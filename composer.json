@@ -57,7 +57,8 @@
             "Database\\Seeders\\": "database/seeders/",
             "FastFFI\\Opencc\\": "packages/ffi-opencc/src/",
             "FastFFI\\Pinyin\\": "packages/ffi-pinyin/src/",
-            "FastFFI\\LAC\\": "packages/ffi-lac/src/"
+            "FastFFI\\LAC\\": "packages/ffi-lac/src/",
+            "FastFFI\\QrCode\\": "packages/ffi-qrcode/src/"
         }
     },
     "autoload-dev": {
@@ -80,7 +81,8 @@
     "replace": {
         "meshell/ffi-opencc": "self.version",
         "meshell/ffi-pinyin": "self.version",
-        "meshell/ffi-lac": "self.version"
+        "meshell/ffi-lac": "self.version",
+        "meshell/ffi-qrcode": "self.version"
     },
     "minimum-stability": "stable",
     "prefer-stable": true

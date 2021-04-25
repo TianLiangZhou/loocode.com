@@ -1,0 +1,24 @@
+[package]
+name = "ffi_qrcode"
+version = "0.1.0"
+authors = ["zhoutianliang <mfkgdyve@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+#
+[lib]
+name = "ffi_qrcode"
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[[bin]]
+name = "ffiqr"
+
+[build-dependencies]
+cbindgen = "0.18.0"
+
+[dependencies]
+qrcode = "0.12"
+image  = "0.23"
+hex = "0.4"

@@ -59,6 +59,7 @@
 <script type="text/javascript">
     function toolConvert() {
         return {
+            mode: 0,
             data: null,
             convert: function () {
                 window.fetch('/api/tool/convert', {

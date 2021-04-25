@@ -1,0 +1,22 @@
+{
+    "name": "meshell/ffi-qrcode",
+    "description": "QR code generator in PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhoutianliang",
+            "email": "mfkgdyve@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+      "php": ">=7.4",
+      "ext-ffi": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "FastFFI\\QrCode\\": "src/"
+      }
+    }
+}
