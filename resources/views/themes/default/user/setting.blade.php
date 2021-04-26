@@ -2,9 +2,8 @@
 @section("header_css")
     <link rel="stylesheet" type="text/css" href="{{ mix("/assets/css/filepond.css")  }}"/>
 @endsection
-
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap px-4 ">
             <div class="w-full md:w-3/12 px-4 px-6 bg-white">
                 <div class="mb-3 pt-3">

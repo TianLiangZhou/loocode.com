@@ -28,9 +28,6 @@ Posts.prototype.isPostViews = function () {
   }
   return null
 }
-Posts.prototype.highlight = function () {
-  hljs.initHighlightingOnLoad();
-}
 Posts.prototype.bootstrap = function () {
   let id = this.isPostViews();
   if (id !== null) {
@@ -106,4 +103,3 @@ Posts.prototype.getRequestUrl = function (name) {
 }
 const app = new Posts();
 app.init();
-app.highlight();

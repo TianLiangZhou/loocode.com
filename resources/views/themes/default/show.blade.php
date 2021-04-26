@@ -2,11 +2,12 @@
 
 @section("header_css")
 <link rel="stylesheet" type="text/css" href="{{ mix("/assets/css/article.css")  }}"/>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.1/build/styles/github.min.css">
 @endsection
 
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="flex-1 flex-grow px-4 overflow-hidden">
                 <div class="bg-white">
@@ -21,12 +22,12 @@
                                 </span>
                             </div>
                         </div>
-                        <article class="markdown-body">
+                        <article class="markdown-body line-numbers">
                             {!! str_replace('//image.', '//static.', $post->post_content) !!}
                         </article>
                         <div class="mt-8 text-center">
                             @foreach($post->tags as $tag)
-                                <a href="/tag/{{ $tag }}" class="mr-2 px-2 py-1 font-medium rounded text-white bg-red-400">{{ $tag }}</a>
+                                <a href="/tag/{{ $tag }}" class="mr-2 px-2 py-1 font-medium rounded text-white bg-red-500">{{ $tag }}</a>
                             @endforeach
                         </div>
                     </div>
@@ -147,7 +148,7 @@
                                     <span>@lang('posts.like')</span> <strong>{{$post->author->meta['_lc_post_like']}}</strong>
                                 </div>
                             </div>
-                            <button class="bg-red-500 text-white rounded-md px-3 py-1">关注作者</button>
+{{--                            <button class="bg-red-500 text-white rounded-md px-3 py-1">关注作者</button>--}}
                         </div>
                     </div>
                 </div>
@@ -203,6 +204,11 @@
 @endsection
 
 @section("footer_js")
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.1/build/highlight.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/show-language/prism-show-language.min.js"></script>
     <script type="text/javascript" src="{{ mix("/assets/js/article.js")  }}"></script>
 @endsection

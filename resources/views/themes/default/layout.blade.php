@@ -19,14 +19,13 @@
     <meta name="Authorization" content="{{ $user->ID }}">
     @endif
     <!-- in your header -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/devicons/devicon@v2.9.0/devicon.min.css">
     @yield("header_css")
 </head>
 <body x-data="{login: false}" x-on:login.window="login = $event.detail.open">
 <div class="w-full">
-    @include("default.header")
+    @include("default.includes.header")
     @yield("content")
-    @include("default.footer")
+    @include("default.includes.footer")
 </div>
 <div id="fly-rocket" class="fixed bottom-12 right-12 text-red-500 bg-white rounded-full cursor-pointer">
     <i class="iconfont icon-Top text-6xl"></i>
@@ -35,7 +34,7 @@
 <script type="text/javascript" src="{{ mix("/assets/js/vendor.js") }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script>
 <script type="text/javascript" src="{{ mix("/assets/js/app.js") }}"></script>
-@include('default.ad_analysis')
+@include('default.includes.ad_analysis')
 @yield("footer_js")
 </body>
 </html>

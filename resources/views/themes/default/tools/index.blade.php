@@ -1,6 +1,6 @@
 @extends("default.layout")
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="flex-1 flex-grow px-4 overflow-hidden">
                 <div class="bg-white border-b">
@@ -12,7 +12,7 @@
                                     <path d="M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z" fill="currentColor"/>
                                 </svg>
                             </li>
-                            <li aria-current="page" class="text-gray-400">工具集合</li>
+                            <li aria-current="page" class="text-gray-400">工具合集</li>
                         </ol>
                     </nav>
                 </div>
@@ -20,7 +20,7 @@
                     <ul class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 xl:gap-8 font-semibold text-gray-900 text-center">
                         @foreach($tools as $item)
                             <li class="flex">
-                                <a href="{{$item['href']}}" class="relative rounded-xl ring-1 ring-black ring-opacity-5 shadow-sm w-full pt-8 pb-6 px-6">
+                                <a href="{{$item['href']}}" class="relative rounded-xl ring-1 ring-black ring-opacity-5 shadow-sm w-full pt-8 pb-6 px-6 hover:text-red-500">
                                     {{$item['name']}}
                                 </a>
                             </li>

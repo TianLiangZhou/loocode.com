@@ -14,10 +14,10 @@
         <label class="text-gray-700">颜色</label>
         <div class="flex-1 ml-4">
             <div class="flex items-center">
-                <input placeholder="背景" type="color" class="ml-2 mt-0 block px-0.5 py-2 text-sm" name="bg_color" value="" maxlength="7" minlength="7" />
+                <input placeholder="背景" type="color" class="ml-2 mt-0 block px-0.5 py-2 text-sm" name="bg_color" value="#FFFFFF" maxlength="7" minlength="7" />
             </div>
             <div class="flex items-center mt-2">
-                <input placeholder="前景" type="color" class="ml-2 mt-0 block px-0.5 py-2 text-sm" name="fg_color" value="" maxlength="7" minlength="7" />
+                <input placeholder="前景" type="color" class="ml-2 mt-0 block px-0.5 py-2 text-sm" name="fg_color" value="#000000" maxlength="7" minlength="7" />
             </div>
         </div>
     </div>

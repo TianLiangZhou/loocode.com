@@ -1,16 +1,16 @@
 @extends("default.layout")
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="w-full lg:w-80 px-4 flex-initial">
                 <div class="bg-white p-4">
                     <div class="">
-                        <h3 class="text-xl text-gray-500 font-medium border-b pb-1 border-gray-200 after:border-b after:border-red-500">工具集合</h3>
+                        <h3 class="text-xl text-gray-500 font-medium border-b pb-1 border-gray-200 after:border-b after:border-red-500">工具合集</h3>
                         <div class="pt-4">
-                            <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-gray-900 text-center">
+                            <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-gray-900 text-left">
                                 @foreach($tools as $item)
-                                    <li class="flex">
-                                        <a href="@if($tool['name'] == $item['name'])#@else {{$item['href']}} @endif" class="relative rounded-xl ring-1 ring-black ring-opacity-5 shadow-sm w-full pt-8 pb-6 px-6">
+                                    <li class="flex my-3">
+                                        <a href="@if($tool['name'] == $item['name'])#@else {{$item['href']}} @endif" class="relative w-full @if($tool['name'] == $item['name']) pl-2 border-l-4 border-red-500 @endif">
                                             {{$item['name']}}
                                         </a>
                                     </li>

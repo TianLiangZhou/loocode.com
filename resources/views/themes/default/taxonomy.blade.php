@@ -1,6 +1,6 @@
 @extends("default.layout")
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="flex-1 flex-grow px-4 overflow-hidden">
                 <div class="bg-white border-b">

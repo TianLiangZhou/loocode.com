@@ -1,5 +1,5 @@
 <footer class="bg-white">
-    <div class="container w-3/4 mx-auto text-center text-gray-400">
+    <div class="container mx-auto text-center text-gray-400">
         <div class="py-4">
             <ul class="m-0 p-0">
                 <li class="inline-block mx-4"><a href="https://beian.miit.gov.cn" target="_blank">浙ICP备17018093号-2</a></li>

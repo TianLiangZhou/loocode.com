@@ -8,6 +8,18 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1100px',
+        'xl': '1100px',
+        '2xl': '1100px',
+      },
+      colors: {
+        aquamarine: {
+
+        },
+      }
     },
   },
   variants: {

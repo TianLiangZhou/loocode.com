@@ -1,6 +1,9 @@
 @extends("default.layout")
+@section("header_css")
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/devicons/devicon@v2.9.0/devicon.min.css">
+@endsection
 @section("content")
-    <div class="container w-3/4 mx-auto my-5">
+    <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="flex-1 flex-grow px-4 overflow-hidden">
                 <div class="flex flex-col relative bg-white">

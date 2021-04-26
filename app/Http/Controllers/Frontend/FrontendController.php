@@ -47,6 +47,7 @@ class FrontendController extends Controller
             'options' => [
                 'site_url' => self::$options['site_url'] ?? "",
                 'site_title' => self::$options['site_title'] ?? "",
+                'site_append_title' => self::$options['site_append_title'],
             ],
             'ad' => [
                 'google' => !empty(self::$options['google_ad']) && isset(self::$options['google_ad_open']) && self::$options['google_ad_open'] === 'true'
