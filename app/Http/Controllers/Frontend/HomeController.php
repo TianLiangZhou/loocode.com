@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 
+use App\Events\Post;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
@@ -26,47 +27,11 @@ class HomeController extends FrontendController
      */
     public function index(): View
     {
-        $sql = <<<EOF
-SELECT
-    COUNT(t1.id) AS cnt
-FROM posts as t1 LEFT JOIN users as t2 ON(t1.post_author=t2.id)
-WHERE (t1.post_status = 'publish' OR (t1.post_status = 'future' AND t1.post_date <= ? )) AND t1.post_type = 'post' ORDER BY t1.post_date DESC, t1.id DESC
-EOF;
-        $now = now();
-        $total = DB::selectOne($sql, [$now])->cnt ?? 0;
-        $items = [];
-        $currentPage = Paginator::resolveCurrentPage('p');
         $prePage = 30;
-        if ($total > 0) {
-            $sql = <<<EOF
-    SELECT
-        t1.id, t1.post_title, t1.post_author, t1.post_modified, t2.display_name as name, t2.avatar, t1.post_excerpt, t1.post_type
-    FROM posts as t1 LEFT JOIN users as t2 ON(t1.post_author=t2.id)
-    WHERE (t1.post_status = 'publish' OR (t1.post_status = 'future' AND t1.post_date <= ? )) AND t1.post_type = 'post' ORDER BY t1.post_date DESC, t1.id DESC LIMIT ?, ?
-    EOF;
-            $items = DB::select($sql, [$now, $currentPage * $prePage - $prePage, $prePage]);
-            if ($items) {
-                $objectIdSets = array_map(function ($item) {return $item->id;}, $items);
-                [$postMeta, $postTag] = $this->getIdSetsMetesAndTaxonomy($objectIdSets);
-                foreach ($items as  $item) {
-                    $item->tags = $postTag[$item->id] ?? [];
-                    $item->metas = $postMeta[$item->id] ?? [];
-                }
-            }
-        }
-        $paginator = Container::getInstance()->makeWith(
-            LengthAwarePaginator::class,
-            [
-                'items' => $items,
-                'total' => $total,
-                'perPage' => $prePage,
-                'currentPage' => $currentPage,
-                'options' => [
-                    'path' => Paginator::resolveCurrentPath(),
-                    'pageName' => 'p',
-                ]
-            ]
-        );
+        $paginator = \Corcel\Model\Post::published()
+            ->type('post')
+            ->orderBy('post_date', 'DESC')
+            ->paginate($prePage, ['ID', 'post_title', 'post_modified', 'post_author', 'post_name'], 'p');
         return view($this->theme . '.index', [
             'posts' => $paginator,
             'hotPosts' => $this->getHot(),

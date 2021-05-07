@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Backend;
 
 
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\InstallingRequest;
 use App\Http\Result;
 use App\Services\Auth\JwtGuard;
 use App\Services\OpenService;
@@ -32,11 +32,11 @@ use Lcobucci\JWT\Signer\Key;
 class AuthorizeController
 {
     /**
-     * @param RegisterRequest $request
+     * @param InstallingRequest $request
      * @return Application|ResponseFactory|Response
      * @throws \Exception
      */
-    public function register(RegisterRequest $request): Response
+    public function register(InstallingRequest $request): Response
     {
         $validated = $request->validated();
         if ($validated['password'] != $validated['confirmPassword']) {
@@ -51,21 +51,12 @@ class AuthorizeController
         $user->user_pass = (new PasswordService())->makeHash($validated['password']);
         $user->user_nicename = $validated['fullName'];
         $user->user_email = $validated['email'];
-        $user->user_activation_key = Str::random(8);
+        $user->user_activation_key = "";
         $user->display_name = $validated['fullName'];
         if (!$user->save()) {
             return response(Result::err(500, "注册失败"));
         }
-        $adminId = config('app.admin_id');
-        if ($user->ID === $adminId || ($adminId === null && User::count() === 1)) {
-            (new OpenService())->firstBuilder($user, __DIR__);
-        }
-        $user->meta()->saveMany([
-           new UserMeta(['meta_key' => 'lasted_ip', 'meta_value' => $request->ip()]) ,
-           new UserMeta(['meta_key' => 'lasted_date', 'meta_value' => now()])
-        ]);
-        [$token, $cookie] = $this->getToken($user->ID, $validated['email'], $user->avatar);
-        return response(Result::ok(['token' => $token->toString()]))->cookie($cookie);
+        return response(Result::ok());
     }
 
     /**

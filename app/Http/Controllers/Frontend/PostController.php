@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 
+use Corcel\Model\Comment;
+use Corcel\Model\Meta\PostMeta;
+use Corcel\Model\Post;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,21 +30,13 @@ class PostController extends FrontendController
      */
     public function show(Request $request, int $id): View
     {
-        $post = $this->getPost($id);
+        $post = Post::find($id);
         if ($post == null) {
             abort(404);
         }
-        $sql = 'SELECT meta_key, meta_value FROM postmeta WHERE post_id = ?';
-        $metas = DB::select($sql, [$id]);
-        $post->meta = $this->formatMeta($metas);
-        $sql = <<<EOF
-SELECT t1.taxonomy, t2.object_id, t3.slug FROM term_taxonomy as t1
-    LEFT JOIN term_relationships as t2 ON (t1.term_taxonomy_id=t2.term_taxonomy_id)
-    LEFT JOIN terms as t3 ON (t1.term_id=t3.term_id)
-    WHERE t2.object_id = ?
-EOF;
-        $taxonomy = DB::select($sql, [$id]);
-
+        $post->meta = $this->formatMeta(
+            PostMeta::select(['meta_key', 'meta_value'])->where('post_id', $post->ID)->whereIn('meta_key', ['_lc_post_views', '_lc_post_like', 'toc'])->get()
+        );
         $sql = <<<EOF
 SELECT
        t2.display_name as name, t2.avatar, t1.comment_author, t1.comment_ID, t1.comment_date, t1.comment_content
@@ -50,21 +46,7 @@ WHERE t1.comment_post_ID = ? AND (t1.comment_approved = 1 OR comment_author = ?)
 EOF;
         $user = $request->user();
         $comments = DB::select($sql, [$id, $user->ID ?? 0]);
-        $author = DB::selectOne('SELECT display_name as name, avatar FROM users WHERE id = ?', [$post->post_author]);
-        $metas = DB::select('SELECT meta_key, meta_value FROM usermeta WHERE user_id = ?', [$post->post_author]);
-        if (!$author) {
-            $author = new stdClass();
-        }
-        $author->meta = $metas ? $this->formatMeta($metas) : [];
-        $post->tags = count($taxonomy) > 0
-            ? array_map(function ($item) {
-                if ($item->taxonomy == 'post_tag') {
-                    return $item->slug;
-                }
-                return "";
-            }, $taxonomy)
-            : [];
-        $post->author = $author;
+        $post->userMeta = $this->formatMeta($post->author->meta);
         return view($this->theme . ".show", [
             'post' => $post,
             'comments' => $comments,
@@ -235,7 +217,7 @@ EOF;
      * @param array $metas
      * @return array
      */
-    private function formatMeta(array $metas)
+    private function formatMeta(Collection $metas)
     {
         $meta = [];
         foreach ($metas as $item) {

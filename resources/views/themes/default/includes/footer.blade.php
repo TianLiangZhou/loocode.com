@@ -1,4 +1,4 @@
-<footer class="bg-white">
+<footer class="bg-white dark:bg-gray-900">
     <div class="container mx-auto text-center text-gray-400">
         <div class="py-4">
             <ul class="m-0 p-0">
@@ -37,8 +37,8 @@
                  x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                  x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                  x-description="Modal panel, show/hide based on modal state."
-                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                 class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex justify-center">
                         <div class="mx-4">
                             <a href="/oauth/qq" title="QQ {{ __('login') }}">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="bg-gray-50 dark:bg-gray-900 dark:text-gray-500 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     @lang('login_tips')
                 </div>
             </div>

@@ -11,7 +11,7 @@
     ],
     "type": "project",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "ext-ffi": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -33,7 +33,8 @@
         "socialiteproviders/google": "^4.1",
         "socialiteproviders/qq": "^4.1",
         "socialiteproviders/weixin-web": "^4.1",
-        "spatie/flysystem-dropbox": "^1.2.3"
+        "spatie/flysystem-dropbox": "^1.2.3",
+        "ext-posix": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

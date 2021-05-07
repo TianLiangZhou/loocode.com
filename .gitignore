@@ -15,9 +15,10 @@ yarn-error.log
 .vscode
 /public/mix-manifest.json
 /public/assets
-/public/hot
+/bootstrap/cache
 /dist
 /dashboard
+/public/dashboard
 key.pem
 cert.pem
 /src/ckeditor5/node_modules

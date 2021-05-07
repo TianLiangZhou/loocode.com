@@ -1,4 +1,4 @@
-<header class="w-full mb-4 bg-white shadow-md dark:bg-gray-800 border-t-4 border-red-500">
+<header class="w-full mb-4 bg-white shadow-md dark:bg-gray-900 border-t-4 border-red-500">
     <div class="container mx-auto px-4">
         <div class="flex justify-start items-center py-1">
             <div class="flex justify-start flex-1 md:flex-none mx-2 md:mx-0">
@@ -12,7 +12,7 @@
                     <label class="block">
                         <input type="text"
                                name="q"
-                               class="placeholder-gray-500 bg-gray-50 p-1 block w-full rounded-2xl text-sm dark:bg-gray-800 dark:text-gray-50 focus:ring-0 border border-gray-50 focus:border-gray-500"
+                               class="px-4 placeholder-gray-500 bg-gray-50 p-1 block w-full rounded-2xl text-sm dark:bg-gray-800 dark:text-gray-400 focus:ring-0 border border-gray-50 dark:border-gray-700 focus:border-gray-700 dark:focus:border-gray-700"
                                placeholder="搜索">
                     </label>
                 </form>
@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <div class="mx-2 md:mx-0">
-                <ul class="flex items-center font-medium text-gray-500">
+                <ul class="flex items-center font-medium text-gray-500 dark:text-gray-400">
                     <li>
                         <a class="hover:text-red-500" href="/" rel="nofollow" title="{{$options['site_title']}}">@lang('main')</a>
                     </li>

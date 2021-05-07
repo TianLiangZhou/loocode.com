@@ -1,11 +1,8 @@
 @extends("default.layout")
-@section("header_css")
-    <link rel="stylesheet" type="text/css" href="{{ mix("/assets/css/filepond.css")  }}"/>
-@endsection
 @section("content")
     <div class="container mx-auto my-5">
         <div class="flex flex-wrap px-4 ">
-            <div class="w-full md:w-3/12 px-4 px-6 bg-white">
+            <div class="w-full md:w-3/12 px-4 px-6 bg-white dark:bg-gray-900">
                 <div class="mb-3 pt-3">
                     <h3 class="font-bold text-2xl">设置</h3>
                 </div>
@@ -28,7 +25,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="flex-1 w-full bg-white">
+            <div class="flex-1 w-full bg-white dark:bg-gray-900">
                 <div class="mb-3 pt-3">
                     <h3 id="email" class="font-medium text-xl">邮箱设置</h3>
                 </div>

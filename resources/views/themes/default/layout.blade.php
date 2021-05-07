@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh_CN" class="text-gray-700 bg-gray-100 font-sans">
+<html lang="zh_CN" class="text-gray-700 bg-gray-100 font-sans dark:bg-gray-800">
 <head>
     <meta charset="UTF-8" />
     <title>{{ $seo->title }}</title>
@@ -27,7 +27,7 @@
     @yield("content")
     @include("default.includes.footer")
 </div>
-<div id="fly-rocket" class="fixed bottom-12 right-12 text-red-500 bg-white rounded-full cursor-pointer">
+<div id="fly-rocket" class="fixed bottom-12 right-12 text-red-500 dark:text-gray-500 bg-white dark:bg-gray-900 rounded-full cursor-pointer">
     <i class="iconfont icon-Top text-6xl"></i>
 </div>
 <script type="text/javascript" src="{{ mix("/assets/js/manifest.js") }}"></script>

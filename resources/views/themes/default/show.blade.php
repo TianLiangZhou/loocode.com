@@ -1,22 +1,15 @@
 @extends("default.layout")
-
-@section("header_css")
-<link rel="stylesheet" type="text/css" href="{{ mix("/assets/css/article.css")  }}"/>
-
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.1/build/styles/github.min.css">
-@endsection
-
 @section("content")
     <div class="container mx-auto my-5">
         <div class="flex flex-wrap">
             <div class="flex-1 flex-grow px-4 overflow-hidden">
-                <div class="bg-white">
+                <div class="bg-white dark:bg-gray-900">
                     <div class="p-7">
-                        <div class="mb-2 border-b">
-                            <h1 class="mb-4 text-3xl font-bold">{{ $post->post_title }}</h1>
+                        <div class="mb-2 border-b dark:border-gray-600">
+                            <h1 class="mb-4 text-3xl font-bold dark:text-gray-400">{{ $post->post_title }}</h1>
                             <div class="mb-4">
-                                <span class="text-gray-400">
-                                    <i class="text-red-500">{{ $post->author->name ?? "" }}</i>
+                                <span class="text-gray-400 dark:text-gray-500">
+                                    <i class="text-red-500">{{ $post->author->display_name ?? "" }}</i>
                                     · {{ date('Y年m月d日', strtotime($post->post_modified)) }}
                                     · 阅读 {{ $post->meta['_lc_post_views'] }}
                                 </span>
@@ -26,16 +19,18 @@
                             {!! str_replace('//image.', '//static.', $post->post_content) !!}
                         </article>
                         <div class="mt-8 text-center">
-                            @foreach($post->tags as $tag)
-                                <a href="/tag/{{ $tag }}" class="mr-2 px-2 py-1 font-medium rounded text-white bg-red-500">{{ $tag }}</a>
-                            @endforeach
+                            @if(($attribute = $post->getTermsAttribute()))
+                                @foreach($attribute['tag'] as $slug => $name)
+                                    <a class="mr-2 px-2 py-1 font-medium rounded-md text-white bg-red-500" href="/tag/{{ $slug }}">{{ $name }}</a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
                 @if($globalComment)
                 <div class="mt-4">
                     @if($comments)
-                    <div class="p-7 bg-white">
+                    <div class="p-7 bg-white dark:bg-gray-900">
                         @foreach($comments as $item)
                             <div class="flex">
                                 <div class="p-3 pt-0 pl-0">
@@ -75,10 +70,10 @@
                         @endforeach
                     </div>
                     @endif
-                    <div class="p-7 mt-4 bg-white">
+                    <div class="p-7 mt-4 bg-white dark:bg-gray-900">
                         <form>
-                            <div class="border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
-                                <markdown-toolbar for="commentTextarea" class="flex flex-wrap border-b border-gray-300">
+                            <div class="border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 dark:border-gray-800">
+                                <markdown-toolbar for="commentTextarea" class="flex flex-wrap border-b border-gray-300 dark:border-gray-800">
                                     <md-header class="p-2" aria-label="Add header text" data-ga-click="Markdown Toolbar, click, header" role="button">
                                         <svg  height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M3.75 2a.75.75 0 01.75.75V7h7V2.75a.75.75 0 011.5 0v10.5a.75.75 0 01-1.5 0V8.5h-7v4.75a.75.75 0 01-1.5 0V2.75A.75.75 0 013.75 2z"></path></svg>
                                     </md-header>
@@ -110,7 +105,7 @@
                                         <svg height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M4.75 2.37a6.5 6.5 0 006.5 11.26.75.75 0 01.75 1.298 8 8 0 113.994-7.273.754.754 0 01.006.095v1.5a2.75 2.75 0 01-5.072 1.475A4 4 0 1112 8v1.25a1.25 1.25 0 002.5 0V7.867a6.5 6.5 0 00-9.75-5.496V2.37zM10.5 8a2.5 2.5 0 10-5 0 2.5 2.5 0 005 0z"></path></svg>
                                     </md-mention>
                                 </markdown-toolbar>
-                                <textarea  id="commentTextarea" class="w-full h-48 border-0 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:border-2 " placeholder="@lang('posts.comment_placeholder')" ></textarea>
+                                <textarea  id="commentTextarea" class="w-full dark:bg-gray-900 dark:text-gray-400 h-48 border-0 focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:border-2 " placeholder="@lang('posts.comment_placeholder')" ></textarea>
                             </div>
                             <div class="text-right mt-2">
                                 <button type="button" class="bg-red-500 text-white rounded-md px-3 py-1 font-medium" data-loading-text="Loading..." id="commentButton">@lang('posts.comment')</button>
@@ -122,9 +117,9 @@
                 @endif
             </div>
             <div class="w-full mt-4 lg:mt-0 lg:w-80 px-4 flex-initial">
-                <div class="bg-white p-4">
+                <div class="bg-white p-4 dark:bg-gray-900">
                     <div class="">
-                        <h3 class="text-lg text-gray-500 font-medium border-b pb-1 border-gray-200">关于作者</h3>
+                        <h3 class="text-lg text-gray-500 dark:text-gray-400 font-medium border-b pb-1 border-gray-200 dark:border-gray-700">关于作者</h3>
                         <div class="pt-4">
                             <div class="flex items-center">
                                 <picture class="rounded-full mr-3">
@@ -137,15 +132,15 @@
                                         alt="avatar"
                                         class="rounded-full" width="64" height="64">
                                 </picture>
-                                <div><h5 class="mb-0"><a href="javascript:" class="text-body">{{ $post->author->name ?? ""  }}</a></h5></div>
+                                <div><h5 class="mb-0"><a href="javascript:" class="text-body dark:text-gray-500">{{ $post->author->display_name ?? ""  }}</a></h5></div>
                             </div>
-                            <p class="py-3">全栈工程师</p>
+                            <p class="py-3 dark:text-gray-400">全栈工程师</p>
                             <div class="flex items-center mb-3 text-gray-500 text-sm">
                                 <div class="mr-4">
-                                    <span>@lang('posts.view')</span> <strong>{{$post->author->meta['_lc_post_views']}}</strong>
+                                    <span>@lang('posts.view')</span> <strong>{{$post->userMeta['_lc_post_views']}}</strong>
                                 </div>
                                 <div>
-                                    <span>@lang('posts.like')</span> <strong>{{$post->author->meta['_lc_post_like']}}</strong>
+                                    <span>@lang('posts.like')</span> <strong>{{$post->userMeta['_lc_post_like']}}</strong>
                                 </div>
                             </div>
 {{--                            <button class="bg-red-500 text-white rounded-md px-3 py-1">关注作者</button>--}}
@@ -153,10 +148,10 @@
                     </div>
                 </div>
                 @if(isset($post->meta["toc"]) && $post->meta["toc"])
-                    <div class="bg-white p-4 mt-4" style="position: sticky;top: 0">
+                    <div class="bg-white p-4 mt-4 dark:bg-gray-900" style="position: sticky;top: 0">
                         <div class="">
-                            <h3 class="text-lg text-gray-500 font-medium border-b pb-1 border-gray-200">文章目录</h3>
-                            <div class="pt-4">
+                            <h3 class="text-lg text-gray-500 dark:text-gray-400 font-medium border-b pb-1 border-gray-200 dark:border-gray-700">文章目录</h3>
+                            <div class="pt-4 dark:text-gray-500">
                                 {!! $post->meta["toc"] !!}
                             </div>
                         </div>
@@ -165,31 +160,31 @@
             </div>
         </div>
     </div>
-    @if(isset($post->user->meta['alipayQr']) || isset($post->user->meta['wechatQr']))
-    <div class="modal fade" id="appreciate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    @if(isset($post->userMeta['alipayQr']) || isset($post->userMeta['wechatQr']))
+    <div class="hidden" id="appreciate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">{{ $language['posts']['donation'] }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ __('posts.donation') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="text-muted">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
                     <ul class="list-inline">
-                        @if(isset($post->user->meta['alipayQr']))
+                        @if(isset($post->userMeta['alipayQr']))
                         <li class="list-inline-item m-3">
                             <img style="border: 2px solid #449ee2"
                                  width="150"
-                                 src="{{ $static_domain }}{{ $post->user->meta['alipayQr'] }}"
+                                 src="{{ $static_domain }}{{ $post->userMeta['alipayQr'] }}"
                                  alt="支付宝收款码">
                         </li>
                         @endif
-                        @if(isset($post->user->meta['wechatQr']))
+                        @if(isset($post->userMeta['wechatQr']))
                         <li class="list-inline-item m-3">
                             <img style="border: 2px solid #53a849"
                                  width="150"
-                                 src="{{ $static_domain }}{{ $post->user->meta['wechatQr'] }}"
+                                 src="{{ $static_domain }}{{ $post->userMeta['wechatQr'] }}"
                                  alt="微信收款码">
                         </li>
                         @endif

@@ -2,10 +2,10 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   purge: [
-    './resources/**/*.blade.php',
-    './resources/**/*.js'
+    './resources/views/themes/**/*.blade.php',
+    './resources/js/*.js'
   ],
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       screens: {
