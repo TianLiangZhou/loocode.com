@@ -256,17 +256,15 @@
 
 .markdown-body table td,
 .markdown-body table th {
-  padding: 6px 13px;
-  border: 1px solid #dfe2e5;
+  @apply px-4 py-2 border border-gray-200 dark:border-gray-700;
 }
 
 .markdown-body table tr {
-  background-color: #fff;
-  border-top: 1px solid #c6cbd1;
+  @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700;
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  @apply bg-gray-50 dark:bg-gray-900;
 }
 
 .markdown-body img {
@@ -1344,6 +1342,7 @@ Generated with Base16 Builder (https://github.com/base16-builder/base16-builder)
 
 code[class*="language-"],
 pre[class*="language-"] {
+  @apply text-gray-300;
   font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace;
   font-size: 14px;
   line-height: 1.375;
@@ -1355,7 +1354,6 @@ pre[class*="language-"] {
   tab-size: 4;
   hyphens: none;
   background: #1d262f;
-  color: #57718e;
 }
 
 pre > code[class*="language-"] {
@@ -1405,7 +1403,7 @@ pre[class*="language-"] {
 .token.tag,
 .token.operator,
 .token.number {
-  color: #0aa370;
+  color: #ff9d3d;
 }
 
 .token.property,
@@ -1607,3 +1605,6 @@ div.code-toolbar > .toolbar span:focus {
   text-decoration: none;
 }
 
+svg {
+  @apply fill-current dark:text-gray-300;
+}

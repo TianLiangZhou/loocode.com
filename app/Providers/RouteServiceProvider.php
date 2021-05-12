@@ -39,7 +39,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
-
         Route::model('user', User::class);
         Route::model('role', Role::class);
         Route::model('option', Option::class);
@@ -52,9 +51,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
-            Route::domain($dashboardDomain)
-                ->prefix("backend")
-                ->middleware('backend')
+            $backend = Route::prefix("backend");
+            if ($dashboardDomain) {
+                $backend->domain($dashboardDomain);
+            }
+            $backend->middleware('backend')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/dashboard.php'));
         });
