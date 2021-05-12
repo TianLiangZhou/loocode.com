@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'dashboard_domain' => env('DASHBOARD_DOMAIN', 'localhost'),
+    'dashboard_domain' => env('DASHBOARD_DOMAIN', ''),
 
     'asset_url' => env('ASSET_URL', null),
 
