@@ -263,7 +263,7 @@ export class PostComponent implements OnInit, AfterViewInit {
     if (this.eye == "private") {
       status = "private";
     }
-    if (this.post.post_date.length > 0) {
+    if (this.post.post_date && this.post.post_date.length > 0) {
       const timestamp = new Date(this.post.post_date).getTime() / 1000 | 0;
       if (timestamp > this.appConfig.appConfig.timestamp) {
         status = "future";

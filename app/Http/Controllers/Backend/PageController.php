@@ -124,7 +124,9 @@ class PageController extends BackendController
             $pc->post_content = $content;
             $pc->save();
         }
-        return Result::ok(null, "页面更新成功");
+        return Result::ok([
+            'id' => $id,
+        ], "页面更新成功");
     }
 
     /**
@@ -141,10 +143,7 @@ class PageController extends BackendController
         $data = new stdClass();
         $data->post_title = $post->post_title;
         $data->post_excerpt = $post->post_excerpt;
-        $editor = config('app.editor');
-        if ($editor == 'markdown') {
-            $data->post_content = $post->meta->markdown ?? $post->post_content;
-        } elseif (config('app.content_separation')) {
+        if (config('app.content_separation')) {
             $data->post_content = PostContent::find($id)->post_content;
         } else {
             $data->post_content = $post->post_content;

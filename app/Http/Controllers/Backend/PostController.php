@@ -210,7 +210,9 @@ class PostController extends BackendController
             $pc->post_content = $content;
             $pc->save();
         }
-        return Result::ok();
+        return Result::ok([
+            'id' => $id,
+        ], '文章更新成功');
     }
 
     /**
