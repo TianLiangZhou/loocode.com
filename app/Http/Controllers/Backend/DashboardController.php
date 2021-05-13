@@ -38,16 +38,8 @@ class DashboardController extends BackendController
      * @param Request $request
      * @return string[]
      */
-    private function getSystemInfo(Request $request)
+    private function getSystemInfo(Request $request): array
     {
-        $columns = [
-            'name' => [
-                'filter' => false,
-            ],
-            'value' => [
-                'filter' => false,
-            ]
-        ];
         $data = [
             ['name' => '主机名', 'value' => php_uname('n')],
             ['name' => '内核', 'value' => php_uname('r')],
@@ -79,33 +71,35 @@ class DashboardController extends BackendController
         }
 
         return [
+            'type' => 'table',
             'class' => 'col-6',
             'title' => '系统信息',
-            'body'  => <<<EOF
-<ng2-smart-table
-  [settings]="settings"
-  [source]="source">
-</ng2-smart-table>
-EOF,
-            'type' => 'table',
-            'data' => [
-                'settings' => [
-                    'actions' => [
-                        'add' => false,
-                        'delete' => false,
-                        'edit' => false,
-                    ],
-                    'columns' => $columns,
+            'body'  => $data,
+            'settings' => [
+                'actions' => [
+                    'add' => false,
+                    'delete' => false,
+                    'edit' => false,
+                    'position' => 'right',
                 ],
-                'data'    => $data,
-            ]
+                'columns' => [
+                    'name' => [
+                        'title' => '名称',
+                        'filter' => false,
+                    ],
+                    'value' => [
+                        'title' => '值',
+                        'filter' => false,
+                    ]
+                ]
+            ],
         ];
     }
 
     /**
      * @return array|null
      */
-    private function getMemory()
+    private function getMemory(): array
     {
         $process = new Process(['free', '-m']);
         $process->run();
@@ -113,7 +107,8 @@ EOF,
             $output = $process->getOutput();
             $table = explode("\n", $output);
             $columns = str_split(substr($table[0], 8), 12);
-            $trColumns = ['name0' => [
+            $trColumns = [
+                'name0' => [
                 'title' => '',
                 'filter' => false,
             ]];
@@ -138,29 +133,22 @@ EOF,
             }
 
             return [
+                'type' => 'table',
                 'class' => 'col-6',
                 'title' => '内存',
-                'body'  => <<<EOF
-<ng2-smart-table
-  [settings]="settings"
-  [source]="source">
-</ng2-smart-table>
-EOF,
-                'type' => 'table',
-                'data' => [
-                    'settings' => [
-                        'actions' => [
-                            'add' => false,
-                            'delete' => false,
-                            'edit' => false,
-                        ],
-                        'columns' => $trColumns,
+                'body'  => $data,
+                'settings' => [
+                    'actions' => [
+                        'add' => false,
+                        'delete' => false,
+                        'edit' => false,
+                        'position' => 'right',
                     ],
-                    'data'    => $data,
-                ]
+                    'columns' => $trColumns,
+                ],
             ];
         }
-        return null;
+        return [];
     }
 
     /**
@@ -180,91 +168,79 @@ EOF,
         $iniConfig = ini_get_all(null, false);
         $displayError = $iniConfig['display_errors'] == 'Off' ? ['close-outline', 'danger'] : ['checkmark-outline', 'success'];
         $timezone = date_default_timezone_get();
+        $data = [
+            [
+                'type' => 'input',
+                'value' => $phpVersion,
+                'name' => 'PHP版本',
+            ],
+            [
+                'type' => 'input',
+                'value' => $zendVersion,
+                'name' => 'Zend引擎版本',
+            ],
+            [
+                'type' => 'input',
+                'value' => $serverSoft,
+                'name' => 'Web服务',
+            ],
+            [
+                'type' => 'input',
+                'value' => $mysqlVersion,
+                'name' => 'MYSQL版本',
+            ],
+            [
+                'type' => 'input',
+                'value' => $laravelVersion,
+                'name' => 'Laravel版本',
+            ],
+            [
+                'type' => 'input',
+                'value' => $runEnv,
+                'name' => '运行模式',
+            ],
+            [
+                'type' => 'input',
+                'value' => $iniDir,
+                'name' => 'INI路径',
+            ],
+            [
+                'type' => 'input',
+                'value' => $iniConfig['memory_limit'],
+                'name' => '脚本最大内存',
+            ],
+            [
+                'type' => 'input',
+                'value' => $iniConfig['upload_max_filesize'],
+                'name' => '最大上传大小',
+            ],
+            [
+                'type' => 'input',
+                'value' => $iniConfig['post_max_size'],
+                'name' => 'POST提交大小',
+            ],
+            [
+                'type' => 'icon',
+                'value' => $displayError[0],
+                'status' => $displayError[1],
+                'name' => '显示错误',
+            ],
+            [
+                'type' => 'input',
+                'value' => $iniConfig['max_execution_time'],
+                'name' => '脚本超时时间',
+            ],
+            [
+                'type' => 'input',
+                'value' => $timezone,
+                'name' => '当前时区',
+            ],
+        ];
         return [
+            'type' => 'form',
             'class' => 'col-6',
             'title' => 'PHP信息',
-            'body'  => <<<EOF
-<form>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">PHP版本</label>
-    <div class="col-6">
-      <input value="{$phpVersion}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">Zend引擎版本</label>
-    <div class="col-6">
-      <input value="{$zendVersion}" nbInput disabled>
-    </div>
-  </div>
-   <div class="form-group row">
-    <label class="label col-6 col-form-label">Web服务</label>
-    <div class="col-6">
-      <input value="{$serverSoft}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">MYSQL版本</label>
-    <div class="col-6">
-      <input value="{$mysqlVersion}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">Laravel版本</label>
-    <div class="col-6">
-      <input value="{$laravelVersion}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">运行模式</label>
-    <div class="col-6">
-      <input value="{$runEnv}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">INI路径</label>
-    <div class="col-6">
-      <input value="{$iniDir}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">脚本最大内存</label>
-    <div class="col-6">
-      <input value="{$iniConfig['memory_limit']}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">最大上传大小</label>
-    <div class="col-6">
-      <input value="{$iniConfig['upload_max_filesize']}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">POST提交大小</label>
-    <div class="col-6">
-      <input value="{$iniConfig['post_max_size']}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">显示错误</label>
-    <div class="col-6">
-      <nb-icon icon="{$displayError[0]}" size="large" status="{$displayError[1]}"></nb-icon>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">脚本超时时间</label>
-    <div class="col-6">
-      <input value="{$iniConfig['max_execution_time']}" nbInput disabled>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="label col-6 col-form-label">当前时区</label>
-    <div class="col-6">
-      <input value="{$timezone}" nbInput disabled>
-    </div>
-  </div>
-</form>
-EOF,
+            'body'  => $data,
         ];
     }
 
@@ -274,19 +250,15 @@ EOF,
     private function getPHPExtension()
     {
         $extensions  = get_loaded_extensions();
-        $exts = '<div class="row">';
+        $body = [];
         foreach ($extensions as $ext) {
-            $exts .=  <<<EOF
-<div class="col">
-<nb-alert status="success">$ext</nb-alert>
-</div>
-EOF;
+            $body[] = $ext;
         }
-        $exts .= '</div>';
         return [
+            'type' => 'grid',
             'class' => 'col-6',
             'title' => 'PHP扩展',
-            'body'  => $exts,
+            'body'  => $body,
         ];
 
     }

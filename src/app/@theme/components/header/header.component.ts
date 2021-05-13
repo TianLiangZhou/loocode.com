@@ -59,7 +59,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private breakpointService: NbMediaBreakpointsService,
               private cookieService: CookieService,
-              private cdRef: ChangeDetectorRef
               ) {
 
   }

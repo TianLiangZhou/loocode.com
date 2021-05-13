@@ -13,6 +13,11 @@ const routes: Routes = [
     path: "new",
     component: NewComponent,
     data: {title: "新建页面"},
+  },
+  {
+    path: 'editing/:id',
+    component: NewComponent,
+    data: {title: "编辑页面"},
   }
 ];
 

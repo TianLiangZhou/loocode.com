@@ -170,7 +170,7 @@
       </div>
     </markdown-toolbar>
     <div class="row">
-      <div class="col">
+      <div class="col" *ngIf="!preview">
         <textarea nbInput fullWidth size="large" id="textareaId"
           class="text-editor"
           [formControl]="control"
@@ -181,8 +181,8 @@
           [cdkAutosizeMinRows]="24">
         </textarea>
       </div>
-      <div class="col-6" *ngIf="preview">
-        <div markdown class="markdown-body" (ready)="renderFinish()" [data]="markdown"></div>
+      <div class="col" *ngIf="preview">
+        <div markdown class="markdown-body p-3" (ready)="renderFinish()" [data]="markdown"></div>
       </div>
     </div>
   </div>

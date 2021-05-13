@@ -4,6 +4,7 @@ import {USER_CREATE_MEMBER, USER_MEMBER, USER_UPDATE_MEMBER} from '../../../@cor
 import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {AppResponseDataOptions} from '../../../@core/app.data.options';
 import {BaseComponent} from '../../../@core/base.component';
+import {CKFinderService} from "../../../@core/services/ckfinder.service";
 
 @Component({
   selector: 'app-user-member',
@@ -23,11 +24,13 @@ export class UserMemberComponent  extends BaseComponent {
     password: '',
     avatar: '',
   };
+  ckfinder: CKFinderService;
 
   init() {
     this.settings = UserMemberComponent.smartTableSettings();
     this.serviceSourceConf.next(TableSourceService.getServerSourceConf(USER_MEMBER));
-    this.finderFileChoose.subscribe((item) => {
+    this.ckfinder = this.injector.get<CKFinderService>(CKFinderService)
+    this.ckfinder.subscribe((item: any) => {
       this.user.avatar =  item.url;
     });
   }

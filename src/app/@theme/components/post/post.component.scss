@@ -1,0 +1,19 @@
+::ng-deep .ck-editor__editable_inline {
+  min-height: 15cm !important;
+}
+.w-0 {
+  width:  0;
+  min-width: 0;
+}
+@media (min-width:782px){
+  .interface-complementary-area {
+    max-width:300px;
+  }
+}
+
+nb-list-item {
+  label, input {
+    padding-left: 0.5rem !important;
+    margin-left: 1.25rem;
+  }
+}

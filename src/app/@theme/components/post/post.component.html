@@ -1,0 +1,228 @@
+<div class="row">
+  <div class="col-12">
+    <nb-card class="mb-0">
+      <nb-card-body>
+        <div class="d-flex justify-content-end">
+          <button *ngIf="post.post_content.length > 0 || post.post_title.length > 0" nbButton status="warning" (click)="action('draft')">保存为草稿</button>
+          <div class="mx-2"></div>
+          <button nbButton status="basic" *ngIf="post.post_content.length > 0" (click)="preview()">预览</button>
+          <div class="mx-2"></div>
+          <button nbButton status="success" type="submit" [disabled]="submitted || !form.valid" (click)="form.onSubmit($event)">{{ id > 0 ? "更新" : "发布" }}</button>
+          <div class="mx-2"></div>
+          <button nbButton status="primary" *ngIf="meta" type="button" (click)="onSetting()">
+            <nb-icon icon="settings-2"></nb-icon>
+          </button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col">
+    <nb-card>
+      <nb-card-body>
+        <form #form="ngForm" (ngSubmit)="action('publish')">
+          <div class="form-group">
+            <div class="col-12">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                status="primary"
+                [(ngModel)]="post.post_title"
+                #title="ngModel"
+                name="title"
+                id="inputTitle"
+                required="required"
+                placeholder="标题"
+                [status]="title.dirty ? (title.invalid  ? 'danger' : 'success') : 'basic'"
+              >
+              <ng-container *ngIf="title.invalid && title.touched">
+                <p class="caption status-danger mt-1" *ngIf="title.errors?.required">
+                  标题不能为空!
+                </p>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-12">
+              <ng-container [ngSwitch]="editorMode">
+                <app-markdown-editor *ngSwitchCase="'markdown'" name="markdown" [(ngModel)]="post.post_content"></app-markdown-editor>
+                <ckeditor
+                  *ngSwitchCase="'ckeditor'"
+                  id="editorContent"
+                  [editor]="Editor"
+                  [config]="editorOptions" (ready)="onReady($event)"
+                  [(ngModel)]="post.post_content"
+                  name="content"
+                ></ckeditor>
+                <textarea *ngSwitchCase="'text'" nbInput fullWidth [(ngModel)]="post.post_content" rows="10"></textarea>
+              </ng-container>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-auto" *ngIf="setting && meta">
+    <nb-accordion class="interface-complementary-area" #accordionComponent multi="true">
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          状态与可见性
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between my-4">
+              <span>
+              <nb-icon icon="eye"></nb-icon>
+               可见性
+              </span>
+              <div>
+                <button nbButton [nbPopover]="list" (nbPopoverShowStateChange)="popoverChange($event)" #eyeButton nbPopoverTrigger="click" nbPopoverPlacement="left" size="small" status="primary">公开</button>
+              </div>
+              <ng-template #list>
+                <nb-card class="margin-bottom-0">
+                  <nb-card-header>文章可见性</nb-card-header>
+                  <nb-list>
+                    <nb-list-item>
+                      <div>
+                        <nb-radio value="open" ngDefaultControl name="eye" [checked]="eye== 'open'" [(ngModel)]="eye" (valueChange)="onEye($event)">公开</nb-radio>
+                        <label class="label">所有人可见。</label>
+                      </div>
+                    </nb-list-item>
+                    <nb-list-item>
+                      <div>
+                        <nb-radio value="private" ngDefaultControl name="eye" [checked]="eye== 'private'" [(ngModel)]="eye" (valueChange)="onEye($event)">私密</nb-radio>
+                        <label class="label">只有站点管理员和编辑可见。</label>
+                      </div>
+                    </nb-list-item>
+                    <nb-list-item>
+                      <div class="d-flex flex-column">
+                        <nb-radio value="password" ngDefaultControl name="eye" [checked]="eye == 'password'" [(ngModel)]="eye">密码保护</nb-radio>
+                        <label class="label">受您选择的密码保护，只有持有密码的人士可查看此文章。</label>
+                        <input nbInput *ngIf="eye == 'password'" size="small" [(ngModel)]="post.password" name="password" (keyup)="onEye('password')"/>
+                      </div>
+                    </nb-list-item>
+                  </nb-list>
+                </nb-card>
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between my-4">
+              <span>
+              <nb-icon icon="calendar"></nb-icon>
+               发布
+              </span>
+              <div>
+                <button nbButton #inputBtnElement size="small" (click)="datetime($event)" status="primary">立即</button>
+                <nb-date-timepicker format="" #dateTimePicker singleColumn [step]="10"></nb-date-timepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between my-4">
+              <span>
+              <nb-icon icon="paper-plane"></nb-icon>
+               文章格式
+              </span>
+              <div>
+                <nb-select status="primary" [(ngModel)]="post.post_type" name="postType" size="small">
+                  <nb-option value="post">标准</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          分类目录
+        </nb-accordion-item-header>
+        <nb-accordion-item-body style="max-height: 400px; overflow-y: auto">
+          <div class="form-group">
+            <div class="col-12 d-flex flex-column">
+              <div class="mb-4 d-flex flex-column">
+                <ng-container *ngFor="let option of categories">
+                  <div>{{ "&nbsp;&nbsp;&nbsp;&nbsp;".repeat(option.level) }}<nb-checkbox status="primary" [(checked)]="option.checked" >{{ option.term.name.replaceAll("— ", "") }}</nb-checkbox></div>
+                </ng-container>
+              </div>
+              <button nbButton size="small" outline status="primary">添加新分类目录</button>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          标签
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <nb-form-field>
+            <nb-tag-list (tagRemove)="onTagRemove($event)">
+              <nb-tag *ngFor="let tag of tags | keyvalue" [text]="tag.key" removable></nb-tag>
+              <input type="text"
+                     placeholder="添加标签"
+                     status="primary"
+                     nbTagInput
+                     [formControl]="inputFormControl"
+                     (tagAdd)="onTagAdd($event.value)"
+                     [focusInputOnValueChange]="true"
+                     [nbAutocomplete]="autocomplete" fullWidth>
+            </nb-tag-list>
+          </nb-form-field>
+          <nb-autocomplete #autocomplete (selectedChange)="onTagAdd($event)">
+            <nb-option *ngFor="let item of filteredTags$" [value]="item.term_taxonomy_id">{{ item.term.name }}</nb-option>
+          </nb-autocomplete>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          特色图像
+        </nb-accordion-item-header>
+        <nb-accordion-item-body class="text-center">
+          <div class="mb-2" *ngIf="post.meta.featured_media">
+            <img class="img-thumbnail" src="{{post.meta.featured_media}}" alt="" />
+          </div>
+          <button nbButton size="large" fullWidth status="basic" (click)="ckfinder.popup(null, 'Images', false)">设置特色图像</button>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          摘要
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <p>撰写摘要（可选）</p>
+          <textarea status="primary" rows="3" fullWidth [(ngModel)]="post.post_excerpt" nbInput></textarea>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          评论
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="d-flex flex-column">
+            <nb-checkbox status="primary" checked="true" (checkedChange)="commentStatus($event)">允许评论</nb-checkbox>
+            <nb-checkbox checked="true" status="primary" (checkedChange)="pingStatus($event)">允许pingback和trackback</nb-checkbox>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          SEO
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="form-group">
+            <div class="col-12">
+              <input fullWidth status="primary" [(ngModel)]="post.meta.keyword" nbInput name="keyword" placeholder="关键字选填" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12">
+              <input fullWidth status="primary" [(ngModel)]="post.meta.description" nbInput name="description" placeholder="描述选填" />
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+</div>

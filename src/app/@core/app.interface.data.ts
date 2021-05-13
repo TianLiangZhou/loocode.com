@@ -9,6 +9,14 @@ export const POSTS: string = '/posts';
 export const POST_SHOW: string = '/post/{id}';
 export const POST_STORE: string = '/post/store';
 export const POST_UPDATE: string = '/post/update/{id}';
+export const POST_DELETE: string = '/post/delete/{id}';
+
+
+export const PAGES: string = '/pages';
+export const PAGE_SHOW: string = '/page/{id}';
+export const PAGE_STORE: string = '/page/store';
+export const PAGE_UPDATE: string = '/page/update/{id}';
+export const PAGE_DELETE: string = '/page/update/{id}';
 
 export const TAGS: string = '/tags';
 export const TAG_STORE: string = '/tag/store';

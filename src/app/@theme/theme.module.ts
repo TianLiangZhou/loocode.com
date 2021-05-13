@@ -9,7 +9,6 @@ import {
   NbLayoutModule,
   NbMenuModule,
   NbRouteTabsetModule,
-  NbSearchModule,
   NbSidebarModule,
   NbTabsetModule,
   NbThemeModule,
@@ -17,25 +16,18 @@ import {
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
-  NbProgressBarModule,
-  NbCalendarModule,
-  NbCalendarRangeModule,
-  NbStepperModule,
   NbButtonModule,
   NbInputModule,
   NbAccordionModule,
   NbDatepickerModule,
   NbDialogModule,
   NbWindowModule,
-  NbListModule,
   NbToastrModule,
   NbAlertModule,
   NbSpinnerModule,
   NbRadioModule,
   NbSelectModule,
   NbChatModule,
-  NbTooltipModule,
-  NbCalendarKitModule,
   NbBadgeModule,
   NbIconModule,
   NbAutocompleteModule,
@@ -53,16 +45,11 @@ import { CustomTableOperationComponent } from './components/custom-table-operati
 import {CookieService} from 'ngx-cookie-service';
 import {DynamicScriptLoaderService} from '../@core/services/dynamic.script.loader.service';
 import {ToastService} from '../@core/services/toast.service';
-
-
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import {TreeViewComponent, TreeViewItemComponent} from './components/treeview/tree-view.component';
-import {BaseComponent} from '../@core/base.component';
-import {UploadService} from '../@core/services/upload.service';
-import {UploadModule} from './components/upload/upload.module';
 
 
 const BASE_MODULES = [
@@ -79,18 +66,11 @@ const NB_MODULES = [
   NbMenuModule,
   NbUserModule,
   NbActionsModule,
-  NbSearchModule,
   NbSidebarModule,
   NbCheckboxModule,
   NbPopoverModule,
-  NbContextMenuModule,
   NbSecurityModule, // *nbIsGranted directive,
-  NbProgressBarModule,
-  NbCalendarModule,
-  NbCalendarRangeModule,
-  NbStepperModule,
   NbButtonModule,
-  NbListModule,
   NbToastrModule,
   NbInputModule,
   NbAccordionModule,
@@ -101,9 +81,6 @@ const NB_MODULES = [
   NbSpinnerModule,
   NbRadioModule,
   NbSelectModule,
-  NbChatModule,
-  NbTooltipModule,
-  NbCalendarKitModule,
   NbBadgeModule,
   NbIconModule,
   NbEvaIconsModule,
@@ -111,16 +88,13 @@ const NB_MODULES = [
   NbAutocompleteModule,
   NbTagModule,
   NbFormFieldModule,
-  UploadModule,
 ];
 
 const COMPONENTS = [
-  // BaseComponent,
   LayoutComponent,
   HeaderComponent,
   FooterComponent,
   CustomTableOperationComponent,
-
   TreeViewComponent,
   TreeViewItemComponent,
 ];
@@ -171,7 +145,7 @@ NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES],
+  imports: [...BASE_MODULES, ...NB_MODULES, NbContextMenuModule],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
   declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...ENTRY_COMPONENTS],

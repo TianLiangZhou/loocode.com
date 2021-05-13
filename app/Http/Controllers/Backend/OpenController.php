@@ -26,8 +26,8 @@ class OpenController extends BackendController
     public function configuration(): Result
     {
         return Result::ok([
-            // markdown | wysiwyg
-            'editor' => 'markdown',
+            // markdown | ckeditor | text
+            'editor' => config('app.editor'),
             'timestamp' => time(),
         ]);
     }

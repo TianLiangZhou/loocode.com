@@ -2,12 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   forwardRef,
   HostBinding,
   Input,
   OnInit,
-  ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
 import * as hljs from "highlight.js";

@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Backend;
 use App\Attributes\Route;
 use App\Events\Post as PostEvent;
 use App\Http\Result;
+use App\Models\PostContent;
 use Corcel\Model\Post;
 use Corcel\Model\Taxonomy;
 use Corcel\Model\Term;
@@ -74,7 +75,15 @@ class PostController extends BackendController
         $data = new \stdClass();
         $data->post_title = $post->post_title;
         $data->post_excerpt = $post->post_excerpt;
-        $data->post_content = $post->meta->markdown ?? $post->post_content;
+
+        $editor = config('app.editor');
+        if ($editor == 'markdown') {
+            $data->post_content = $post->meta->markdown ?? $post->post_content;
+        } elseif (config('app.content_separation')) {
+            $data->post_content = PostContent::find($id)->post_content;
+        } else {
+            $data->post_content = $post->post_content;
+        }
         $data->post_status = $post->post_status;
         $data->post_type = $post->post_type;
         $data->comment_status = $post->comment_status;
@@ -117,13 +126,21 @@ class PostController extends BackendController
         if (empty($data['post_date'])) {
             $data['post_date'] = now();
         }
+        $isContentSeparation = config('app.content_separation');
+        $content = "";
         if (!empty($data['post_content'])) {
-            [$html, $toc] = $this->markdown($data['post_content']);
-            $data['meta']['markdown'] = $data['post_content'];
-            if ($toc) {
-                $data['meta']['toc'] = $toc;
+            $editor = config('app.editor');
+            $content = $data['post_content'];
+            if ($editor == 'markdown') {
+                [$content, $toc] = $this->markdown($data['post_content']);
+                $data['meta']['markdown'] = $data['post_content'];
+                if ($toc) {
+                    $data['meta']['toc'] = $toc;
+                }
             }
-            $data['post_content'] = $html;
+            if (!$isContentSeparation) {
+                $data['post_content'] = $content;
+            }
         }
         $post = new Post($data);
         $post->post_name = $data['post_name'] ?? $data['post_title'];
@@ -133,6 +150,12 @@ class PostController extends BackendController
         $post->save();
         if ($post->ID) {
             $this->bindTagCategory($post->ID, $data['tags'], $data['categories'], $data['meta']);
+        }
+        if ($isContentSeparation) {
+            $pc = new PostContent();
+            $pc->post_id = $post->ID;
+            $pc->post_content = $content;
+            $pc->save();
         }
         return Result::ok([
             'id' => $post->ID,
@@ -152,14 +175,26 @@ class PostController extends BackendController
         if ($post == null) {
             return Result::err(404, "文章不存在");
         }
+        $isContentSeparation = config('app.content_separation');
+        $content = "";
         if (!empty($post['post_content'])) {
-            [$html, $toc] = $this->markdown($data['post_content']);
-            $data['meta']['markdown'] = $data['post_content'];
-            $data['meta']['toc'] = $toc;
-            $data['post_content'] = $html;
+            $editor = config('app.editor');
+            $content = $data['post_content'];
+            if ($editor == 'markdown') {
+                [$content, $toc] = $this->markdown($data['post_content']);
+                $data['meta']['markdown'] = $data['post_content'];
+                if ($toc) {
+                    $data['meta']['toc'] = $toc;
+                }
+            }
+            if (!$isContentSeparation) {
+                $data['post_content'] = $content;
+            }
         }
         $post->post_title = $data['post_title'];
-        $post->post_content = $data['post_content'];
+        if (!$isContentSeparation) {
+            $post->post_content = $data['post_content'];
+        }
         $post->post_name = $data['post_name'] ?? $data['post_title'];
         $post->post_status = $data['post_status'];
         $post->post_excerpt = $data['post_excerpt'];
@@ -169,6 +204,11 @@ class PostController extends BackendController
         $post->save();
         if ($post->ID) {
             $this->bindTagCategory($post->ID, $data['tags'], $data['categories'], $data['meta'], 'update');
+        }
+        if ($isContentSeparation) {
+            $pc = PostContent::find($post->ID);
+            $pc->post_content = $content;
+            $pc->save();
         }
         return Result::ok();
     }

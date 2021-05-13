@@ -1,11 +1,31 @@
 <div class="row">
   <div class="{{item.class}}" *ngFor="let item of card">
     <nb-card>
-      <nb-card-header>
-        {{item.title}}
-      </nb-card-header>
+      <nb-card-header>{{item.title}}</nb-card-header>
       <nb-card-body>
-        <ng-template #ref></ng-template>
+        <ng-container [ngSwitch]="item.type">
+          <ng2-smart-table *ngSwitchCase="'table'"
+            [settings]="item.settings"
+            [source]="item.body"
+          >
+          </ng2-smart-table>
+          <form *ngSwitchCase="'form'">
+            <div class="form-group row" *ngFor="let input of item.body">
+              <label class="label col-6 col-form-label">{{input.name}}</label>
+              <div class="col-6">
+                <ng-container [ngSwitch]="input.type">
+                  <nb-icon *ngSwitchCase="'icon'" icon="{{input.value}}" status="{{input.status}}"></nb-icon>
+                  <input *ngSwitchDefault value="{{ input.value }}" nbInput disabled>
+                </ng-container>
+              </div>
+            </div>
+          </form>
+          <div class="row" *ngSwitchCase="'grid'">
+            <div class="col" *ngFor="let grid of item.body">
+              <nb-alert status="success">{{grid}}</nb-alert>
+            </div>
+          </div>
+        </ng-container>
       </nb-card-body>
     </nb-card>
   </div>

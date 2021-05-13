@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Backend\AuthorizeController;
 use App\Http\Controllers\Backend\DecorationController;
 use App\Http\Controllers\Backend\ManagerController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SiteController;
 use App\Http\Controllers\Backend\TaxonomyController;
@@ -53,6 +54,13 @@ Route::middleware(['auth:backend', 'rbac'])->group(function() {
     Route::get('/post/{id}', [PostController::class, 'show']);
     Route::post('/post/store', [PostController::class, 'store']);
     Route::post('/post/update/{id}', [PostController::class, 'update']);
+    Route::post('/post/delete/{id}', [PostController::class, 'delete']);
+
+    Route::get('/pages', [PageController::class, 'index']);
+    Route::get('/page/{id}', [PageController::class, 'show']);
+    Route::post('/page/store', [PageController::class, 'store']);
+    Route::post('/page/update/{id}', [PageController::class, 'update']);
+    Route::post('/page/delete/{id}', [PageController::class, 'delete']);
 
 
     Route::get('/tags', [TaxonomyController::class, 'tags']);

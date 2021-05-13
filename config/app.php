@@ -56,10 +56,13 @@ return [
 
     'dashboard_domain' => env('DASHBOARD_DOMAIN', ''),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', ''),
 
-    'mix_url' => env('ASSET_URL', null),
+    'mix_url' => env('ASSET_URL', ''),
 
+    'editor' => env('EDITOR', 'markdown'),
+
+    'content_separation' => env('CONTENT_SEPARATION', 0),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

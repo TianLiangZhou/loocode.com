@@ -1,4 +1,15 @@
-import {ChangeDetectorRef, Component, Directive, EventEmitter, Inject, Injectable, OnInit, Output, TemplateRef} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  EventEmitter,
+  Inject,
+  Injectable,
+  Injector,
+  OnInit,
+  Output,
+  TemplateRef
+} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, Router, RoutesRecognized} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {
@@ -56,17 +67,18 @@ export abstract class BaseComponent implements OnInit {
   protected toastService: ToastService;
   protected dialogService: NbDialogService;
   protected router: Router;
+  protected injector: Injector;
 
   constructor(
     private readonly route: ActivatedRoute
   ) {
-    const injector = AppInjector.getInjector();
-    this.http = injector.get<HttpClient>(HttpClient);
-    this.windowService = injector.get<NbWindowService>(NbWindowService);
-    this.toastService = injector.get<ToastService>(ToastService);
-    this.dialogService = injector.get<NbDialogService>(NbDialogService);
-    this.appConfig = injector.get<ConfigurationService>(ConfigurationService).appConfig;
-    this.router = injector.get<Router>(Router);
+    this.injector = AppInjector.getInjector();
+    this.http = this.injector.get<HttpClient>(HttpClient);
+    this.windowService = this.injector.get<NbWindowService>(NbWindowService);
+    this.toastService = this.injector.get<ToastService>(ToastService);
+    this.dialogService = this.injector.get<NbDialogService>(NbDialogService);
+    this.appConfig = this.injector.get<ConfigurationService>(ConfigurationService).appConfig;
+    this.router = this.injector.get<Router>(Router);
   }
 
   ngOnInit(): void {
@@ -154,37 +166,6 @@ export abstract class BaseComponent implements OnInit {
     });
     this.nbWindowRef.onClose.subscribe(() => {
       this.onCloseDialogCallback();
-    });
-  }
-  openCKFinderPopup(element: string, resourceType = 'Images', multi: boolean = true) {
-    const _this = this;
-    // @ts-ignore
-    window.CKFinder.modal({
-      language: 'zh-cn',
-      resourceType: resourceType,
-      chooseFiles: true,
-      selectMultiple: multi,
-      onInit: function (finder) {
-        finder.on('files:choose', function (evt) {
-          const files: {name: string, url: string, pixel: string, size: number, extension: string}[] = [];
-          evt.data.files.forEach( (item, index) => {
-            files[index] = {
-              name: item.attributes.name,
-              url: item.attributes.url,
-              size: item.attributes.size,
-              extension: item._extenstion,
-              pixel: item.attributes.hasOwnProperty('imageResizeData')
-                ? item.attributes.imageResizeData.attributes.originalSize
-                : ''
-            };
-          });
-          _this.finderFileChoose.emit(files);
-          document.dispatchEvent(new MouseEvent('click'));
-          if (element) {
-            (<HTMLInputElement>document.getElementById(element)).value = evt.data.files.last().getUrl();
-          }
-        });
-      }
     });
   }
 
