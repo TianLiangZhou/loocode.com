@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
 
 interface Scripts {
   name: string;
@@ -63,7 +62,7 @@ export class DynamicScriptLoaderService {
   }
 
   loadCKfinder() {
-    this.push([{name: 'ckfinder', src: environment.gateway + '/ckfinder/ckfinder.js'},]);
+    this.push([{name: 'ckfinder', src:'/ckfinder/ckfinder.js'},]);
     // @ts-ignore
     if (!window["CKFinder"]) {
       this.load('ckfinder');

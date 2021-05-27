@@ -29,6 +29,8 @@ class OpenController extends BackendController
             // markdown | ckeditor | text
             'editor' => config('app.editor'),
             'timestamp' => time(),
+            'taxonomy' => config('app.taxonomy'),
+            'post_type'=> config('app.post_type'),
         ]);
     }
 

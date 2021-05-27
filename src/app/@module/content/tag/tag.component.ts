@@ -1,9 +1,9 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {TableSourceService} from "../../../@core/services/table.source.service";
-import {CATEGORY_DELETE, TAG_DELETE, TAG_STORE, TAG_UPDATE, TAGS} from "../../../@core/app.interface.data";
+import {EXTENSION_META_TYPE, TAG_DELETE, TAG_STORE, TAG_UPDATE, TAGS} from "../../../@core/app.interface.data";
 import {BaseComponent} from "../../../@core/base.component";
 import {AppResponseDataOptions} from "../../../@core/app.data.options";
-import {Row} from "ng2-smart-table/lib/lib/data-set/row";
+import {MetaComponent} from "../../../@theme/components/meta/meta.component";
 
 @Component({
   selector: 'app-tag',
@@ -12,7 +12,7 @@ import {Row} from "ng2-smart-table/lib/lib/data-set/row";
 })
 export class TagComponent extends BaseComponent {
 
-  @ViewChild('updateWindow', {static: false}) storeWindow: TemplateRef<any>;
+  @ViewChild("metaComponent", {static: false}) metaComponent: MetaComponent;
 
   tag: {[key: string]: any} = {
     id: 0,
@@ -74,8 +74,16 @@ export class TagComponent extends BaseComponent {
     },
   };
 
+  metas = [];
+
   init() {
     this.serviceSourceConf.next(TableSourceService.getServerSourceConf(TAGS));
+    this.http.get(EXTENSION_META_TYPE + "/post_tag").subscribe((res:AppResponseDataOptions) => {
+      if (res.code !== 200) {
+        return;
+      }
+      this.metas = res.data.forms;
+    });
   }
 
   edit($event: any) {
@@ -106,6 +114,7 @@ export class TagComponent extends BaseComponent {
       return this.toastService.showToast('danger', this.title, "名称不能为空");
     }
     this.tag.taxonomy = "post_tag";
+    this.tag.metas = this.metaComponent.metaBindModel;
     let url = TAG_STORE
     if (this.tag.id > 0) {
       url = TAG_UPDATE.replace("{id}", this.tag.id.toString())

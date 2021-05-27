@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Backend\AuthorizeController;
 use App\Http\Controllers\Backend\DecorationController;
+use App\Http\Controllers\Backend\ExtensionController;
 use App\Http\Controllers\Backend\ManagerController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
@@ -30,7 +31,7 @@ Route::post('/authorize/login', [AuthorizeController::class, 'authenticate']);
 Route::post('/authorize/logout', [AuthorizeController::class, 'logout']);
 Route::get('/open/configuration', [OpenController::class, 'configuration']);
 
-Route::middleware(['auth:backend', 'rbac'])->group(function() {
+Route::middleware(['auth:backend', 'rbac'])->group(callback: function() {
     Route::get('/dashboard', [DashboardController::class, 'main']);
     Route::any('/ckfinder/connector', [CKFinderController::class, 'request']);
     Route::get('/open/user/menu', [OpenController::class, 'userMenu']);
@@ -91,6 +92,9 @@ Route::middleware(['auth:backend', 'rbac'])->group(function() {
 
     Route::get('/themes', [DecorationController::class, 'themes']);
 
+
+    Route::post('/extension/meta/save', [ExtensionController::class, 'saveMeta']);
+    Route::get('/extension/meta/{taxonomy}', [ExtensionController::class, 'taxonomy']);
 });
 
 

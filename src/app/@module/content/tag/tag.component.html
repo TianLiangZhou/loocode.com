@@ -37,6 +37,7 @@
             <textarea nbInput id="desc" [(ngModel)]="tag.description" name="description" status="primary" fullWidth></textarea>
             <label class="label">描述只会在一部分主题中显示。</label>
           </div>
+          <meta-container [metas]="metas" #metaComponent></meta-container>
           <div class="form-group">
             <button status="primary" size="small" nbButton [disabled]="submitted || !ngForm.valid">{{mode[currentMode]}}</button>
           </div>

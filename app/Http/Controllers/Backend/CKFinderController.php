@@ -24,6 +24,7 @@ class CKFinderController extends BackendController
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     #[Route(title: "文件管理", sort: 1, hidden: true)]
     public function request(ContainerInterface $container, Request $request)

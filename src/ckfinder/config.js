@@ -3,26 +3,22 @@
  For licensing, see LICENSE.html or https://ckeditor.com/sales/license/ckfinder
  */
 
-var config = {};
-
+let config = {};
 // Set your configuration options below.
-
 // Examples:
 // config.language = 'pl';
 // config.skin = 'jquery-mobile';
-
-// Examples:
 config.language = 'zh_CN';
-// config.skin = 'jquery-mobile';
-var hostDomain = window.parent.location.protocol + '//' + window.parent.location.host;
-var currentDomain = null;
-var selector = document.querySelectorAll("[type=\"text/javascript\"]")
+const hostDomain = window.parent.location.protocol + '//' + window.parent.location.host;
+let currentDomain = null;
+const selector = document.querySelectorAll("[type=\"text/javascript\"]")
 selector.forEach(function (node, index, parent) {
     if (node.nodeName.toLowerCase() === 'script') {
-        var l = document.createElement("a");
+        let l = document.createElement("a");
         l.href = node.src
         currentDomain = l.protocol + '//' + l.hostname
     }
 });
-config.connectorPath = (currentDomain == null ? hostDomain : currentDomain) + '/backend/ckfinder/connector';
+const jwt = JSON.parse(window.localStorage.getItem('auth_app_token'));
+config.connectorPath = '/backend/ckfinder/connector?token=' + jwt.value.replace(".", "_") + '&';
 CKFinder.define(config);

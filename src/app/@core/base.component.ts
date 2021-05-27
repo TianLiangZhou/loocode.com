@@ -13,27 +13,18 @@ import {
 import {ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, Router, RoutesRecognized} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {
-  NB_DATE_ADAPTER,
   NbComponentType,
-  NbDatepickerAdapter,
   NbDialogService,
-  NbSidebarService,
   NbWindowRef,
   NbWindowService,
   NbWindowState
 } from '@nebular/theme';
 import {ToastService} from './services/toast.service';
-import {UploadService} from './services/upload.service';
-import {DomSanitizer, Title} from '@angular/platform-browser';
-import {environment} from '../../environments/environment';
-import {FormBuilder} from '@angular/forms';
 import {WindowContent, AppConfiguration} from './app.data.options';
 import {ServerDataSource} from './services/server.data.source';
 import {ReplaySubject} from 'rxjs';
-import {DynamicScriptLoaderService} from './services/dynamic.script.loader.service';
 import {ConfigurationService} from './services/configuration.service';
 import {AppInjector} from "./app.injector";
-import {filter, flatMap, map} from "rxjs/operators";
 
 @Component({
   template: ``,

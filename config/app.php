@@ -63,6 +63,18 @@ return [
     'editor' => env('EDITOR', 'markdown'),
 
     'content_separation' => env('CONTENT_SEPARATION', 0),
+
+    'taxonomy' => [
+        ['name' => '分类', 'value' => 'category'],
+        ['name' => '标签', 'value' => 'post_tag'],
+    ],
+    'post_type' => [
+        ['name' => '标准', 'value' => 'post'],
+        ['name' => '图像', 'value' => 'image'],
+        ['name' => '视频', 'value' => 'video'],
+        ['name' => '音频', 'value' => 'voice'],
+        ['name' => '链接', 'value' => 'link'],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -1,0 +1,44 @@
+
+<div class="form-group" *ngFor="let meta of metas">
+  <label class="label" for="{{meta.keyword}}">{{ meta.name }}</label>
+  <ng-container  [ngSwitch]="meta.type">
+    <input *ngSwitchCase="'input'" [(ngModel)]="metaBindModel[meta.keyword]" nbInput id="{{meta.keyword}}" fullWidth name="{{meta.keyword}}" />
+    <textarea *ngSwitchCase="'textarea'" nbInput id="{{meta.keyword}}" name="{{ meta.keyword }}" fullWidth [(ngModel)]="metaBindModel[meta.keyword]"></textarea>
+    <div class="row" *ngSwitchCase="'file'">
+      <div class="col-6 flex-column d-flex">
+        <span *ngIf="meta.value == false || meta.value == null" class="d-inline">{{ metaBindModel[meta.keyword] }}</span>
+        <ng-container *ngIf="meta.value">
+          <span class="d-inline my-1" *ngFor="let file of metaBindModel[meta.keyword]">{{ file }}"</span>
+        </ng-container>
+      </div>
+      <div class="col-6">
+        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Files', meta.value ? true : false, meta.keyword);">浏览</button>
+      </div>
+    </div>
+    <div class="row" *ngSwitchCase="'image'">
+      <div class="col-6 flex-column d-flex">
+        <ng-container *ngIf="meta.value == false || meta.value == null">
+          <img alt="{{meta.name}}" width="98" class="d-inline" src="{{ metaBindModel[meta.keyword] }}"/>
+        </ng-container>
+        <ng-container *ngIf="meta.value">
+          <img alt="{{meta.name}}" width="98" class="d-inline my-1" *ngFor="let image of metaBindModel[meta.keyword]" src="{{ image }}"/>
+        </ng-container>
+      </div>
+      <div class="col-6">
+        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Images', meta.value ? true : false, meta.keyword);">浏览</button>
+      </div>
+    </div>
+    <nb-select  *ngSwitchCase="'select'" name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]">
+      <nb-option *ngFor="let option of meta.value" [value]="option.value">{{option.name}}</nb-option>
+    </nb-select>
+    <div *ngSwitchCase="'checkbox'">
+      <nb-checkbox name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]" status="primary" *ngFor="let option of meta.value">{{option.name}}</nb-checkbox>
+    </div>
+    <div *ngSwitchCase="'radio'">
+      <nb-radio-group name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]">
+        <nb-radio [value]="option.value" *ngFor="let option of meta.value">{{option.name}}</nb-radio>
+      </nb-radio-group>
+    </div>
+  </ng-container>
+  <label class="label" *ngIf="meta.description.length > 0">{{meta.description}}</label>
+</div>

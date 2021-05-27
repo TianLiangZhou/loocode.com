@@ -12,6 +12,8 @@ export interface WindowContent {
 export interface AppConfiguration {
   timestamp?: number;
   editor?: string;
+  taxonomy: {name: string, value: string}[];
+  post_type: {name: string, value: string}[];
 }
 
 export interface AppMenuItem {

@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {TableSourceService} from "../../../@core/services/table.source.service";
-import {CATEGORIES, CATEGORY_DELETE, CATEGORY_STORE, CATEGORY_UPDATE, TAG_STORE, TAG_UPDATE} from "../../../@core/app.interface.data";
+import {
+  CATEGORIES,
+  CATEGORY_DELETE,
+  CATEGORY_STORE,
+  CATEGORY_UPDATE,
+  EXTENSION_META_TYPE,
+} from "../../../@core/app.interface.data";
 import {BaseComponent} from "../../../@core/base.component";
 import {AppResponseDataOptions} from "../../../@core/app.data.options";
+import {MetaComponent} from "../../../@theme/components/meta/meta.component";
 
 @Component({
   selector: 'app-category',
@@ -10,6 +17,7 @@ import {AppResponseDataOptions} from "../../../@core/app.data.options";
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent extends BaseComponent {
+  @ViewChild("metaComponent", {static: false}) metaComponent: MetaComponent;
   settings = {
     actions: {
       position: 'right',
@@ -75,13 +83,21 @@ export class CategoryComponent extends BaseComponent {
     description: "",
   };
   categories: any[] = [];
+  metas = [];
+
   init() {
     this.serviceSourceConf.next(TableSourceService.getServerSourceConf(CATEGORIES));
     this.source.rawData.subscribe((res) => {
       if (res.code == 200) {
         this.categories = res.data;
       }
-    })
+    });
+    this.http.get(EXTENSION_META_TYPE + "/category").subscribe((res:AppResponseDataOptions) => {
+      if (res.code !== 200) {
+        return;
+      }
+      this.metas = res.data.forms;
+    });
   }
 
   action($event: any) {
@@ -90,6 +106,7 @@ export class CategoryComponent extends BaseComponent {
     }
     this.submitted = true;
     this.category.taxonomy = "category";
+    this.category.metas = this.metaComponent.metaBindModel;
     let url = CATEGORY_STORE
     if (this.category.id > 0) {
       url = CATEGORY_UPDATE.replace("{id}", this.category.id.toString())

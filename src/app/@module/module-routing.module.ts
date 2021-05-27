@@ -32,6 +32,14 @@ const routes: Routes = [{
     {
       path: 'decoration',
       loadChildren: () => import('./decoration/decoration.module').then(m => m.DecorationModule),
+    },
+    {
+      path: 'extension',
+      loadChildren: () => import('./extension/extension.module').then(m => m.ExtensionModule),
+    },
+    {
+      path: 'media',
+      loadChildren: () => import('./media/media.module').then(m => m.MediaModule),
     }
   ],
 }];

@@ -71,6 +71,10 @@ class JwtGuard implements Guard
         return $this->user = $this->provider->retrieveById($id);
     }
 
+    /**
+     * @param array $credentials
+     * @return bool
+     */
     public function validate(array $credentials = [])
     {
         // TODO: Implement validate() method.
@@ -89,6 +93,9 @@ class JwtGuard implements Guard
         }
         if ($this->request->hasCookie('token')) {
             return $this->request->cookie('token');
+        }
+        if (($token = $this->request->query('token'))) {
+            return str_replace('_', '.', $token);
         }
         return "";
     }

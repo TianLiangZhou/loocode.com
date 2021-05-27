@@ -54,6 +54,10 @@ export const SITE_AD_OPTION_SAVE: string = '/site/ad/option/save';
 
 export const DASHBOARD: string = '/dashboard';
 
+
+export const EXTENSION_META_TYPE: string = '/extension/meta';
+export const EXTENSION_META_SAVE: string = '/extension/meta/save';
+
 export const MANAGERS: string = '/managers';
 export const MANAGER_STORE: string = '/manager/store';
 export const MANAGER_UPDATE: string = '/manager/update/{id}';

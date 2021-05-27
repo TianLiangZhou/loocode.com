@@ -230,7 +230,14 @@ var CKFinder = function () {
                     type: S("\x12U}ysd")
                 }, n), t = extendObject(window.CKFinder._config || {}, t);
                 var i = window.CKFinder._connectors[window.CKFinder.connector];
-                "/" !== i.charAt(0) && (i = window.CKFinder.basePath + i), i = o(i), Object.keys(t).length && (window.CKFinder._popupOptions || (window.CKFinder._popupOptions = {}), t._omitCheckOnInit = !0, window.CKFinder._popupOptions[e.name] = t, e.config.filebrowserBrowseUrl += S("\x1e PNRVT\x18\x17\x01KFDMEJgK\r") + encodeURIComponent(e.name), t.connectorPath && (i = o(t.connectorPath))), e.config.filebrowserUploadUrl = i + createUrlParams(n)
+                "/" !== i.charAt(0) && (i = window.CKFinder.basePath + i),
+                  i = o(i),
+                Object.keys(t).length && (window.CKFinder._popupOptions || (window.CKFinder._popupOptions = {}),
+                  t._omitCheckOnInit = !0,
+                  window.CKFinder._popupOptions[e.name] = t,
+                  e.config.filebrowserBrowseUrl += S("\x1e PNRVT\x18\x17\x01KFDMEJgK\r") + encodeURIComponent(e.name),
+                t.connectorPath && (i = o(t.connectorPath))),
+                  e.config.filebrowserUploadUrl = i + createUrlParams(n)
             } else {
                 for (var r in CKEDITOR.instances) CKFinder.setupCKEditor(CKEDITOR.instances[r]);
                 CKEDITOR.on(S("\x0fy\x7fagu{ur[k\x7fzhxz"), function (e) {
@@ -3109,7 +3116,7 @@ var CKFinder = function () {
                         })
                     }
                     r.id && (o.id = r.id);
-                    var l = this.baseUrl + "?" + i.util.toGet(c.extend(o, t));
+                    var l = this.baseUrl + (this.baseUrl.indexOf("?") > 1 ? '' : '?') + i.util.toGet(c.extend(o, t));
                     return 0 < s.length && (l += "&" + s), l
                 }
 
@@ -3148,7 +3155,12 @@ var CKFinder = function () {
                         return t.protocol + S("\x10>=") + t.host + e
                     }
 
-                    this.finder = e, (this.config = t).connectorPath ? this.baseUrl = n(t.connectorPath) : (this.baseUrl = i._connectors[i.connector], "/" !== this.baseUrl.charAt(0) && (this.baseUrl = i.require.toUrl(S("6\x19\x17") + this.baseUrl)), this.baseUrl = n(this.baseUrl)), e.setHandlers({
+                    this.finder = e,
+                      (this.config = t).connectorPath
+                        ? this.baseUrl = n(t.connectorPath)
+                        : (this.baseUrl = i._connectors[i.connector], "/" !== this.baseUrl.charAt(0) && (this.baseUrl = i.require.toUrl(S("6\x19\x17") + this.baseUrl)),
+                          this.baseUrl = n(this.baseUrl)),
+                      e.setHandlers({
                         "command:send": {
                             callback: o,
                             context: this

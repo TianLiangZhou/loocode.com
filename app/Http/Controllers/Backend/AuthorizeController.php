@@ -61,10 +61,10 @@ class AuthorizeController
 
     /**
      * @param Request $request
-     * @return Application|ResponseFactory|Response
+     * @return Result
      * @throws \Exception
      */
-    public function authenticate(Request $request): Response
+    public function authenticate(Request $request): Result
     {
         $body = $request->json()->all();
         /**
@@ -78,14 +78,14 @@ class AuthorizeController
          */
         $user = $guard->getProvider()->retrieveByCredentials($credentials);
         if ($user == null) {
-            return response(Result::err(404, "用户不存在"));
+            return Result::err(404, "用户不存在");
         }
         $isValid = $guard->getProvider()->validateCredentials($user, $credentials);
         if (!$isValid) {
-            return response(Result::err(600, "密码匹配失败"));
+            return Result::err(600, "密码匹配失败");
         }
-        [$token, $cookie] = $this->getToken($user->ID, $body['email'], $user->avatar);
-        return response(Result::ok(['token' => $token->toString()]))->cookie($cookie);
+        $token = $this->getToken($user->ID, $body['email'], $user->avatar);
+        return Result::ok(['token' => $token->toString()]);
     }
 
 
@@ -103,10 +103,10 @@ class AuthorizeController
      * @param int $id
      * @param string $email
      * @param string|null $avatar
-     * @return array
+     * @return \Lcobucci\JWT\Token\Plain
      * @throws \Exception
      */
-    private function getToken(int $id, string $email, ?string $avatar): array
+    private function getToken(int $id, string $email, ?string $avatar): \Lcobucci\JWT\Token\Plain
     {
         $config = Configuration::forSymmetricSigner(
             new Sha256(),
@@ -126,7 +126,6 @@ class AuthorizeController
             ->withClaim('avatar', $avatar)
             ->getToken($config->signer(), $config->signingKey());
         // ckfinder 需要使用 cookie来认证
-        $cookie = cookie('token', $token->toString(), 24 * 60, sameSite: 'None');
-        return [$token, $cookie];
+        return $token;
     }
 }

@@ -1,0 +1,8 @@
+{
+  "/backend/ckfinder": {
+    "target": "http://dashboard.loocode.local",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
