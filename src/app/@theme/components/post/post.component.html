@@ -59,6 +59,7 @@
               </ng-container>
             </div>
           </div>
+          <meta-container [metas]="metas" [value]="metaBindValue" #metaComponent></meta-container>
         </form>
       </nb-card-body>
     </nb-card>
@@ -126,8 +127,8 @@
                文章格式
               </span>
               <div>
-                <nb-select status="primary" [(ngModel)]="post.post_type" name="postType" size="small">
-                  <nb-option value="post">标准</nb-option>
+                <nb-select status="primary" (selectedChange)="changePostType($event);" [(ngModel)]="post.post_type" name="postType" size="small">
+                  <nb-option [value]="type.value" *ngFor="let type of postType">{{type.name}}</nb-option>
                 </nb-select>
               </div>
             </div>

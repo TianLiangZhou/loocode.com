@@ -14,15 +14,6 @@ export class MetaComponent implements OnInit {
 
   taxonomies = [];
 
-  formType = [
-    {'name': '文本', 'type': 'input'},
-    {'name': '多行文本', 'type': 'textarea'},
-    {'name': '文件', 'type': 'file'},
-    {'name': '图像', 'type': 'image'},
-    {'name': '选择', 'type': 'select'},
-    {'name': '复选', 'type': 'checkbox'},
-    {'name': '单选', 'type': 'radio'},
-  ];
   selectedMeta: string = "category";
 
   metas = [];
@@ -67,44 +58,6 @@ export class MetaComponent implements OnInit {
           forms: [],
         }
       );
-    });
-  }
-
-  metaTrash(index: number) {
-    this.metas.splice(index, 1);
-  }
-  metaTrashRow(metaIndex: number, row: number) {
-    this.metas[metaIndex].forms.splice(row, 1);
-  }
-
-  metaAdd(j: number) {
-    this.metas[j].forms.push({
-      name: "",
-      keyword: "",
-      description: "",
-      type: "input",
-      value: null,
-    });
-  }
-
-  isMultiple(type: string) {
-    return ['select', 'checkbox', 'radio'].includes(type);
-  }
-  isMedia(type: string) {
-    return ['file', 'image'].includes(type);
-  }
-
-  metaTrashValueRow(j: number, i: number, k: number) {
-    this.metas[j].forms[i].value.splice(k, 1);
-  }
-
-  metaValueAdd(j: number, i: number) {
-    if (this.metas[j].forms[i].value == null) {
-      this.metas[j].forms[i].value = [];
-    }
-    this.metas[j].forms[i].value.push({
-      name: "",
-      value: "",
     });
   }
 

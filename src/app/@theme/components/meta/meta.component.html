@@ -2,8 +2,8 @@
 <div class="form-group" *ngFor="let meta of metas">
   <label class="label" for="{{meta.keyword}}">{{ meta.name }}</label>
   <ng-container  [ngSwitch]="meta.type">
-    <input *ngSwitchCase="'input'" [(ngModel)]="metaBindModel[meta.keyword]" nbInput id="{{meta.keyword}}" fullWidth name="{{meta.keyword}}" />
-    <textarea *ngSwitchCase="'textarea'" nbInput id="{{meta.keyword}}" name="{{ meta.keyword }}" fullWidth [(ngModel)]="metaBindModel[meta.keyword]"></textarea>
+    <input *ngSwitchCase="'input'" [placeholder]="meta.is_required ? '必填项': ''" [required]="meta.is_required" [(ngModel)]="metaBindModel[meta.keyword]" nbInput id="{{meta.keyword}}" fullWidth name="{{meta.keyword}}" />
+    <textarea *ngSwitchCase="'textarea'" [placeholder]="meta.is_required ? '必填项': ''"  nbInput [required]="meta.is_required" id="{{meta.keyword}}" name="{{ meta.keyword }}" fullWidth [(ngModel)]="metaBindModel[meta.keyword]"></textarea>
     <div class="row" *ngSwitchCase="'file'">
       <div class="col-6 flex-column d-flex">
         <span *ngIf="meta.value == false || meta.value == null" class="d-inline">{{ metaBindModel[meta.keyword] }}</span>
@@ -12,7 +12,7 @@
         </ng-container>
       </div>
       <div class="col-6">
-        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Files', meta.value ? true : false, meta.keyword);">浏览</button>
+        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Files', !!meta.value, meta.keyword);">浏览</button>
       </div>
     </div>
     <div class="row" *ngSwitchCase="'image'">
@@ -25,10 +25,10 @@
         </ng-container>
       </div>
       <div class="col-6">
-        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Images', meta.value ? true : false, meta.keyword);">浏览</button>
+        <button nbButton type="button" status="primary" (click)="ckfinder.popup(null, 'Images', !!meta.value, meta.keyword);">浏览</button>
       </div>
     </div>
-    <nb-select  *ngSwitchCase="'select'" name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]">
+    <nb-select  *ngSwitchCase="'select'" [placeholder]="meta.is_required ? '必选': ''"  [required]="meta.is_required" name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]">
       <nb-option *ngFor="let option of meta.value" [value]="option.value">{{option.name}}</nb-option>
     </nb-select>
     <div *ngSwitchCase="'checkbox'">
@@ -38,6 +38,23 @@
       <nb-radio-group name="{{meta.keyword}}" [(ngModel)]="metaBindModel[meta.keyword]">
         <nb-radio [value]="option.value" *ngFor="let option of meta.value">{{option.name}}</nb-radio>
       </nb-radio-group>
+    </div>
+    <div *ngSwitchCase="'date'">
+      <input nbInput name="{{meta.keyword}}" [placeholder]="meta.is_required ? '必填项': ''"  [required]="meta.is_required" [(ngModel)]="metaBindModel[meta.keyword]" [nbDatepicker]="dateTimePicker">
+      <nb-datepicker #dateTimePicker></nb-datepicker>
+    </div>
+
+    <div *ngSwitchCase="'datetime'">
+      <input nbInput name="{{meta.keyword}}" [placeholder]="meta.is_required ? '必填项': ''" [required]="meta.is_required" [(ngModel)]="metaBindModel[meta.keyword]" [nbDatepicker]="dateTimePickerComponent">
+      <nb-date-timepicker #dateTimePickerComponent></nb-date-timepicker>
+    </div>
+
+    <div *ngSwitchCase="'range_date'">
+      <input nbInput name="{{meta.keyword}}" [placeholder]="meta.is_required ? '必填项': ''" [required]="meta.is_required" [(ngModel)]="metaBindModel[meta.keyword]" [nbDatepicker]="dateTimePickerComponent">
+      <nb-rangepicker #dateTimePickerComponent></nb-rangepicker>
+    </div>
+    <div *ngSwitchCase="'input_auto'">
+      <input nbInput name="{{meta.keyword}}" [placeholder]="meta.is_required ? '必填项': ''" [required]="meta.is_required" [(ngModel)]="metaBindModel[meta.keyword]">
     </div>
   </ng-container>
   <label class="label" *ngIf="meta.description.length > 0">{{meta.description}}</label>

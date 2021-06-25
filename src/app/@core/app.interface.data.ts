@@ -58,6 +58,13 @@ export const DASHBOARD: string = '/dashboard';
 export const EXTENSION_META_TYPE: string = '/extension/meta';
 export const EXTENSION_META_SAVE: string = '/extension/meta/save';
 
+
+export const MODELS: string = '/models';
+export const MODEL_STORE: string = '/model/store';
+export const MODEL_UPDATE: string = '/model/{id}/update';
+export const MODEL_DELETE: string = '/model/{id}/delete';
+
+
 export const MANAGERS: string = '/managers';
 export const MANAGER_STORE: string = '/manager/store';
 export const MANAGER_UPDATE: string = '/manager/update/{id}';

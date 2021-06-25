@@ -17,7 +17,7 @@ import {MetaComponent} from "../../../@theme/components/meta/meta.component";
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent extends BaseComponent {
-  @ViewChild("metaComponent", {static: false}) metaComponent: MetaComponent;
+  @ViewChild("metaComponent", {static: true}) metaComponent: MetaComponent;
   settings = {
     actions: {
       position: 'right',
@@ -52,20 +52,20 @@ export class CategoryComponent extends BaseComponent {
           return row.term.name;
         },
       },
+      slug: {
+        title: '别名',
+        type: 'string',
+        sort: false,
+        filter: true,
+        valuePrepareFunction: (avatar: string, row: any) => {
+          return row.term.slug;
+        },
+      },
       description: {
         title: '内容描述',
         type: 'string',
         sort: false,
         filter: false,
-      },
-      slug: {
-        title: '别名',
-        type: 'string',
-        sort: false,
-        filter: false,
-        valuePrepareFunction: (avatar: string, row: any) => {
-          return row.term.slug;
-        },
       },
       count: {
         title: '总数',
@@ -84,6 +84,7 @@ export class CategoryComponent extends BaseComponent {
   };
   categories: any[] = [];
   metas = [];
+  metaBindValue = {};
 
   init() {
     this.serviceSourceConf.next(TableSourceService.getServerSourceConf(CATEGORIES));
@@ -106,7 +107,7 @@ export class CategoryComponent extends BaseComponent {
     }
     this.submitted = true;
     this.category.taxonomy = "category";
-    this.category.metas = this.metaComponent.metaBindModel;
+    this.category.meta = this.metaComponent.metaBindModel;
     let url = CATEGORY_STORE
     if (this.category.id > 0) {
       url = CATEGORY_UPDATE.replace("{id}", this.category.id.toString())
@@ -132,6 +133,11 @@ export class CategoryComponent extends BaseComponent {
       description: data.description,
       parent: data.parent,
     };
+    let metaBindValue = {};
+    data.meta.forEach((item, index) => {
+      metaBindValue[item.meta_key] = item.value;
+    });
+    this.metaBindValue = metaBindValue;
   }
 
   delete($event: any) {

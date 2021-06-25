@@ -22,7 +22,7 @@ class PageController extends BackendController
     /**
      * @return Result
      */
-    #[Route(title: "所有页面", parent: "页面", sort: 1, link: "/app/page")]
+    #[Route(title: "所有页面", sort: 1, link: "/app/page")]
     public function anchor(): Result
     {
         return Result::ok();
@@ -58,7 +58,7 @@ class PageController extends BackendController
     /**
      * @return Result
      */
-    #[Route(title: "新建页面", parent: "页面", sort: 1, link: "/app/page/new")]
+    #[Route(title: "新建页面", sort: 1, link: "/app/page/new")]
     public function new(): Result
     {
         return Result::ok();
@@ -103,7 +103,7 @@ class PageController extends BackendController
      * @param Request $request
      * @return Result
      */
-    #[Route(title: "更新页面", parent: "新建页面", sort: 1, link: "/app/page/new")]
+    #[Route(title: "更新页面", parent: "新建页面", sort: 1)]
     public function update(int $id, Request $request)
     {
         $post = Post::find($id);
@@ -133,7 +133,7 @@ class PageController extends BackendController
      * @param int $id
      * @return Result
      */
-    #[Route(title: "页面详情", parent: "新建页面", sort: 1, link: "/app/page/new")]
+    #[Route(title: "页面详情", parent: "新建页面", sort: 1)]
     public function show(int $id): Result
     {
         $post = Post::find($id);

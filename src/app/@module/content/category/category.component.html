@@ -4,7 +4,7 @@
       <nb-card-header>
         {{mode[currentMode]}}{{ title }}
         <div class="float-right" *ngIf="category.id > 0">
-          <button size="small" status="success" (click)="currentMode='create';category = {}" nbButton><nb-icon icon="plus"></nb-icon></button>
+          <button size="small" status="success" (click)="currentMode='create';category = {}; metaBindValue = {};" nbButton><nb-icon icon="plus"></nb-icon></button>
         </div>
       </nb-card-header>
       <nb-card-body>
@@ -44,7 +44,7 @@
             <textarea nbInput id="desc" [(ngModel)]="category.description" name="description" status="primary" fullWidth></textarea>
             <label class="label">描述只会在一部分主题中显示。</label>
           </div>
-          <meta-container [metas]="metas" #metaComponent></meta-container>
+          <meta-container [metas]="metas" [value]="metaBindValue" #metaComponent></meta-container>
           <div class="form-group">
             <button status="primary" size="small" [disabled]="submitted || !ngForm.valid" nbButton>{{mode[currentMode]}}</button>
           </div>

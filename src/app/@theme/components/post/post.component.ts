@@ -13,12 +13,13 @@ import {FormControl} from "@angular/forms";
 import {DynamicScriptLoaderService} from "../../../@core/services/dynamic.script.loader.service";
 import {ActivatedRoute} from "@angular/router";
 import {debounceTime, distinctUntilChanged, filter, startWith, switchMap} from "rxjs/operators";
-import {CATEGORIES, POST_SHOW, POST_STORE, POST_UPDATE, TAGS} from "../../../@core/app.interface.data";
+import {CATEGORIES, EXTENSION_META_TYPE, TAGS} from "../../../@core/app.interface.data";
 import {AppResponseDataOptions} from "../../../@core/app.data.options";
 import {HttpClient} from "@angular/common/http";
 import {ConfigurationService} from "../../../@core/services/configuration.service";
 import {ToastService} from "../../../@core/services/toast.service";
 import {CKFinderService} from "../../../@core/services/ckfinder.service";
+import {MetaComponent} from "../meta/meta.component";
 
 @Component({
   selector: 'app-post',
@@ -60,6 +61,9 @@ export class PostComponent implements OnInit, AfterViewInit {
       featured_media: "",
     }
   };
+
+  postType = [];
+
   eye: string = "open";
   setting: boolean = true;
   Editor = ClassicEditor;
@@ -116,6 +120,14 @@ export class PostComponent implements OnInit, AfterViewInit {
   categories: any[] = [];
   @ViewChild(NbTagInputDirective, { read: ElementRef }) tagInput: ElementRef<HTMLInputElement>;
 
+  @ViewChild("dateTimePicker") datepicker: NbDateTimePickerComponent<any>;
+  @ViewChild("inputBtnElement", {read: ElementRef}) inputBtnElement;
+
+
+  @ViewChild("metaComponent", {static: true}) metaComponent: MetaComponent;
+  metas = [];
+  metaBindValue = {};
+
   constructor(
     private http: HttpClient,
     private loadScript: DynamicScriptLoaderService,
@@ -127,11 +139,11 @@ export class PostComponent implements OnInit, AfterViewInit {
     private toastService: ToastService,
     public ckfinder: CKFinderService,
   ) {
-
   }
 
   ngOnInit() {
     this.editorMode = this.appConfig.appConfig.editor || 'markdown';
+    this.postType = this.appConfig.appConfig.post_type;
     this.inputFormControl.valueChanges.pipe(
       startWith(''),
       filter(value => value != ""),
@@ -169,6 +181,7 @@ export class PostComponent implements OnInit, AfterViewInit {
           this.id = +paramMap.get('id');
           this.post = res.data;
           if (this.meta) {
+            this.metaBindValue = this.meta;
             res.data.terms.forEach((item) => {
               this.tags.set(item.name, item.id);
             });
@@ -178,13 +191,13 @@ export class PostComponent implements OnInit, AfterViewInit {
             });
             this.categories = categories;
           }
+          this.getPostTypeCustomMeta(this.post.post_type);
         });
       }
     });
+    this.getPostTypeCustomMeta(this.post.post_type);
   }
 
-  @ViewChild("dateTimePicker") datepicker: NbDateTimePickerComponent<any>;
-  @ViewChild("inputBtnElement", {read: ElementRef}) inputBtnElement;
   ngAfterViewInit(): void {
     if (this.datepicker) {
       this.datepicker.attach(this.inputBtnElement)
@@ -274,6 +287,7 @@ export class PostComponent implements OnInit, AfterViewInit {
     if (this.id > 0) {
       url = this.update.replace('{id}', this.id.toString());
     }
+    this.post.meta = Object.assign(this.post.meta, this.metaComponent.metaBindModel);
     this.http.post(url, this.post).subscribe((res: AppResponseDataOptions) => {
       this.toastService.showResponseToast(res.code, "", res.message);
       this.submitted = false;
@@ -328,5 +342,23 @@ export class PostComponent implements OnInit, AfterViewInit {
 
   onSetting() {
     this.setting = !this.setting;
+  }
+
+  changePostType($event: any) {
+    this.getPostTypeCustomMeta($event);
+  }
+
+  private static cacheMetas = {};
+  private getPostTypeCustomMeta(type: string) {
+    if (PostComponent.cacheMetas[type]) {
+      this.metas = PostComponent.cacheMetas[type];
+      return ;
+    }
+    this.http.get(EXTENSION_META_TYPE + "/" + type).subscribe((res:AppResponseDataOptions) => {
+      if (res.code !== 200) {
+        return;
+      }
+      this.metas = PostComponent.cacheMetas[type] = res.data.forms;
+    });
   }
 }

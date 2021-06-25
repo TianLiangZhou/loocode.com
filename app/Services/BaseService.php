@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseService
 {
@@ -10,7 +11,7 @@ abstract class BaseService
     /**
      * The repository model
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $model;
 
@@ -104,7 +105,7 @@ abstract class BaseService
      *
      * @param array $data
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function create(array $data)
     {
@@ -183,7 +184,7 @@ abstract class BaseService
     /**
      * Get the first specified model record from the database
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function first()
     {
@@ -219,7 +220,7 @@ abstract class BaseService
      *
      * @param $id
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function getById($id)
     {
@@ -267,7 +268,7 @@ abstract class BaseService
      * @param       $id
      * @param array $data
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function updateById($id, array $data)
     {
@@ -416,11 +417,20 @@ abstract class BaseService
      */
     protected function unsetClauses()
     {
-        $this->wheres   = array();
-        $this->whereIns = array();
-        $this->scopes   = array();
+        $this->wheres   = [];
+        $this->whereIns = [];
+        $this->scopes   = [];
+        $this->orderBys = [];
         $this->take     = null;
 
         return $this;
+    }
+
+    /**
+     * @return Model
+     */
+    public function getModel(): Model
+    {
+        return $this->model;
     }
 }

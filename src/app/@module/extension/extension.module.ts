@@ -2,15 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ExtensionRoutingModule } from './extension-routing.module';
-import { MetaComponent } from './meta/meta.component';
 import { ModelComponent } from './model/model.component';
-import {NbButtonModule, NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbSelectModule} from "@nebular/theme";
+import { MetaComponent } from './meta/meta.component';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbRadioModule, NbSelectModule} from "@nebular/theme";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserModule} from "@angular/platform-browser";
+import { NewModelComponent } from './new-model/new-model.component';
+import {BuildMetaComponent} from "../../@theme/components/meta/build-meta.component";
+import {Ng2SmartTableModule} from "ng2-smart-table";
+import { DynamicModelComponent } from './dynamic-model/dynamic-model.component';
+import {MetaContainerModule} from "../../@theme/components/meta/meta-container.module";
 
 
 @NgModule({
-  declarations: [MetaComponent, ModelComponent],
+  declarations: [
+    MetaComponent,
+    ModelComponent,
+    NewModelComponent,
+    BuildMetaComponent,
+    DynamicModelComponent,
+  ],
   imports: [
     CommonModule,
     ExtensionRoutingModule,
@@ -21,7 +31,11 @@ import {BrowserModule} from "@angular/platform-browser";
     NbIconModule,
     FormsModule,
     ReactiveFormsModule,
-    NbCheckboxModule
-  ]
+    NbCheckboxModule,
+    NbRadioModule,
+    Ng2SmartTableModule,
+    MetaContainerModule
+  ],
+
 })
 export class ExtensionModule { }

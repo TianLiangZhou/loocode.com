@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {MetaComponent} from "./meta/meta.component";
 import {ModelComponent} from "./model/model.component";
+import {NewModelComponent} from "./new-model/new-model.component";
+import {DynamicModelComponent} from "./dynamic-model/dynamic-model.component";
 
 const routes: Routes = [
   {
@@ -13,6 +15,21 @@ const routes: Routes = [
     path: "model",
     component: ModelComponent,
     data: {title: "模型"}
+  },
+  {
+    path: "new-model",
+    component: NewModelComponent,
+    data: {title: "新建模型"}
+  },
+  {
+    path: 'editing-model/:id',
+    component: NewModelComponent,
+    data: {title: '编辑模型'}
+  },
+  {
+    path: "dynamic-model/:id",
+    component: DynamicModelComponent,
+    data: {title: ""}
   },
 ];
 

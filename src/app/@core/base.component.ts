@@ -61,7 +61,7 @@ export abstract class BaseComponent implements OnInit {
   protected injector: Injector;
 
   constructor(
-    private readonly route: ActivatedRoute
+    protected readonly route: ActivatedRoute
   ) {
     this.injector = AppInjector.getInjector();
     this.http = this.injector.get<HttpClient>(HttpClient);

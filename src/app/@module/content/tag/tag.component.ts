@@ -12,7 +12,7 @@ import {MetaComponent} from "../../../@theme/components/meta/meta.component";
 })
 export class TagComponent extends BaseComponent {
 
-  @ViewChild("metaComponent", {static: false}) metaComponent: MetaComponent;
+  @ViewChild("metaComponent", {static: true}) metaComponent: MetaComponent;
 
   tag: {[key: string]: any} = {
     id: 0,
@@ -75,6 +75,7 @@ export class TagComponent extends BaseComponent {
   };
 
   metas = [];
+  metaBindValue = {};
 
   init() {
     this.serviceSourceConf.next(TableSourceService.getServerSourceConf(TAGS));
@@ -95,6 +96,11 @@ export class TagComponent extends BaseComponent {
       slug: data.term.slug,
       description: data.description,
     };
+    let metaBindValue = {};
+    data.meta.forEach((item, index) => {
+      metaBindValue[item.meta_key] = item.value;
+    });
+    this.metaBindValue = metaBindValue;
   }
 
   delete($event: any) {
@@ -114,7 +120,7 @@ export class TagComponent extends BaseComponent {
       return this.toastService.showToast('danger', this.title, "名称不能为空");
     }
     this.tag.taxonomy = "post_tag";
-    this.tag.metas = this.metaComponent.metaBindModel;
+    this.tag.meta = this.metaComponent.metaBindModel;
     let url = TAG_STORE
     if (this.tag.id > 0) {
       url = TAG_UPDATE.replace("{id}", this.tag.id.toString())

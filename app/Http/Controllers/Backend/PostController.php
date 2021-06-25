@@ -92,11 +92,7 @@ class PostController extends BackendController
         $data->tags = [];
         $data->password = $post->post_password;
         $data->post_date = $post->post_date;
-        $data->meta =  [
-            "keyword" =>  $post->meta->keyword,
-            "description" => $post->meta->description,
-            "featured_media" => $post->meta->featured_media,
-        ];
+        $data->meta = $post->meta;
         $terms = [];
         if (($taxonomies = $post->taxonomies()->get())) {
             foreach ($taxonomies as $taxonomy) {

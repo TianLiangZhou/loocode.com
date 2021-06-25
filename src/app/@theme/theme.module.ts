@@ -51,7 +51,6 @@ import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import {TreeViewComponent, TreeViewItemComponent} from './components/treeview/tree-view.component';
 import {CKFinderService} from "../@core/services/ckfinder.service";
-import {MetaComponent} from "./components/meta/meta.component";
 
 
 const BASE_MODULES = [
@@ -99,7 +98,6 @@ const COMPONENTS = [
   CustomTableOperationComponent,
   TreeViewComponent,
   TreeViewItemComponent,
-  MetaComponent
 ];
 
 const ENTRY_COMPONENTS = [

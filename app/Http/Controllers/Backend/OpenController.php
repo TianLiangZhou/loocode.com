@@ -69,5 +69,4 @@ class OpenController extends BackendController
 
 
 
-
 }

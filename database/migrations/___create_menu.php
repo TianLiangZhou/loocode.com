@@ -19,6 +19,7 @@ class Menu extends Migration
             $table->string('class', 64)->default('');
             $table->string('url')->default('');
             $table->string('link', 128)->default('');
+            $table->integer('object_id')->default(0);
             $table->dateTime('created_date');
         });
     }

@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col">
+    <form>
+      <nb-card>
+      <nb-card-header>
+        {{title}}
+      </nb-card-header>
+      <nb-card-body>
+          <div class="form-group row">
+            <label for="name" class="label col-1 col-form-label">名称</label>
+            <div class="col-4">
+              <input nbInput id="name" [(ngModel)]="model.name" name="name">
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="model.option.template == 1">
+            <label for="identity" class="label col-1 col-form-label" >标识</label>
+            <div class="col-4">
+              <input nbInput id="identity" placeholder="英文标识" required="" [(ngModel)]="model.identity" name="identity">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="template" class="label col-1 col-form-label">模型</label>
+            <div class="col-4">
+              <nb-radio-group id="template" name="template" (valueChange)="onChangeTemplate($event)" [(ngModel)]="model.option.template" class="d-flex">
+                <nb-radio *ngFor="let o of ['自定义', '归类', '配置']; let i = index;" [value]="i+1">{{o}}</nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="model.option.template == 2">
+            <label for="taxonomy" class="label col-1 col-form-label">归类标识</label>
+            <div class="col-4">
+              <nb-select name="taxonomy" id="taxonomy" [(ngModel)]="model.option.taxonomy">
+                <nb-option *ngFor="let o of taxonomies" [value]="o.value">
+                  <ng-container  *ngIf="o.value != 'category' && o.value != 'post_tag'">
+                    {{o.name}}
+                  </ng-container>
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+<!--          <div class="form-group row" *ngif="model.option.template == 1">-->
+<!--            <label for="save_type" class="label col-1 col-form-label">存储形式</label>-->
+<!--            <div class="col-4">-->
+<!--              <nb-radio-group id="save_type" name="save_type" [(ngmodel)]="model.option.save_type" class="d-flex">-->
+<!--                <nb-radio *ngfor="let o of [{n:'配置', k: 'config'}, {n:'列表', k: 'row'}];" [value]="o.k">{{o.n}}</nb-radio>-->
+<!--              </nb-radio-group>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="form-group row">
+            <label for="menu-level" class="label col-1 col-form-label">菜单层级</label>
+            <div class="col-8">
+              <nb-radio-group id="menu-level" name="menu-level" (valueChange)="menuChange($event)" [(ngModel)]="model.option.menu_level" class="d-flex">
+                <nb-radio *ngFor="let o of ['一级','二级', '现有子级']; let i = index;" [value]="i+1">{{o}}</nb-radio>
+              </nb-radio-group>
+
+              <div class="form-group mt-2 d-flex align-items-center" *ngIf="model.option.menu_level == 3">
+                <label class="label" for="name">父级菜单</label>
+                <div class="ml-1" >
+                  <nb-select name="parent-menu" [(ngModel)]="model.option.parent_menu_id">
+                    <nb-option *ngFor="let m of menus" [value]="m.id">{{m.name}}</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+              <div class="form-group mt-2" *ngIf="model.option.menu_level == 2">
+                <label class="label" for="name">父级名称</label>
+                <input class="ml-1" nbInput [(ngModel)]="model.option.parent_menu_name" name="parent_menu_name">
+              </div>
+              <div class="form-group mt-2">
+                <label class="label" for="name">菜单名称</label>
+                <input class="ml-1"  nbInput [(ngModel)]="model.option.menu_name" name="menu_name">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="model-form" class="label col-1 col-form-label">模型表单</label>
+            <div class="col">
+              <build-meta-container id="model-form" [meta]="model.option.meta"></build-meta-container>
+            </div>
+          </div>
+      </nb-card-body>
+      <nb-card-footer class="text-right">
+        <button nbButton status="primary" [disabled]="submitted || model.name.length < 1" type="button" (click)="save()">保存</button>
+      </nb-card-footer>
+    </nb-card>
+    </form>
+  </div>
+</div>

@@ -128,9 +128,14 @@ class OpenService extends BaseService
             }
         }
         if ($parentId == 0 && $collection) {
-            Menu::whereNotIn('id', $collection)->delete();
-            Permission::whereNotIn('menu_id', $collection)->delete();
-
+            /**
+             * @var $collection Collection
+             */
+            $collection = Menu::whereNotIn('id', $collection)->where("object_id", 0)->get();
+            foreach ($collection as $item) {
+                Permission::where("menu_id")->delete();
+                $item->delete();
+            }
         }
     }
 

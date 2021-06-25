@@ -59,9 +59,7 @@ class JwtGuard implements Guard
 
         $token = $config->parser()->parse($tokenStr);
         assert($token instanceof UnencryptedToken);
-
         $constraints = $config->validationConstraints();
-
         try {
             $config->validator()->assert($token, ...$constraints);
         } catch (\Exception $e) {
@@ -91,11 +89,8 @@ class JwtGuard implements Guard
         if ($this->request->hasHeader('Authorization')) {
             return $this->request->header('Authorization');
         }
-        if ($this->request->hasCookie('token')) {
-            return $this->request->cookie('token');
-        }
         if (($token = $this->request->query('token'))) {
-            return str_replace('_', '.', $token);
+            return str_replace('--', '.', $token);
         }
         return "";
     }

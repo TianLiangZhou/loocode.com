@@ -15,6 +15,17 @@ class Menu extends Model
 
     const UPDATED_AT = null;
 
+    protected $fillable = [
+        "parent_id",
+        "name",
+        "hidden",
+        "weight",
+        "class",
+        "url",
+        "link",
+        "object_id"
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

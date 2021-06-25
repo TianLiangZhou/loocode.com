@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Attributes\Route;
 use App\Http\Result;
+use App\Services\TaxonomyService;
 use Corcel\Model\Tag;
 use Corcel\Model\Taxonomy;
 use Corcel\Model\Term;
@@ -13,6 +14,7 @@ use Corcel\Model\TermRelationship;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use League\Flysystem\Exception;
 
 /**
  * Class CategoryController
@@ -21,6 +23,14 @@ use Illuminate\Support\Facades\DB;
 #[Route(title: "文章", icon: "file-text")]
 class TaxonomyController extends BackendController
 {
+
+    private TaxonomyService $service;
+
+    public function __construct(TaxonomyService $service)
+    {
+        $this->service = $service;
+        parent::__construct();
+    }
 
     /**
      * @return Result
@@ -47,21 +57,10 @@ class TaxonomyController extends BackendController
     #[Route(title: "分类列表", parent: "分类目录")]
     public function categories(Request $request): Result
     {
-        if ($request->query->has('name_like')) {
-            $name = $request->query->get('name_like');
-        } else {
-            $name = $request->get('name');
-        }
-        $builder = Taxonomy::category();
-        if ($name) {
-            $builder = $builder->whereHas('term', function ($query) use ($name) {
-                $query->where('slug', 'like', '%' . $name . '%');
-            });
-        }
         /**
          * @var $categories Collection
          */
-        $categories = $builder->get();
+        $categories = $this->service->taxonomy($request, "category", false);
         $result = [];
         if ($categories->count() > 0) {
             $children = [];
@@ -82,23 +81,7 @@ class TaxonomyController extends BackendController
     #[Route(title: "标签列表", parent: "标签")]
     public function tags(Request $request): Result
     {
-        if ($request->query->has('name_like')) {
-            $name = $request->query->get('name_like');
-        } else {
-            $name = $request->get('name');
-        }
-        $tag = new Tag();
-        if ($name) {
-            $tag = $tag->whereHas('term', function ($query) use ($name) {
-                $query->where('slug', 'like', '%' . $name . '%');
-            });
-        }
-        $tags = $tag->orderBy('term_taxonomy_id', 'desc')
-            ->paginate(
-                $request->query->getInt("data_per_page", 30),
-                ['*'],
-                'data_current_page'
-            );
+        $tags = $this->service->taxonomy($request, "post_tag");
         return Result::ok($tags);
     }
 
@@ -135,7 +118,7 @@ class TaxonomyController extends BackendController
     #[Route(title: "创建分类", parent: "分类目录")]
     public function storeCategory(Request $request): Result
     {
-        return $this->store($request);
+        return $this->store($request, "category");
     }
 
     /**
@@ -152,6 +135,7 @@ class TaxonomyController extends BackendController
     /**
      * @param int $id
      * @return Result
+     * @throws \Exception
      */
     #[Route(title: "删除分类", parent: "分类目录")]
     public function deleteCategory(int $id): Result
@@ -166,7 +150,7 @@ class TaxonomyController extends BackendController
     #[Route(title: "创建标签", parent: "标签")]
     public function storeTag(Request $request): Result
     {
-        return $this->store($request);
+        return $this->store($request, "post_tag");
     }
 
     /**
@@ -183,6 +167,7 @@ class TaxonomyController extends BackendController
     /**
      * @param int $id
      * @return Result
+     * @throws \Exception
      */
     #[Route(title: "删除标签", parent: "标签")]
     public function deleteTag(int $id): Result
@@ -192,27 +177,19 @@ class TaxonomyController extends BackendController
 
     /**
      * @param Request $request
+     * @param string $taxonomy
      * @return Result
      */
-    private function store(Request $request)
+    private function store(Request $request, string $taxonomy): Result
     {
         $body = $request->json()->all();
         if (empty($body['name'])) {
             return Result::err(500, "名称不能为空");
         }
-        if (empty($body['slug'])) {
-            $body['slug'] = $body['name'];
-        }
-        $term = Term::firstOrCreate(['name' => $body['name']], ['slug' => $body['slug']]);
-        if ($term->taxonomy != null && $term->taxonomy->taxonomy == $body['taxonomy']) {
-            return Result::ok(null, "添加成功");
-        }
-        $taxonomy = new Taxonomy();
-        $taxonomy->taxonomy = $body['taxonomy'];
-        $taxonomy->description = $body['description'] ?? "";
-        $taxonomy->parent = $body['parent'] ?? 0;
-        $term->taxonomy()->save($taxonomy);
-        return Result::ok(null, "添加成功");
+        $term = $this->service->createTaxonomy($taxonomy, $body);
+        return Result::ok([
+            "id" => $term->term_taxonomy_id ?? 0
+        ]);
     }
 
     /**
@@ -226,35 +203,26 @@ class TaxonomyController extends BackendController
         if (empty($body['name'])) {
             return Result::err(500, "名称不能为空");
         }
-        if (empty($body['slug'])) {
-            $body['slug'] = $body['name'];
-        }
-        $taxonomy = Taxonomy::find($id);
-        if ($taxonomy == null) {
-            return Result::err(404);
-        }
-        $taxonomy->description = $body['description'] ?? "";
-        $taxonomy->parent = $body['parent'] ?? 0;
-        $term = Term::find($taxonomy->term_id);
-        $term->name = $body['name'];
-        $term->slug = $body['slug'];
-        $term->taxonomy()->save($taxonomy);
-        $term->save();
-        return Result::ok(null, "更新成功");
+        $term = $this->service->updateTaxonomy($id, $body);
+        return Result::ok([
+            "id" => $term->term_taxonomy_id ?? 0,
+        ]);
     }
 
     /**
      * @param int $id
-     * @return Result|void
+     * @return Result
+     * @throws \Exception
      */
     private function delete(int $id): Result
     {
-        $taxonomy = Taxonomy::find($id);
-        if ($taxonomy == null) {
+        try {
+            $model = $this->service->getById($id);
+        } catch (\Exception $_) {
             return Result::err(404, "资源不存在");
         }
         TermRelationship::where("term_taxonomy_id", $id)->delete();
-        $taxonomy->delete();
+        $model->delete();
         return Result::ok(null, "删除成功");
     }
 

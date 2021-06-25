@@ -5,16 +5,16 @@ use App\Http\Controllers\Backend\AuthorizeController;
 use App\Http\Controllers\Backend\DecorationController;
 use App\Http\Controllers\Backend\ExtensionController;
 use App\Http\Controllers\Backend\ManagerController;
+use App\Http\Controllers\Backend\MediaController;
+use App\Http\Controllers\Backend\ModelController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SiteController;
 use App\Http\Controllers\Backend\TaxonomyController;
-use App\Http\Controllers\Backend\CKFinderController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\OpenController;
 use App\Http\Controllers\Backend\GlobalController;
-use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +33,7 @@ Route::get('/open/configuration', [OpenController::class, 'configuration']);
 
 Route::middleware(['auth:backend', 'rbac'])->group(callback: function() {
     Route::get('/dashboard', [DashboardController::class, 'main']);
-    Route::any('/ckfinder/connector', [CKFinderController::class, 'request']);
+    Route::any('/ckfinder/connector', [MediaController::class, 'request']);
     Route::get('/open/user/menu', [OpenController::class, 'userMenu']);
     Route::get('/open/menus', [OpenController::class, 'menus']);
     Route::post('/open/menu/refresh', [OpenController::class, 'menuRefresh']);
@@ -95,6 +95,16 @@ Route::middleware(['auth:backend', 'rbac'])->group(callback: function() {
 
     Route::post('/extension/meta/save', [ExtensionController::class, 'saveMeta']);
     Route::get('/extension/meta/{taxonomy}', [ExtensionController::class, 'taxonomy']);
+
+    Route::get('/model/top/menu', [ModelController::class, 'topMenu']);
+    Route::get('/models', [ModelController::class, 'main']);
+    Route::get('/model/{id}', [ModelController::class, 'show']);
+    Route::get('/model/{id}/data', [ModelController::class, 'dynamicModelData']);
+    Route::post('/model/{id}/data', [ModelController::class, 'saveDynamicModelData']);
+    Route::post('/model/{modelId}/data/{id}/delete', [ModelController::class, 'deleteDynamicModelData']);
+    Route::post('/model/store', [ModelController::class, 'store']);
+    Route::post('/model/{id}/update', [ModelController::class, 'update']);
+    Route::post('/model/{id}/delete', [ModelController::class, 'delete']);
 });
 
 

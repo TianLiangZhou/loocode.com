@@ -1,0 +1,79 @@
+<table class="table">
+  <caption *ngIf="meta.taxonomy">{{meta.taxonomy.name}}</caption>
+  <thead>
+  <tr>
+    <th width="15%" scope="col">名称</th>
+    <th width="10%"  scope="col">关键字</th>
+    <th width="10%"  scope="col">表单类型</th>
+    <th width="15%"  scope="col">描述</th>
+    <th width="30%"  scope="col">选项值</th>
+    <th width="10%"  scope="col">是否必填</th>
+    <th width="10%" >
+      <button nbButton type="button" status="success" (click)="metaAdd()">
+        <nb-icon icon="plus"></nb-icon>
+      </button>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of meta.forms; let i = index;">
+    <td>
+      <input nbInput name="name" [(ngModel)]="meta.forms[i].name" fullWidth />
+    </td>
+    <td>
+      <input nbInput [(ngModel)]="meta.forms[i].keyword" name="keyword" fullWidth />
+    </td>
+    <td>
+      <nb-select name="type" [(ngModel)]="meta.forms[i].type">
+        <nb-option *ngFor="let item of formType" [value]="item.type">{{item.name}}</nb-option>
+      </nb-select>
+    </td>
+    <td>
+      <textarea nbInput rows="2" name="description" [(ngModel)]="meta.forms[i].description"></textarea>
+    </td>
+    <td>
+      <ng-container *ngIf="isMultiple(meta.forms[i].type)">
+        <table>
+          <thead>
+          <tr>
+            <th width="45%" scope="col">名称</th>
+            <th width="45%"  scope="col">值</th>
+            <th width="10%" >
+              <button nbButton type="button" status="success" (click)="metaValueAdd(i)">
+                <nb-icon icon="plus"></nb-icon>
+              </button>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let value of meta.forms[i].value; let k = index;">
+            <td>
+              <input nbInput name="optionName" [(ngModel)]="meta.forms[i].value[k].name" />
+            </td>
+            <td>
+              <input nbInput name="optionValue" [(ngModel)]="meta.forms[i].value[k].value" />
+            </td>
+            <td>
+              <button nbButton type="button" status="danger" (click)="metaTrashValueRow(i, k)">
+                <nb-icon icon="trash"></nb-icon>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-container *ngIf="isMedia(meta.forms[i].type)">
+        <nb-checkbox [(ngModel)]="meta.forms[i].value">多选</nb-checkbox>
+      </ng-container>
+    </td>
+    <td>
+      <nb-checkbox [(ngModel)]="meta.forms[i].is_required">必填</nb-checkbox>
+    </td>
+    <td>
+      <button nbButton type="button" status="danger" (click)="metaTrashRow(i)">
+        <nb-icon icon="trash"></nb-icon>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

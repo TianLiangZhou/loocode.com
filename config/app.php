@@ -67,6 +67,8 @@ return [
     'taxonomy' => [
         ['name' => '分类', 'value' => 'category'],
         ['name' => '标签', 'value' => 'post_tag'],
+        ['name' => '作者', 'value' => 'author'],
+        ['name' => '朝代', 'value' => 'chaodai'],
     ],
     'post_type' => [
         ['name' => '标准', 'value' => 'post'],

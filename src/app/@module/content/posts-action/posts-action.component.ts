@@ -14,5 +14,4 @@ export class PostsActionComponent extends BaseComponent {
   update = POST_UPDATE;
   show = POST_SHOW;
   store = POST_STORE;
-
 }

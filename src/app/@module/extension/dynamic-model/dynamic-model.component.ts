@@ -12,7 +12,7 @@ import {TableSourceService} from "../../../@core/services/table.source.service";
 })
 export class DynamicModelComponent extends BaseComponent {
 
-  @ViewChild("metaComponent", {static: false}) metaComponent: MetaComponent;
+  @ViewChild("metaComponent", {static: true}) metaComponent: MetaComponent;
 
   metas = [];
 
@@ -43,8 +43,8 @@ export class DynamicModelComponent extends BaseComponent {
         this.id = data.id;
         this.metas = res.data.option.meta.forms;
         this.title = res.data.name;
-        this.isList = res.data.option.save_type == 'row';
-        this.isTaxonomy = res.data.option.template == 1;
+        this.isList = res.data.option.template != 3;
+        this.isTaxonomy = res.data.option.template == 2;
         this.isList && this.buildSetting();
         if (this.isList) {
           this.serviceSourceConf.next(TableSourceService.getServerSourceConf(
@@ -68,7 +68,6 @@ export class DynamicModelComponent extends BaseComponent {
     } else {
       this.data = Object.assign(this.data, this.metaComponent.metaBindModel);
     }
-    console.log(this.data);
     this.http.post("/model/" + this.id + "/data", this.data).subscribe((res: AppResponseDataOptions) => {
       this.toastService.showResponseToast(res.code, this.title, res.message);
       this.submitted = false;
@@ -76,6 +75,9 @@ export class DynamicModelComponent extends BaseComponent {
         if (res.data.id > 0) {
           this.data.id = res.data.id;
           this.currentMode = 'editor';
+        }
+        if (this.isList) {
+          this.source.refresh();
         }
       }
     }, () => this.submitted = false);
@@ -104,7 +106,15 @@ export class DynamicModelComponent extends BaseComponent {
   }
 
   delete($event: any) {
-
+    if (window.confirm("确定删除[" + $event.getData().id + "]记录")) {
+      this.http.post("/model/" + this.id + "/data/" + $event.getData().id + "/delete", {})
+        .subscribe((res: AppResponseDataOptions) => {
+          this.toastService.showResponseToast(res.code, this.title, res.message);
+          if (res.code == 200) {
+            this.source.refresh();
+          }
+        });
+    }
   }
 
   private buildSetting() {

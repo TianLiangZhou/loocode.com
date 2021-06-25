@@ -4,7 +4,18 @@
 namespace App\Models;
 
 
-class Term
+/**
+ * Class Term
+ * @package App\Models
+ */
+class Term extends \Corcel\Model\Term
 {
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
 
 }

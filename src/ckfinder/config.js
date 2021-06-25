@@ -20,5 +20,5 @@ selector.forEach(function (node, index, parent) {
     }
 });
 const jwt = JSON.parse(window.localStorage.getItem('auth_app_token'));
-config.connectorPath = '/backend/ckfinder/connector?token=' + jwt.value.replace(".", "_") + '&';
+config.connectorPath = '/backend/ckfinder/connector?token=' + jwt.value.replace(".", "--") + '&';
 CKFinder.define(config);

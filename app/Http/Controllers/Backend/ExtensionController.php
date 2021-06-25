@@ -27,15 +27,8 @@ class ExtensionController extends BackendController
         parent::__construct();
     }
 
-    #[Route(title: "元信息", parent: "外观", sort: 2, link: "/app/extension/meta")]
+    #[Route(title: "元信息", sort: 2, link: "/app/extension/meta")]
     public function meta(): Result
-    {
-        return Result::ok();
-    }
-
-
-    #[Route(title: "模型", parent: "外观", sort: 2, link: "/app/extension/model")]
-    public function model(): Result
     {
         return Result::ok();
     }
