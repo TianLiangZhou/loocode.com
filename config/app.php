@@ -56,9 +56,13 @@ return [
 
     'dashboard_domain' => env('DASHBOARD_DOMAIN', ''),
 
-    'asset_url' => env('ASSET_URL', ''),
+    'asset_url' => env('ASSET_URL', 'http://localhost'),
 
-    'mix_url' => env('ASSET_URL', ''),
+    'mix_url' => env('ASSET_URL', 'http://localhost'),
+
+    'static_path' => env('STATIC_PATH', storage_path("app/public")),
+
+    'upload_path' => env('UPLOAD_PATH', storage_path("app/public")),
 
     'editor' => env('EDITOR', 'markdown'),
 

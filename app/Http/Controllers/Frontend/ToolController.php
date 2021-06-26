@@ -296,7 +296,7 @@ EOF;
         $image = "";
         switch ($body['mode']) {
             case 1:
-                $uploadPath = env('UPLOAD_PATH');
+                $uploadPath = config('app.upload_path');
                 $path = $uploadPath . '/images/qrcode/' . date('Ymd');
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
@@ -365,7 +365,7 @@ EOF;
         $filename = md5($logo->getClientOriginalName()) . '.' . $logo->getClientOriginalExtension();
         $url = $logo->storePubliclyAs($path, $filename, 'public');
         if ($url) {
-            return env('STATIC_PATH') . '/' . $path . '/' . $filename;
+            return config('app.static_path') . '/' . $path . '/' . $filename;
         }
         return "";
     }
