@@ -6,9 +6,9 @@ namespace App\Http\Controllers\Backend;
 use App\Attributes\Route;
 use App\Helpers\Helper;
 use App\Http\Result;
+use App\Services\OptionService;
 use Corcel\Model\Option;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class GlobalController
@@ -17,6 +17,21 @@ use Illuminate\Support\Facades\DB;
 #[Route(title: "设置", sort: 111, icon: "settings-2")]
 class GlobalController extends BackendController
 {
+    /**
+     * @var OptionService
+     */
+    private OptionService $optionService;
+
+    /**
+     * GlobalController constructor.
+     * @param OptionService $optionService
+     */
+    public function __construct(OptionService $optionService)
+    {
+        $this->optionService = $optionService;
+        parent::__construct();
+    }
+
     /**
      * @return Result
      */
@@ -27,12 +42,13 @@ class GlobalController extends BackendController
     }
 
     /**
+     * @param Request $request
      * @return Result
      */
     #[Route(title: "配置列表", parent: "全局")]
-    public function options(): Result
+    public function options(Request $request): Result
     {
-        $options = DB::table('options')->paginate(30);
+        $options = $this->optionService->getPaginator($request);
         foreach ($options as $option) {
             $value = Helper::formatValue($option->option_value);
             $option->type = 5;
@@ -62,15 +78,15 @@ class GlobalController extends BackendController
     #[Route(title: "添加配置", parent: "全局")]
     public function store(Request $request): Result
     {
-        $body = json_decode($request->getContent());
-        if (empty($body->option_name)) {
+        $data = $request->json()->all();
+        if (empty($data['option_name'])) {
             return Result::err(600, "名称不能为空");
         }
-        $item = Option::get($body->option_name);
+        $item = $this->optionService->oneByName($data['option_name']);
         if ($item) {
             return Result::err(603, "已存在相同名称配置");
         }
-        Option::add($body->option_name, is_scalar($body->option_value) ? $body->option_value : json_encode($body->option_value));
+        $this->optionService->create($data);
         return Result::ok(null, "创建成功");
     }
 
@@ -82,9 +98,7 @@ class GlobalController extends BackendController
     #[Route(title: "更新配置", parent: "全局")]
     public function update(Option $option, Request $request): Result
     {
-        $body = json_decode($request->getContent());
-        $option->option_value = is_scalar($body->option_value) ? $body->option_value : json_encode($body->option_value);
-        $option->update();
+        $this->optionService->update($option, $request->json()->all());
         return Result::ok(null, "更新成功");
     }
 

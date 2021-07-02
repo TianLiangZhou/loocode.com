@@ -1,11 +1,12 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/auth';
+import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions} from '@nebular/auth';
 import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 
 import { of as observableOf } from 'rxjs';
 import {StateService} from './services/state.service';
 import {AUTHORIZE_LOGIN, AUTHORIZE_LOGOUT, AUTHORIZE_REGISTER} from './app.interface.data';
+import {HttpResponse} from "@angular/common/http";
 
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
@@ -58,10 +59,10 @@ export const NB_CORE_PROVIDERS = [
           defaultMessages: ['You have been successfully logged in.'],
         },
         errors: {
-          key: 'data.errors',
+          key: 'message',
         },
         messages: {
-          key: 'data.message',
+          key: 'message',
         }
       }),
     ],

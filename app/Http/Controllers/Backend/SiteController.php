@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Backend;
 use App\Attributes\Route;
 use App\Helpers\Helper;
 use App\Http\Result;
+use App\Services\OptionService;
 use Corcel\Model\Option;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,17 @@ class SiteController extends BackendController
     ];
 
     /**
+     * @var OptionService
+     */
+    private OptionService $optionService;
+
+    public function __construct(OptionService $optionService)
+    {
+        $this->optionService = $optionService;
+        parent::__construct();
+    }
+
+    /**
      * @return Result
      */
     #[Route(title: "站点", sort: 0, link: "/app/system/site")]
@@ -52,7 +64,7 @@ class SiteController extends BackendController
     #[Route(title: "配置信息", parent: "站点")]
     public function options(): Result
     {
-        $option = Option::asArray($this->defaultGeneralNames);
+        $option = $this->optionService->options($this->defaultGeneralNames);
         if (empty($option['timezone'])) {
             $option['timezone'] = date_default_timezone_get();
         }
@@ -78,15 +90,15 @@ class SiteController extends BackendController
     #[Route(title: "广告统计配置", parent: "站点")]
     public function adOptions(): Result
     {
-        $options = Option::asArray($this->defaultAdNames);
+        $option = $this->optionService->options($this->defaultAdNames);
         foreach ($this->defaultAdNames as $name) {
-            if (!isset($options[$name])) {
-                $options[$name] = null;
+            if (!isset($option[$name])) {
+                $option[$name] = null;
             } else {
-                $options[$name] = Helper::formatValue($options[$name]);
+                $option[$name] = Helper::formatValue($option[$name]);
             }
         }
-        return Result::ok($options);
+        return Result::ok($option);
     }
 
     /**
@@ -106,17 +118,14 @@ class SiteController extends BackendController
      */
     private function save(Request $request, array $options): Result
     {
-        $body = json_decode($request->getContent(), true);
-        foreach ($options as $optionName) {
-            if (isset($body[$optionName])) {
-                Option::updateOrCreate(['option_name' => $optionName], [
-                    'option_value' =>
-                        is_bool($body[$optionName])
-                            ? [true => 'true', false => 'false'][$body[$optionName]]
-                            : (is_array($body[$optionName]) ? json_encode($body[$optionName]) : $body[$optionName]),
-                ]);
+        $body = $request->json()->all();
+        $enableOption = [];
+        foreach ($options as $name) {
+            if (isset($body[$name])) {
+                $enableOption[$name] = $body[$name];
             }
         }
+        $this->optionService->saveOptions($enableOption);
         return Result::ok(null, "创建成功");
     }
 }

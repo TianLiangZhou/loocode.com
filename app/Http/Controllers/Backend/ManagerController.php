@@ -54,10 +54,8 @@ class ManagerController extends UserController
      * @throws \Exception
      */
     #[Route(title: "删除管理员", parent: "管理员")]
-    public function delete(User $user)
+    public function delete(User $user): Result
     {
-        $user->meta()->delete();
-        $user->delete();
-        return Result::ok(null, '删除成功');
+        return parent::delete($user);
     }
 }

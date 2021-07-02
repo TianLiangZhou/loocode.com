@@ -14,6 +14,8 @@ export interface AppConfiguration {
   editor?: string;
   taxonomy: {name: string, value: string}[];
   post_type: {name: string, value: string}[];
+  name?: string;
+  logo?: string;
 }
 
 export interface AppMenuItem {

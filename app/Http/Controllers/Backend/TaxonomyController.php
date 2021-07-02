@@ -60,7 +60,7 @@ class TaxonomyController extends BackendController
         /**
          * @var $categories Collection
          */
-        $categories = $this->service->taxonomy($request, "category", false);
+        $categories = $this->service->getPaginatorTaxonomy($request, "category", false);
         $result = [];
         if ($categories->count() > 0) {
             $children = [];
@@ -81,7 +81,7 @@ class TaxonomyController extends BackendController
     #[Route(title: "标签列表", parent: "标签")]
     public function tags(Request $request): Result
     {
-        $tags = $this->service->taxonomy($request, "post_tag");
+        $tags = $this->service->getPaginatorTaxonomy($request, "post_tag");
         return Result::ok($tags);
     }
 
@@ -225,6 +225,4 @@ class TaxonomyController extends BackendController
         $model->delete();
         return Result::ok(null, "删除成功");
     }
-
-
 }

@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Attributes\Route;
 use App\Http\Result;
+use App\Services\DecorationService;
+use App\Services\PostService;
 use Corcel\Model\Menu;
 use Corcel\Model\Option;
 use Corcel\Model\Post;
@@ -14,10 +16,22 @@ use Corcel\Model\Term;
 use Corcel\Model\TermRelationship;
 use Illuminate\Http\Request;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 #[Route(title: "外观", sort: 2, icon: "layout")]
 class DecorationController extends BackendController
 {
+    private DecorationService $decorationService;
+
+    /**
+     * DecorationController constructor.
+     * @param DecorationService $decorationService
+     */
+    public function __construct(DecorationService $decorationService)
+    {
+        parent::__construct();
+        $this->decorationService = $decorationService;
+    }
 
     /**
      * @return Result
@@ -53,22 +67,7 @@ class DecorationController extends BackendController
     #[Route(title: "主题列表", parent: "主题", sort: 1)]
     public function themes(): Result
     {
-        $path = resource_path('views/themes');
-        $iterator = Finder::create()->files()->name('theme.json')->in($path);
-        $themes = [];
-        $theme = Option::get('theme') ?? 'default';
-        foreach ($iterator as $file) {
-            /**
-             * @var $file \Symfony\Component\Finder\SplFileInfo
-             */
-            $manifest = json_decode(file_get_contents($file->getPathname()));
-            if (isset($manifest->image) && $manifest->image && (strpos($manifest->image, '/') === 0 || strpos($manifest->image, '.') === 0)) {
-                $manifest->image = 'data:image/png;base64, ' . base64_encode(file_get_contents(realpath($manifest->image)));
-            }
-            $manifest->token = $file->getRelativePath();
-            $manifest->enable = $theme === $manifest->token;
-            $themes[] = $manifest;
-        }
+        $themes = $this->decorationService->themes(resource_path('views/themes'));
         return Result::ok($themes);
     }
 
@@ -78,17 +77,7 @@ class DecorationController extends BackendController
      */
     public function navigateStructData(): Result
     {
-        $page = Post::published()->without('meta')->select("ID", "post_title")->type("page")->orderBy("ID", "DESC")->limit(20)->get();
-        $post = Post::published()->without('meta')->select("ID", "post_title")->where("post_type", '!=', 'page')->where("post_type", '!=', 'menu')->orderBy("ID", "DESC")->limit(20)->get();
-        $category= Taxonomy::category()->orderBy("term_taxonomy_id", "DESC")->limit(20)->get();
-        // $tag = Taxonomy::name("post_tag")->orderBy("term_taxonomy_id", "DESC")->limit(20)->get();
-        $menu = Taxonomy::name("nav_menu")->get();
-        $data = new \stdClass();
-        $data->page = $page;
-        $data->post = $post;
-        $data->categories = $category;
-        // $data->tag = $tag;
-        $data->menu = $menu;
+        $data = $this->decorationService->navigateStructData();
         return Result::ok($data);
     }
 

@@ -8,6 +8,7 @@ use App\Models\Menu;
 /**
  * Class MenuService
  * @package App\Services
+ * @property Menu $model
  */
 class MenuService extends BaseService
 {
@@ -27,5 +28,22 @@ class MenuService extends BaseService
     public function deleteObjectId(int $id)
     {
         return $this->where("object_id", $id)->delete();
+    }
+
+    /**
+     * @param string $title
+     * @return ?Menu
+     */
+    public function name(string $title): ?Menu
+    {
+        try {
+            /**
+             * @var $model Menu
+             */
+            $model = $this->where("name", $title)->first();
+        } catch (\Exception $exception) {
+            return null;
+        }
+        return $model;
     }
 }

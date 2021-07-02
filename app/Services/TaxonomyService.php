@@ -5,12 +5,14 @@ namespace App\Services;
 
 use App\Models\Taxonomy;
 use App\Models\Term;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 /**
  * Class TaxonomyService
  * @package App\Services
+ * @property Taxonomy $model
  */
 class TaxonomyService extends BaseService
 {
@@ -36,7 +38,7 @@ class TaxonomyService extends BaseService
      * @param bool $isPage
      * @return mixed
      */
-    public function taxonomy(Request $request, string $taxonomyName, bool $isPage = true)
+    public function getPaginatorTaxonomy(Request $request, string $taxonomyName, bool $isPage = true)
     {
         if ($request->query->has('name_like')) {
             $name = $request->query->get('name_like');
@@ -58,6 +60,16 @@ class TaxonomyService extends BaseService
                 );
         }
         return $model->orderBy('term_taxonomy_id', 'desc')->get();
+    }
+
+
+    /**
+     * @param string $name
+     * @return Collection
+     */
+    public function taxonomy(string $name): Collection
+    {
+        return $this->model->name($name)->get();
     }
 
     /**

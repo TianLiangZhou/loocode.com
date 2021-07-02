@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Backend;
 use App\Attributes\Route;
 use App\Http\Result;
 use App\Models\PostContent;
+use App\Services\PostService;
 use Corcel\Model\Post;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -19,6 +19,21 @@ use stdClass;
 #[Route(title: "页面", sort: 2, icon: "file")]
 class PageController extends BackendController
 {
+    /**
+     * @var PostService
+     */
+    private PostService $postService;
+
+    /**
+     * PageController constructor.
+     * @param PostService $postService
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+        parent::__construct();
+    }
+
     /**
      * @return Result
      */
@@ -35,24 +50,7 @@ class PageController extends BackendController
     #[Route(title: "页面列表", parent: "所有页面", sort: 1)]
     public function index(Request $request): Result
     {
-        $posts = Post::select('id','post_author', 'post_title', 'post_status', 'post_modified', 'comment_count')
-            ->type("page")
-            ->orderBy('id', 'DESC');
-        if ($request->query->has('id_like')) {
-            $posts->where('ID',$request->query->get('id_like'));
-        }
-        if ($request->query->has('post_author_like')) {
-            $posts->where('post_author', $request->query->getInt('post_author_like'));
-        }
-        if ($request->query->has('post_title_like')) {
-            $posts->where('post_title', 'like', '%' . $request->query->get('post_title_like') . '%');
-        }
-        $posts = $posts->without("meta")->paginate(
-            $request->query->getInt("data_per_page", 30),
-            ['*'],
-            'data_current_page',
-        );
-        return Result::ok($posts);
+        return Result::ok($this->postService->getPaginator($request, "page"));
     }
 
     /**

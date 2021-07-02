@@ -8,6 +8,8 @@ use App\Attributes\Route;
 use App\Http\Result;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Services\RBACService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 /**
@@ -17,6 +19,20 @@ use Illuminate\Http\Request;
 #[Route(title: "设置", sort: 111, icon: "settings-2")]
 class RoleController extends BackendController
 {
+    /**
+     * @var RBACService
+     */
+    private RBACService $service;
+
+    /**
+     * RoleController constructor.
+     * @param RBACService $service
+     */
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
+        parent::__construct();
+    }
 
     /**
      * @return Result
@@ -30,17 +46,7 @@ class RoleController extends BackendController
     #[Route(title: "角色列表", parent: "角色", sort: 1)]
     public function roles(Request $request): Result
     {
-        $builder = new Role();
-        $size = $request->query->getInt("data_per_page", 30);
-        $roles = $builder->without("permission")->orderBy('id', 'desc')
-            ->paginate($size, ['*'], 'data_current_page');
-        foreach ($roles as $role) {
-            $role['permission'] = $size > 30 ? [] :
-                Permission::select('menu_id')->where('role_id', $role->id)->get()->map(function ($item) {
-                    return $item->menu_id;
-                });
-        }
-        return Result::ok($roles);
+        return Result::ok($this->service->getRolePaginator($request));
     }
 
     #[Route(title: "添加角色", parent: "角色", sort: 2)]
@@ -50,21 +56,11 @@ class RoleController extends BackendController
         if (empty($body['name'])) {
             return Result::err(500, "名称不能为空");
         }
-        if (Role::where('name', $body['name'])->first()) {
+        if ($this->service->getRole()->name($body['name']) != null) {
             return Result::err(500, "存在相同名称角色");
         }
-        $role = new Role();
-        $role->name = $body['name'];
-        $role->save();
-        if (!empty($body['permission']) && is_array($body['permission'])) {
-            $permissions = [];
-            foreach ($body['permission'] as $id) {
-                $permissions[] = new Permission(["menu_id" => $id]);
-            }
-            $role->permission()->saveMany($permissions);
-        }
         return Result::ok([
-            'id' => $role->id,
+            'id' => $this->service->createRole($body)->id ?? 0,
         ]);
     }
 
@@ -75,21 +71,14 @@ class RoleController extends BackendController
         if (empty($body['name'])) {
             return Result::err(500, "名称不能为空");
         }
-        $nameRole = Role::where('name', $body['name'])->first();
+        $nameRole = $this->service->getRole()->name($body['name']);
         if ($nameRole && $nameRole->id != $role->id) {
             return Result::err(500, "存在相同名称角色");
         }
         if (empty($body['permission']) || !is_array($body['permission'])) {
             return Result::ok();
         }
-        $role->name = $body['name'];
-        $role->permission()->delete();
-        $permissions = [];
-        foreach ($body['permission'] as $id) {
-            $permissions[] = new Permission(["menu_id" => $id]);
-        }
-        $role->permission()->saveMany($permissions);
-        $role->save();
+        $this->service->updateRole($role, $body);
         return Result::ok(null, "更新成功");
     }
 
@@ -103,6 +92,6 @@ class RoleController extends BackendController
     {
         $role->permission()->delete();
         $role->delete();
-        return Result::ok();
+        return Result::ok(null, "删除成功");
     }
 }

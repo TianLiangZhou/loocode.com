@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Backend;
 use App\Attributes\Route;
 use App\Http\Result;
 use App\Models\Role;
+use App\Services\RoleService;
+use App\Services\UserService;
 use Corcel\Model\User;
 use Corcel\Services\PasswordService;
 use Illuminate\Http\Request;
@@ -20,6 +22,22 @@ use Illuminate\Support\Str;
 #[Route(title: "用户", sort: 100, icon: "person")]
 class UserController extends BackendController
 {
+    /**
+     * @var UserService
+     */
+    private UserService $userService;
+    private RoleService $roleService;
+
+    /**
+     * UserController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService, RoleService $roleService)
+    {
+        $this->userService = $userService;
+        $this->roleService = $roleService;
+        parent::__construct();
+    }
 
     /**
      * @return Result
@@ -37,20 +55,16 @@ class UserController extends BackendController
     #[Route(title: "会员列表", parent: "所有用户")]
     public function members(Request $request): Result
     {
-        $users = User::paginate(
-            $request->query->getInt("data_per_page", 30),
-            ['*'],
-            'data_current_page',
-        );
+        $users = $this->userService->getPaginator($request);
         foreach ($users as $user) {
             $user['roles'] = json_decode($user->meta->roles ?? '[]', true);
             /**
              * @var $roles Collection
              */
             $roles = $user['roles']
-                ? Role::without('permission')->whereIn('id', $user['roles'])->get()->map(function($item) {
-                return $item->name;
-            })
+                ? $this->roleService->idArray($user['roles'])->map(function($item) {
+                    return $item->name;
+                })
                 : collect([]);
             $user['role_name'] = $roles ? $roles->implode(',') : "";
             $user['lasted_date'] = $user->meta->lasted_date;
@@ -62,22 +76,13 @@ class UserController extends BackendController
     public function store(Request $request): Result
     {
         $body = $request->json()->all();
-        $user = User::where("user_email", $body['email'])->first();
+        $user = $this->userService->email($body['email']);
         if ($user) {
             return Result::err(500, "邮箱地址已存在");
         }
-        $user = new User();
-        $user->user_login = $body['user_login'];
-        $user->user_pass = (new PasswordService())->makeHash($body['password']);
-        $user->user_nicename = $body['user_login'];
-        $user->user_email = $body['email'];
-        $user->user_activation_key = Str::random(8);
-        $user->display_name = $body['user_login'];
-        if (!$user->save()) {
+        $user = $this->userService->create($body, is_array($body['roles']) && $this instanceof ManagerController);
+        if ($user == null) {
             return Result::err(500, "添加失败");
-        }
-        if (is_array($body['roles']) && $this instanceof ManagerController) {
-            $user->saveMeta('roles', json_encode($body['roles']));
         }
         return Result::ok(null, "添加成功");
     }
@@ -86,28 +91,18 @@ class UserController extends BackendController
     public function update(User $user, Request $request): Result
     {
         $body = $request->json()->all();
-        $emailUser = User::where("user_email", $body['email'])->first();
-        if ($emailUser && $emailUser->ID != $user->ID) {
+        $email = $this->userService->email($body['email']);
+        if ($email && $email->ID != $user->ID) {
             return Result::err(500, "邮箱地址已存在");
         }
-        $user->user_login = $body['user_login'];
-        if (!empty($body['password'])) {
-            $user->user_pass = (new PasswordService())->makeHash($body['password']);
-        }
-        $user->user_nicename = $body['user_login'];
-        $user->user_email = $body['email'];
-        $user->display_name = $body['user_login'];
-        if (!$user->save()) {
+        if (!$this->userService->update($user, $body, is_array($body['roles']) && $this instanceof ManagerController)) {
             return Result::err(500, "添加失败");
-        }
-        if (is_array($body['roles']) && $this instanceof ManagerController) {
-            $user->saveMeta('roles', json_encode($body['roles']));
         }
         return Result::ok(null, "更新成功");
     }
 
     #[Route(title: "删除会员", parent: "所有用户")]
-    public function delete(User $user)
+    public function delete(User $user): Result
     {
         $user->meta()->delete();
         $user->delete();

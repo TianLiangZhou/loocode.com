@@ -31,7 +31,7 @@ export class ModelComponent extends BaseComponent {
     },
     mode: 'external',
     columns: {
-      id: {
+      ID: {
         title: 'ID',
         type: 'number',
         sort: true,
@@ -41,7 +41,7 @@ export class ModelComponent extends BaseComponent {
         title: "模型名称",
         type: 'text',
         sort: false,
-        filter: false,
+        filter: true,
       },
       post_status: {
         title: "模型状态",
@@ -67,13 +67,13 @@ export class ModelComponent extends BaseComponent {
   }
 
   edit($event: any) {
-    this.router.navigateByUrl("/app/extension/editing-model/" + $event.getData().id)
+    this.router.navigateByUrl("/app/extension/editing-model/" + $event.getData().ID)
   }
 
   delete($event: any) {
     if (window.confirm("确定删除" + $event.getData().post_title + "模型")) {
       this.http.post(
-        MODEL_DELETE.replace("{id}", $event.getData().id), {})
+        MODEL_DELETE.replace("{id}", $event.getData().ID), {})
         .subscribe((res: AppResponseDataOptions) => {
           this.toastService.showResponseToast(res.code, this.title, res.message);
           if (res.code == 200) {

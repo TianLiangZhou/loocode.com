@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Backend;
 
 
-use App\Http\Requests\InstallingRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Result;
 use App\Services\Auth\JwtGuard;
-use App\Services\OpenService;
-use Corcel\Model\Meta\UserMeta;
-use Corcel\Model\User;
-use Corcel\Services\PasswordService;
+use App\Services\UserService;
 use DateTimeImmutable;
 use DateTimeZone;
 use Illuminate\Auth\GenericUser;
@@ -20,10 +17,10 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Token\Plain;
 
 /**
  * Class AuthorizeController
@@ -31,40 +28,53 @@ use Lcobucci\JWT\Signer\Key;
  */
 class AuthorizeController
 {
+
     /**
-     * @param InstallingRequest $request
-     * @return Application|ResponseFactory|Response
-     * @throws \Exception
+     * @var UserService
      */
-    public function register(InstallingRequest $request): Response
+    private UserService $userService;
+
+    /**
+     * AuthorizeController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    /**
+     * @param RegisterRequest $request
+     * @return Response
+     */
+    public function register(RegisterRequest $request): Response
     {
         $validated = $request->validated();
         if ($validated['password'] != $validated['confirmPassword']) {
-            return response(Result::err(500, "两次密码不一致"));
+            return response(Result::err(500, "两次密码不一致"), 500);
         }
-        $exist = User::where('user_email', $validated['email'])->first();
-        if ($exist) {
-            return response(Result::err(500, "该邮箱已被注册"));
+        $email = $this->userService->email($validated['email']);
+        if ($email) {
+            return response(Result::err(500, "该邮箱已被注册"), 500);
         }
-        $user = new User();
-        $user->user_login = $validated['fullName'];
-        $user->user_pass = (new PasswordService())->makeHash($validated['password']);
-        $user->user_nicename = $validated['fullName'];
-        $user->user_email = $validated['email'];
-        $user->user_activation_key = "";
-        $user->display_name = $validated['fullName'];
-        if (!$user->save()) {
-            return response(Result::err(500, "注册失败"));
+        $user = $this->userService->create([
+            "user_login" => $validated['fullName'],
+            "password" => $validated['password'],
+            "email" => $validated['email'],
+            "user_activation_key" => "",
+        ]);
+        if ($user == null) {
+            return response(Result::err(500, "注册失败"), 500);
         }
         return response(Result::ok());
     }
 
     /**
      * @param Request $request
-     * @return Result
+     * @return Application|Response|ResponseFactory
      * @throws \Exception
      */
-    public function authenticate(Request $request): Result
+    public function authenticate(Request $request): Response
     {
         $body = $request->json()->all();
         /**
@@ -78,14 +88,17 @@ class AuthorizeController
          */
         $user = $guard->getProvider()->retrieveByCredentials($credentials);
         if ($user == null) {
-            return Result::err(404, "用户不存在");
+            return response(Result::err(404, "用户不存在"), 404);
+        }
+        if ($user->user_activation_key == "") {
+            return response(Result::err(401, "请管理员激活此账号"), 403);
         }
         $isValid = $guard->getProvider()->validateCredentials($user, $credentials);
         if (!$isValid) {
-            return Result::err(600, "密码匹配失败");
+            return response(Result::err(600, "密码匹配失败"), 500);
         }
         $token = $this->getToken($user->ID, $body['email'], $user->avatar);
-        return Result::ok(['token' => $token->toString()]);
+        return response(Result::ok(['token' => $token->toString()], "登录成功"));
     }
 
 
@@ -103,17 +116,17 @@ class AuthorizeController
      * @param int $id
      * @param string $email
      * @param string|null $avatar
-     * @return \Lcobucci\JWT\Token\Plain
+     * @return Plain
      * @throws \Exception
      */
-    private function getToken(int $id, string $email, ?string $avatar): \Lcobucci\JWT\Token\Plain
+    private function getToken(int $id, string $email, ?string $avatar): Plain
     {
         $config = Configuration::forSymmetricSigner(
             new Sha256(),
             Key\InMemory::file(base_path() . '/key.pem')
         );
         $now = new DateTimeImmutable("now", new DateTimeZone(config('app.timezone')));
-        $token = $config->builder()
+        return $config->builder()
             ->issuedBy(config('app.url'))
             ->identifiedBy(explode(':', config('app.key'))[1])
             ->issuedAt($now)
@@ -125,7 +138,5 @@ class AuthorizeController
             ->withClaim('email', $email)
             ->withClaim('avatar', $avatar)
             ->getToken($config->signer(), $config->signingKey());
-        // ckfinder 需要使用 cookie来认证
-        return $token;
     }
 }

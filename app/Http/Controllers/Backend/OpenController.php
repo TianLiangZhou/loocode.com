@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Result;
 use App\Services\OpenService;
+use App\Services\OptionService;
 use Illuminate\Http\Request;
 
 /**
@@ -15,8 +16,25 @@ use Illuminate\Http\Request;
  */
 class OpenController extends BackendController
 {
-    public function __construct(public OpenService $openService)
+    /**
+     * @var OpenService
+     */
+    private OpenService $openService;
+
+    /**
+     * @var OptionService
+     */
+    private OptionService $optionService;
+
+    /**
+     * OpenController constructor.
+     * @param OpenService $openService
+     * @param OptionService $optionService
+     */
+    public function __construct(OpenService $openService, OptionService $optionService)
     {
+        $this->openService = $openService;
+        $this->optionService = $optionService;
         parent::__construct();
     }
 
@@ -25,12 +43,14 @@ class OpenController extends BackendController
      */
     public function configuration(): Result
     {
+        $name = $this->optionService->oneByName("site_title");
         return Result::ok([
             // markdown | ckeditor | text
             'editor' => config('app.editor'),
             'timestamp' => time(),
             'taxonomy' => config('app.taxonomy'),
             'post_type'=> config('app.post_type'),
+            'name' => $name ?? config('app.name'),
         ]);
     }
 

@@ -71,6 +71,13 @@ abstract class BaseService
      */
     protected $scopes = array();
 
+    /**
+     * Array of related models to eager load
+     *
+     * @var array
+     */
+    protected $without = [];
+
 
     /**
      * Get all the model records in the database
@@ -333,6 +340,22 @@ abstract class BaseService
         return $this;
     }
 
+    /**
+     * Set Eloquent relationships to eager load
+     *
+     * @param $relations
+     *
+     * @return $this
+     */
+    public function without($relations)
+    {
+        if (is_string($relations)) $relations = func_get_args();
+
+        $this->without = $relations;
+
+        return $this;
+    }
+
 
     /**
      * Create a new instance of the model's query builder
@@ -357,6 +380,10 @@ abstract class BaseService
         foreach($this->with as $relation)
         {
             $this->query->with($relation);
+        }
+
+        foreach ($this->without as $relation) {
+            $this->query->without($relation);
         }
 
         return $this;
@@ -422,6 +449,8 @@ abstract class BaseService
         $this->scopes   = [];
         $this->orderBys = [];
         $this->take     = null;
+        $this->without = [];
+        $this->with = [];
 
         return $this;
     }

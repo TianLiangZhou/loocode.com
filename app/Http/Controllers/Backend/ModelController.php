@@ -8,7 +8,6 @@ use App\Attributes\Route;
 use App\Http\Result;
 use App\Models\Menu;
 use App\Services\ExtensionService;
-use Corcel\Model\Post;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -60,21 +59,8 @@ class ModelController extends BackendController
     #[Route(title: "模型列表", parent: "模型", sort: 2)]
     public function main(Request $request): Result
     {
-        $posts = Post::select('id', 'post_title', 'post_name', 'post_status', 'post_modified')
-            ->type("model")
-            ->orderBy('id', 'DESC');
-        if ($request->query->has('id_like')) {
-            $posts->where('ID',$request->query->get('id_like'));
-        }
-        if ($request->query->has('post_title_like')) {
-            $posts->where('post_title', 'like', '%' . $request->query->get('post_title_like') . '%');
-        }
-        $posts = $posts->without("meta")->paginate(
-            $request->query->getInt("data_per_page", 30),
-            ['*'],
-            'data_current_page',
-        );
-        return Result::ok($posts);
+        $models = $this->extensionService->getPostService()->getPaginator($request, "model");
+        return Result::ok($models);
     }
 
     /**

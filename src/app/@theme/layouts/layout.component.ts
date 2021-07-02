@@ -1,7 +1,7 @@
 import {Component, OnDestroy } from '@angular/core';
 import {StateService} from '../../@core/services/state.service';
 import {takeWhile} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import {ConfigurationService} from "../../@core/services/configuration.service";
 
 @Component({
   selector: 'app-layout',
@@ -18,13 +18,16 @@ export class LayoutComponent implements OnDestroy {
 
   private alive = true;
 
-  constructor(protected stateService: StateService) {
+  constructor(
+    protected stateService: StateService,
+    private configService: ConfigurationService
+  ) {
       this.stateService.onSidebarState()
       .pipe(takeWhile(() => this.alive))
       .subscribe((sidebar: string) => {
           this.sidebar = sidebar;
       });
-      this.name = environment.project_name;
+      this.name = this.configService.appConfig.name;
   }
 
   ngOnDestroy(): void {

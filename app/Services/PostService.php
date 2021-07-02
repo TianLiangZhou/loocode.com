@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Http\Result;
 use Corcel\Model\Post;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,6 +14,7 @@ use stdClass;
 /**
  * Class PostService
  * @package App\Services
+ * @property Post $model
  */
 class PostService extends BaseService
 {
@@ -32,13 +34,32 @@ class PostService extends BaseService
      */
     public function getPaginator(Request $request, string $typeName): LengthAwarePaginator
     {
-        return $this->model->without("meta")->type($typeName)
-            ->orderBy('id', 'DESC')
-            ->paginate(
-                $request->query->getInt("data_per_page", 30),
-                ['*'],
-                'data_current_page',
-            );
+        $paginator = $this->model->without("meta")->type($typeName)
+            ->orderBy('ID', 'DESC');
+        if ($request->query->has('id_like')) {
+            $paginator->where('ID',$request->query->get('id_like'));
+        }
+        if ($request->query->has('post_author_like')) {
+            $paginator->where('post_author', $request->query->getInt('post_author_like'));
+        }
+        if ($request->query->has('post_title_like')) {
+            $paginator->where('post_title', 'like', '%' . $request->query->get('post_title_like') . '%');
+        }
+        return $paginator->paginate(
+            $request->query->getInt("data_per_page", 30),
+            ['*'],
+            'data_current_page',
+        );
+    }
+
+    /**
+     * @param string $type
+     * @param int $limit
+     * @return Collection
+     */
+    public function getTypeLimit(string $type, int $limit  = 20)
+    {
+        return $this->model->published()->without('meta')->select("ID", "post_title")->type($type)->orderBy("ID", "DESC")->limit($limit)->get();
     }
 
     /**

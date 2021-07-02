@@ -22,6 +22,19 @@ use Symfony\Component\Finder\Finder;
  */
 class OpenService extends BaseService
 {
+    /**
+     * @var MenuService
+     */
+    private MenuService $menuService;
+
+    /**
+     * OpenService constructor.
+     * @param MenuService $menuService
+     */
+    public function __construct(MenuService $menuService)
+    {
+        $this->menuService = $menuService;
+    }
 
     /**
      * @param User $user
@@ -35,7 +48,7 @@ class OpenService extends BaseService
          */
         $role = Role::firstOrCreate(['name' => '超级管理员']);
         $this->refreshMenu($dir);
-        $menus = Menu::all();
+        $menus = $this->menuService::all();
         $permission = [];
         foreach ($menus as $menu) {
             $permission[] = new Permission(['menu_id' => $menu->id]);
@@ -59,7 +72,7 @@ class OpenService extends BaseService
 
 
     /**
-     * @param $user
+     * @param ?User $user
      * @return Result
      */
     public function getUserMenu(?User $user): Result
@@ -89,7 +102,7 @@ class OpenService extends BaseService
      */
     public function menus(array $permission = []): Collection
     {
-        $menu = Menu::select(['id', 'parent_id', 'name', 'hidden', 'class', 'link', 'url'])->where("parent_id", 0);
+        $menu = $this->menuService->where("parent_id", 0);
         if ($permission) {
             $menu->whereIn('id', $permission);
         }
@@ -108,9 +121,9 @@ class OpenService extends BaseService
     private function saveMenu(array $menus, int $parentId = 0, array &$collection = [])
     {
         foreach ($menus as $item) {
-            $menu = Menu::where('name', $item->title)->first();
+            $menu = $this->menuService->name($item->title);
             if ($menu == null) {
-                $menu = new Menu();
+                $menu = $this->menuService->getModel();
                 $menu->name = $item->title;
             }
             $menu->parent_id = $parentId;

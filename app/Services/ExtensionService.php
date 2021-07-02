@@ -216,7 +216,7 @@ class ExtensionService extends BaseService
         }
         $option = json_decode($model->post_content);
         if ($option->template == 2) {
-            return $this->taxonomyService->taxonomy($request, $option->taxonomy);
+            return $this->taxonomyService->getPaginatorTaxonomy($request, $option->taxonomy);
         }
         /**
          * @var $forms array
@@ -312,5 +312,13 @@ class ExtensionService extends BaseService
                 break;
         }
         return true;
+    }
+
+    /**
+     * @return PostService
+     */
+    public function getPostService(): PostService
+    {
+        return $this->postService;
     }
 }

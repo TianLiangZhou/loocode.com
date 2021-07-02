@@ -9,6 +9,7 @@ use App\Attributes\Route;
 use App\Events\Post as PostEvent;
 use App\Http\Result;
 use App\Models\PostContent;
+use App\Services\PostService;
 use Corcel\Model\Post;
 use Corcel\Model\Taxonomy;
 use Corcel\Model\Term;
@@ -25,6 +26,21 @@ use League\CommonMark\GithubFlavoredMarkdownConverter;
 #[Route(title: "文章", sort: 1, icon: "file-text")]
 class PostController extends BackendController
 {
+    /**
+     * @var PostService
+     */
+    private PostService $postService;
+
+    /**
+     * PostController constructor.
+     * @param PostService $postService
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+        parent::__construct();
+    }
+
 
     #[Route(title: "所有文章", sort: 0, link: "/app/content/posts")]
     public function managerAnchor(): Result
@@ -42,23 +58,7 @@ class PostController extends BackendController
     #[Route(title: "文章列表", parent: "所有文章")]
     public function posts(Request $request): Result
     {
-        $posts = Post::select('id','post_author', 'post_title', 'post_status', 'post_modified', 'comment_count')
-            ->type('post')->orderBy('id', 'DESC');
-        if ($request->query->has('id_like')) {
-            $posts->where('ID',$request->query->get('id_like'));
-        }
-        if ($request->query->has('post_author_like')) {
-            $posts->where('post_author', $request->query->getInt('post_author_like'));
-        }
-        if ($request->query->has('post_title_like')) {
-            $posts->where('post_title', 'like', '%' . $request->query->get('post_title_like') . '%');
-        }
-        $posts = $posts->without("meta")->paginate(
-                $request->query->getInt("data_per_page", 30),
-                ['*'],
-                'data_current_page',
-            );
-        return Result::ok($posts);
+        return Result::ok($this->postService->getPaginator($request, "post"));
     }
 
     /**
@@ -68,14 +68,13 @@ class PostController extends BackendController
     #[Route(title: "文章详情", parent: "所有文章")]
     public function show(int $id): Result
     {
-        $post = Post::find($id);
+        $post = $this->postService->id($id);
         if ($post == null) {
             return Result::err(404, "文章不存在");
         }
         $data = new \stdClass();
         $data->post_title = $post->post_title;
         $data->post_excerpt = $post->post_excerpt;
-
         $editor = config('app.editor');
         if ($editor == 'markdown') {
             $data->post_content = $post->meta->markdown ?? $post->post_content;
@@ -116,6 +115,9 @@ class PostController extends BackendController
     #[Route(title: "创建文章", parent: "所有文章")]
     public function store(Request $request): Result
     {
+
+        $this->postService->save();
+
         $data = $request->json()->all();
         $data['post_author'] = isset($data['post_user']) && $data['post_user'] ? (int) $data['post_user'] : auth('backend')->id();
         $data['to_ping'] = $data['pinged'] = $data['post_content_filtered'] = "";

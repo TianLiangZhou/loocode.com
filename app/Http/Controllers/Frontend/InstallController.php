@@ -3,18 +3,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Exceptions\InstallException;
 use App\Http\Requests\InstallingRequest;
 use App\Services\InstallService;
-use App\Services\OpenService;
 use Corcel\Model\Option;
-use Corcel\Model\User;
-use Corcel\Services\PasswordService;
-use Illuminate\Database\Migrations\DatabaseMigrationRepository;
-use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 /**
  * Class InstallController
