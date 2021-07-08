@@ -12,6 +12,7 @@ use FastFFI\Pinyin\Pinyin;
 use FastFFI\QrCode\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class ToolController
@@ -140,20 +141,27 @@ class ToolController extends FrontendController
      */
     private function ocr(array $body)
     {
-        $result = [];
-        if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
-            switch ($logo) {
-                case "error-max":
-                    return Result::err(419, "文件不能大于2M");
-                case "error-type":
-                    return Result::err(503, "必须是图片类型文件");
-                case "error":
-                    return Result::err(503, "上传失败");
+        $lock = Cache::lock("ocr:threading");
+        $result = $lock->get(function () use ($body) {
+            $result = [];
+            if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
+                switch ($logo) {
+                    case "error-max":
+                        return Result::err(419, "文件不能大于2M");
+                    case "error-type":
+                        return Result::err(503, "必须是图片类型文件");
+                    case "error":
+                        return Result::err(503, "上传失败");
+                }
+                $OCR = OCR::new(['use_mkldnn' => (int)(PHP_OS !== "Darwin")]);
+                $result = $OCR->run($logo);
             }
-            $OCR = OCR::new(['use_mkldnn' => (int)(PHP_OS !== "Darwin")]);
-            $result = $OCR->run($logo);
+            return Result::ok($result ? implode("\n", $result) : "");
+        });
+        if ($result instanceof Result) {
+            return $result;
         }
-        return Result::ok($result ? implode("\n", $result) : "");
+        return Result::err(503, "请等待其它任务完成!");
     }
 
     /**
