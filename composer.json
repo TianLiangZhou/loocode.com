@@ -35,7 +35,7 @@
         "socialiteproviders/qq": "^4.1",
         "socialiteproviders/weixin-web": "^4.1",
         "spatie/flysystem-dropbox": "^1.2.3",
-        "meshell/php-ffi-packages": "^1.0.4"
+        "meshell/php-ffi-packages": "^1.0.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

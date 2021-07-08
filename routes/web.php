@@ -51,3 +51,4 @@ Route::get("/tool/pinyin/chinese-to-pinyin", [ToolController::class, 'tool']);
 Route::get("/tool/opencc/simplified-chinese-to-traditional-chinese", [ToolController::class, 'tool']);
 Route::get("/tool/lac/chinese-word-segmentation", [ToolController::class, 'tool']);
 Route::get("/tool/qrcode/qr-code-generator", [ToolController::class, 'tool']);
+Route::get("/tool/ocr/ocr-recognition", [ToolController::class, 'tool']);

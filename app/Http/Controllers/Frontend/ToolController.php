@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Result;
 use FastFFI\LAC\LAC;
+use FastFFI\OCR\OCR;
 use FastFFI\Opencc\OpenCC;
 use FastFFI\Pinyin\Pinyin;
 use FastFFI\QrCode\QrCode;
@@ -53,6 +54,15 @@ class ToolController extends FrontendController
                 'title' => '在线二维码生成_快速生成二维码_SVG二维码生成_字符二维码生成',
                 'keywords' => '二维码生成器，PHP二维码生成',
                 'description' => '在线生成各种二维码',
+            ],
+        ],
+        'ocr' => [
+            'name' => '图文识别',
+            'href' => '/tool/ocr/ocr-recognition',
+            'seo' => [
+                'title' => '在线OCR识别，图文识别，百度paddleOCR在线测试',
+                'keywords' => 'OCR识别，paddleOCR测试',
+                'description' => 'OCR图文识别',
             ],
         ],
     ];
@@ -114,7 +124,7 @@ class ToolController extends FrontendController
     public function convert(Request $request)
     {
         /**
-         * @var $tool 'pinyin' | 'opencc' | 'lac'
+         * @var $tool 'pinyin' | 'opencc' | 'lac' | 'qrcode' | 'ocr'
          */
         $tool = $request->post('tool');
         $body = $request->all();
@@ -122,6 +132,28 @@ class ToolController extends FrontendController
             return call_user_func([$this, $tool], $body);
         }
         return Result::ok();
+    }
+
+    /**
+     * @param array $body
+     * @return Result
+     */
+    private function ocr(array $body)
+    {
+        $result = [];
+        if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
+            switch ($logo) {
+                case "error-max":
+                    return Result::err(419, "文件不能大于2M");
+                case "error-type":
+                    return Result::err(503, "必须是图片类型文件");
+                case "error":
+                    return Result::err(503, "上传失败");
+            }
+            $OCR = OCR::new(['use_mkldnn' => (int)(PHP_OS !== "Darwin")]);
+            $result = $OCR->run($logo);
+        }
+        return Result::ok($result ? implode("\n", $result) : "");
     }
 
     /**
@@ -309,10 +341,16 @@ EOF;
                 if (!empty($body['fg_color']) && preg_match('/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $body['fg_color'], $fgColor) && $fgColor) {
                     $qrCode->withFgColor($body['fg_color']);
                 }
-                if (!empty($body['logo'])) {
-                    if (($logo = $this->uploadLogo($body['logo']))) {
-                        $qrCode->withLogo($logo, true, false);
+                if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
+                    switch ($logo) {
+                        case "error-max":
+                            return Result::err(419, "文件不能大于2M");
+                        case "error-type":
+                            return Result::err(503, "必须是图片类型文件");
+                        case "error":
+                            return Result::err(503, "上传失败");
                     }
+                    $qrCode->withLogo($logo, true, false);
                 }
                 $name = $qrCode->image();
                 if ($name) {
@@ -353,13 +391,13 @@ EOF;
 
     private function uploadLogo(UploadedFile $logo)
     {
-        if ($logo->getSize() > 1024 * 1024) {
+        if ($logo->getSize() > 2 * 1024 * 1024) {
             // 超出大小
-            return "";
+            return "error-max";
         }
         if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
             // mime类型错误;
-            return "";
+            return "error-type";
         }
         $path = 'images/qrcode/' . date('Ymd');
         $filename = md5($logo->getClientOriginalName()) . '.' . $logo->getClientOriginalExtension();
@@ -367,7 +405,7 @@ EOF;
         if ($url) {
             return config('app.static_path') . '/' . $path . '/' . $filename;
         }
-        return "";
+        return "error";
     }
 
 

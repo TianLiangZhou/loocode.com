@@ -24,3 +24,4 @@ cert.pem
 /src/ckeditor5/node_modules
 monorepo-builder.php
 /resources/model
+/resources/inference

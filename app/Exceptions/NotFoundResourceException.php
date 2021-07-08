@@ -4,7 +4,9 @@
 namespace App\Exceptions;
 
 
-class NotFoundResourceException
+use RuntimeException;
+
+class NotFoundResourceException extends RuntimeException
 {
 
 }
