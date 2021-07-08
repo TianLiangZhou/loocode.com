@@ -3,9 +3,12 @@
     <div class="flex my-5">
         <label class="text-gray-700 dark:text-gray-400">图片</label>
         <div class="flex-1 ml-4">
-            <input placeholder="上传图片" name="logo" value="选择图片" type="file" class="ml-2 mt-0 block px-0.5 py-2 text-sm dark:bg-gray-900" />
+            <input accept="image/*" placeholder="上传图片" name="logo" id="logo" value="选择图片" type="file" class="ml-2 mt-0 block px-0.5 py-2 text-sm dark:bg-gray-900" />
             <span class="text-sm text-gray-400">限制最大为2M</span>
         </div>
+    </div>
+    <div class="flex my-5">
+        <img alt="原图" id="image" width="320" />
     </div>
     <div class="flex my-5 justify-center">
         <button type="button" class="bg-red-500 text-white rounded-md px-3 py-1 text-xl font-bold" @click.prevent="convert()">生成</button>
@@ -18,4 +21,13 @@
             </textarea>
         </div>
     </div>
+@endsection
+
+@section("footer_js")
+    @parent
+    <script type="text/javascript">
+        document.getElementById('logo').onchange = function () {
+            document.getElementById('image').src = URL.createObjectURL(this.files[0])
+        }
+    </script>
 @endsection
