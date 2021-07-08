@@ -153,7 +153,7 @@ class ToolController extends FrontendController
                     case "error":
                         return Result::err(503, "上传失败");
                 }
-                $OCR = OCR::new(['use_mkldnn' => (int)(PHP_OS !== "Darwin")]);
+                $OCR = OCR::new(['use_mkldnn' => 0]);
                 $result = $OCR->run($logo);
             }
             return Result::ok($result ? implode("\n", $result) : "");
