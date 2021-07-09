@@ -147,7 +147,7 @@ class ToolController extends FrontendController
             $lock->release();
         }
         $result = $lock->get(function () use ($body) {
-            Cache::add("ocr:threading:time", time());
+            Cache::put("ocr:threading:time", time());
             $result = [];
             if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
                 switch ($logo) {
