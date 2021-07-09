@@ -141,13 +141,8 @@ class ToolController extends FrontendController
      */
     private function ocr(array $body)
     {
-        $lock = Cache::lock("ocr:threading");
-        $prevTime = Cache::get("ocr:threading:time");
-        if ($prevTime && time() - $prevTime >= 60) {
-            $lock->release();
-        }
+        $lock = Cache::lock("ocr:threading", 60);
         $result = $lock->get(function () use ($body) {
-            Cache::put("ocr:threading:time", time());
             $result = [];
             if (!empty($body['logo']) && ($logo = $this->uploadLogo($body['logo']))) {
                 switch ($logo) {
