@@ -1,0 +1,36 @@
+<div class="bg-white dark:bg-slate-800 rounded-md">
+    {% if collection %}
+        {% for item in collection %}
+            <div class="flex flex-row items-center px-4 border-b border-slate-200 dark:border-slate-900 last:border-0">
+                {% set devicon = item.getMetaValue('devicon') %}
+                {% if devicon %}
+                <div class="mr-4">
+                    <a class="text-8xl text-primary dark:text-slate-400" href="{{ permalink(item) }}" title="{{ item.getTitle() }}"><i class="devicon-{{ devicon }}-plain"></i></a>
+                </div>
+                {% endif %}
+                <div class="py-4">
+                    <div class="truncate">
+                        <h2 class="title text-lg font-bold text-slate-900 dark:text-slate-200"><a class="hover:underline  hover:text-primary" href="{{ permalink(item) }}">{{ item.getTitle() }}</a></h2>
+                    </div>
+                    <div class="mt-0.5 flex flex-col">
+                        <div class="text-base text-slate-700 dark:text-slate-300">
+                            {% set author = item.getAuthor() %}
+                            <a href="{{ permalink(author) }}" class="hover:underline">{{ author.getNickname()}}</a>
+                            <span>·</span>
+                            <span>{{ item.getModifiedAt()|date('Y/m/d') }}</span>
+                        </div>
+                        {% set tags = item.getTags() %}
+                        <div class="tags flex flex-wrap items-center mt-2">
+                            {% for tag in tags %}
+                                {% if loop.index < 7 %}
+                                <a class="block first:ml-0 text-white dark:text-slate-400 bg-primary border dark:bg-slate-900 border-primary dark:border-slate-800 hover:bg-primary/90 dark:hover:bg-slate-900/90 rounded-lg mx-2 px-2" href="{{ permalink(tag) }}">{{ tag.name }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{{ widget('pagination', {template: 'summer/pagination.html.twig'}) }}

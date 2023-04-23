@@ -1,0 +1,69 @@
+{% extends '@OctopusPress/base.html.twig' %}
+
+{% block body %}
+    <div class="container mx-auto my-5">
+        <div class="isolate pt-14 px-4">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex flex-wrap pt-4">
+            <div class="w-full lg:w-80 px-4">
+                <div class="bg-white p-4 dark:bg-slate-800 rounded-lg">
+                    <div class="">
+                        <h3 class="text-xl text-slate-500 font-medium border-b pb-1 border-slate-200 after:border-b after:border-red-500 dark:border-slate-700">工具合集</h3>
+                        <div class="pt-4">
+                            <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-slate-900 text-left dark:text-slate-500">
+                                {% for item in tools %}
+                                    <li class="flex my-3">
+                                        <a href="{% if tool.name == item.name %}#{% else %} {{item.href}} {% endif %}" class="relative w-full {% if tool.name == item.name %} pl-2 border-l-4 border-primary {% endif %}">
+                                            {{item.name}}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 lg:mt-0 flex-1 flex-grow px-4 overflow-hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert">
+                    <div class="p-6 relative border-b border-opacity-5 dark:border-slate-700">
+                        <form name="body" x-ref="form">
+                            <input type="hidden" name="tool" value="{{name}}">
+                            {% block child %}{% endblock %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block style %}
+    <script>
+
+        // fix https://github.com/alpinejs/alpine/discussions/1705
+        // <!-- ✅ After -->
+        document.addEventListener('alpine:init', () => {
+            // Will be executed before initializing Alpine.
+            Alpine.data("toolConvert", () => ({
+                mode: 0,
+                data: null,
+                convert() {
+                    window.fetch('/tool/convert', {
+                        method: 'POST',
+                        body: new FormData(this.$refs.form),
+                    })
+                    .then((response) => {
+                        response.json().then((body) => {
+                            this.data = body.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                }})
+            );
+        });
+    </script>
+{% endblock %}

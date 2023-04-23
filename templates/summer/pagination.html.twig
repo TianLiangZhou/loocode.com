@@ -1,0 +1,49 @@
+{% if links|length > 1 %}
+<nav class="flex items-center justify-between border-t border-slate-200 dark:border-slate-900 px-4 pb-4 sm:px-0">
+    <div class="-mt-px flex w-0 flex-1">
+        {% if previous %}
+        <a href="{{ previous.link }}" class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">
+            <!-- Heroicon name: mini/arrow-long-left -->
+            <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd" />
+            </svg>
+            {{ previous.text }}
+        </a>
+        {% endif %}
+    </div>
+    <div class="hidden md:-mt-px md:flex">
+        {% for item in startLinks %}
+            {% if item.link %}
+                <a href="{{ item.link }}" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">{{ item.text }}</a>
+            {% else %}
+                <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500">{{ item.text }}</span>
+            {% endif %}
+        {% endfor %}
+        {% for item in links %}
+            {% if item.link %}
+                <a href="{{ item.link }}" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">{{ item.text }}</a>
+            {% else %}
+                <span class="inline-flex items-center border-t-2 border-primary px-4 pt-4 text-sm font-medium text-primary" aria-current="page">{{ item.text }}</span>
+            {% endif %}
+        {% endfor %}
+        {% for item in endLinks %}
+            {% if item.link %}
+                <a href="{{ item.link }}" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">{{ item.text }}</a>
+            {% else %}
+                <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500">{{ item.text }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="-mt-px flex w-0 flex-1 justify-end">
+        {% if next %}
+        <a href="{{ next.link }}" class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">
+            {{ next.text }}
+            <!-- Heroicon name: mini/arrow-long-right -->
+            <svg class="ml-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd" />
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+</nav>
+{% endif %}

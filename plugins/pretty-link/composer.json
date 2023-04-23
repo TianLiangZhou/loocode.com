@@ -1,0 +1,20 @@
+{
+  "name": "meshell/pretty-link",
+  "description": "让站点URL以html后缀结尾，此插件需要配合服务器设置。",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "type": "octopuspress-plugin",
+  "authors": [
+    {
+      "name": "meshell",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "OctopusPress\\Plugin\\PrettyLink\\": "src"
+    }
+  }
+}

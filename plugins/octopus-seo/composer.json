@@ -1,0 +1,20 @@
+{
+  "name": "meshell/octopus-seo",
+  "description": "搜索引擎优化。",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "type": "octopuspress-plugin",
+  "authors": [
+    {
+      "name": "meshell",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "OctopusPress\\Plugin\\OctopusSeo\\": "src"
+    }
+  }
+}

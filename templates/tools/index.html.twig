@@ -1,0 +1,23 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block body %}
+    <div class="container mx-auto my-5">
+        <div class="isolate pt-14">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex pt-4">
+            <div class="flex-1 flex-grow">
+                <div class="bg-white py-5 dark:bg-slate-900">
+                    <ul class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 xl:gap-8 font-semibold text-slate-900 text-center">
+                        {% for item in tools %}
+                            <li class="flex">
+                                <a href="{{item.href}}" class="relative rounded-xl ring-1 ring-black ring-opacity-5 dark:ring-opacity-50 shadow-sm w-full pt-8 pb-6 dark:text-slate-500 hover:text-red-500 dark:ring-slate-700">
+                                    {{item.name}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

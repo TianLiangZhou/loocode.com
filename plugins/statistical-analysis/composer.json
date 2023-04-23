@@ -1,0 +1,20 @@
+{
+  "name": "meshell/statistical-analysis",
+  "description": "插件用于帖子的浏览统计，类目的浏览统计，作品统计，作者浏览统计。第三方百度，谷歌统计分析。",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "type": "octopuspress-plugin",
+  "authors": [
+    {
+      "name": "meshell",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "OctopusPress\\Plugin\\StatisticalAnalysis\\": "src"
+    }
+  }
+}
