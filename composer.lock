@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0d6b0384c4501764f12683bc0acf17f",
+    "content-hash": "9e3fe0467acdcd7897d53cd3d73a07b3",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.263.14",
+            "version": "3.268.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "7a6a43fad8899e3be3c46471fa3802331620e36b"
+                "reference": "b59134c9ca64dcb9de6f7dbbcb9d5a75ed665a98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7a6a43fad8899e3be3c46471fa3802331620e36b",
-                "reference": "7a6a43fad8899e3be3c46471fa3802331620e36b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b59134c9ca64dcb9de6f7dbbcb9d5a75ed665a98",
+                "reference": "b59134c9ca64dcb9de6f7dbbcb9d5a75ed665a98",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.263.14"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.268.16"
             },
-            "time": "2023-04-20T18:21:44+00:00"
+            "time": "2023-04-21T21:37:05+00:00"
         },
         {
             "name": "beberlei/doctrineextensions",
@@ -1408,16 +1408,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.14.2",
+            "version": "2.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52"
+                "reference": "a64f315dfeae5e50b17f132626fd9e9b4ec8985d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
-                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/a64f315dfeae5e50b17f132626fd9e9b4ec8985d",
+                "reference": "a64f315dfeae5e50b17f132626fd9e9b4ec8985d",
                 "shasum": ""
             },
             "require": {
@@ -1503,9 +1503,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.14.2"
+                "source": "https://github.com/doctrine/orm/tree/2.14.3"
             },
-            "time": "2023-03-30T15:18:54+00:00"
+            "time": "2023-04-20T09:46:32+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2588,7 +2588,7 @@
             "dist": {
                 "type": "path",
                 "url": "../octopuspress-bundle",
-                "reference": "7869aa5b724cfa10c15701726e89be2aceb3161e"
+                "reference": "b725e0f1b4757c594cd3a759a1555ae38480f3a5"
             },
             "require": {
                 "beberlei/doctrineextensions": "dev-master",
@@ -2657,6 +2657,7 @@
                 ]
             },
             "transport-options": {
+                "symlink": false,
                 "relative": true
             }
         },
@@ -3201,16 +3202,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.20.0",
+            "version": "1.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "10553ab3f0337ff1a71433c3417d7eb2a3eec1fd"
+                "reference": "90490bd8fd8530a272043c4950c180b6d0cf5f81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/10553ab3f0337ff1a71433c3417d7eb2a3eec1fd",
-                "reference": "10553ab3f0337ff1a71433c3417d7eb2a3eec1fd",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/90490bd8fd8530a272043c4950c180b6d0cf5f81",
+                "reference": "90490bd8fd8530a272043c4950c180b6d0cf5f81",
                 "shasum": ""
             },
             "require": {
@@ -3240,9 +3241,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.20.2"
             },
-            "time": "2023-04-20T11:18:07+00:00"
+            "time": "2023-04-22T12:59:35+00:00"
         },
         {
             "name": "pimple/pimple",
