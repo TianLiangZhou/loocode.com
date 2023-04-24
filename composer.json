@@ -107,7 +107,10 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../octopuspress-bundle"
+            "url": "../octopuspress-bundle",
+            "options": {
+              "symlink": false
+            }
         }
     ]
 }
