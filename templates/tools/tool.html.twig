@@ -14,7 +14,7 @@
                             <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-slate-900 text-left dark:text-slate-500">
                                 {% for item in tools %}
                                     <li class="flex my-3">
-                                        <a href="{% if tool.name == item.name %}#{% else %} {{item.href}} {% endif %}" class="relative w-full {% if tool.name == item.name %} pl-2 border-l-4 border-primary {% endif %}">
+                                        <a href="{% if tool.name == item.name %}#{% else %} {{item.href}} {% endif %}" class="relative w-full hover:underline hover:text-primary {% if tool.name == item.name %} pl-2 border-l-4 border-primary {% endif %}">
                                             {{item.name}}
                                         </a>
                                     </li>
