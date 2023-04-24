@@ -48,12 +48,12 @@ class ToolController extends Controller
             'title' => '在线二维码生成_快速生成二维码_SVG二维码生成_字符二维码生成_二维码生成器_PHP二维码生成',
             'description' => '二维码生成是基于Rust动态库来实现的一款在线二维码工具，支持图片、文本、SVG等形式来生成二维码',
         ],
-        'ocr' => [
-            'name' => '图文识别',
-            'href' => '/tool/ocr/ocr-recognition',
-            'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
-            'description' => 'OCR图文识别',
-        ],
+//        'ocr' => [
+//            'name' => '图文识别',
+//            'href' => '/tool/ocr/ocr-recognition',
+//            'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
+//            'description' => 'OCR图文识别',
+//        ],
     ];
 
     static array $tags = [
