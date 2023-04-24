@@ -160,7 +160,7 @@ class ToolController extends Controller
      * @return Response
      */
     #[Route('/tool/convert', methods: 'POST')]
-    public function convert(Request $request, $cache): Response
+    public function convert(Request $request, CacheItemPoolInterface $cache): Response
     {
         /**
          * @var $tool 'pinyin' | 'opencc' | 'lac' | 'qrcode' | 'ocr'
