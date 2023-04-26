@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './js/summer.js',
+    './js/*.js',
     '../**/*.twig',
   ],
   safelist: [
@@ -1000,6 +1000,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography')
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
   ],
 }

@@ -2,8 +2,8 @@
 
 {% block body %}
     {% set keyword = site_keywords|default('')|split(',')[0] %}
-    <section>
-        <div class="isolate px-6 pt-14 lg:px-8">
+    <section class="my-5">
+        <div class="isolate px-6 pt-4 lg:px-8">
             <div class="mx-auto max-w-3xl">
                 {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
             </div>

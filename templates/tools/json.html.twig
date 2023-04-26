@@ -2,10 +2,10 @@
 
 {% block body %}
     <div class="container mx-auto my-5">
-        <div class="isolate pt-4 px-4">
+        <div class="isolate pt-14 px-4">
             {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
         </div>
-        <div class="flex pt-4">
+        <div class="flex flex-wrap pt-4">
             <div class="w-full lg:w-80 px-4">
                 <div class="bg-white p-4 dark:bg-slate-800 rounded-lg">
                     <div class="">
@@ -36,33 +36,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block style %}
-    <script>
-        // fix https://github.com/alpinejs/alpine/discussions/1705
-        // <!-- ✅ After -->
-        document.addEventListener('alpine:init', () => {
-            // Will be executed before initializing Alpine.
-            Alpine.data("toolConvert", () => ({
-                mode: 0,
-                data: null,
-                convert() {
-                    window.fetch('/tool/convert', {
-                        method: 'POST',
-                        body: new FormData(this.$refs.form),
-                    })
-                    .then((response) => {
-                        response.json().then((body) => {
-                            this.data = body.data;
-                        }).catch((err) => {
-                            console.log(err);
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                }})
-            );
-        });
-    </script>
 {% endblock %}

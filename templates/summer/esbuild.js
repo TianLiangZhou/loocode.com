@@ -9,6 +9,7 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
     entryPoints: [
       'dev/js/summer.js',
       'dev/js/prismjs.js',
+      'dev/js/json-to-go.js',
       'dev/css/summer.css',
     ],
     bundle: true,

@@ -1,33 +1,25 @@
 {% extends 'tools/tool.html.twig' %}
 {% block child %}
     <div class="flex my-5">
-        <label class="text-slate-700 dark:text-slate-400">图片</label>
-        <div class="flex-1 ml-4">
-            <input accept="image/*" placeholder="上传图片" name="logo" id="logo" value="选择图片" type="file" class="ml-2 mt-0 block px-0.5 py-2 text-sm dark:bg-slate-900" />
-            <span class="text-sm text-slate-400">限制最大为2M</span>
+        <label for="logo" class="text-slate-700 dark:text-slate-400">图片</label>
+        <div class="flex-1 ml-4 flex flex-col relative">
+            <div class="relative" x-data="{img: ''}">
+                <button type="button" @click="$refs.logo.click()" class="absolute left-0 top-0 w-36 text-white py-1 rounded-md font-medium text-center bg-primary border-2 border-solid border-primary">上传图片</button>
+                <input accept="image/*" id="logo" x-ref="logo" @change="img=window.URL.createObjectURL($el.files[0])" placeholder="上传logo" class="w-36 opacity-0 invisible" name="logo" value="选择图片" type="file" />
+                <img class="mt-4" x-show="img!=''" :src="img" />
+            </div>
+            <span class="text-sm text-slate-400 mt-2">限制最大为2M</span>
         </div>
-    </div>
-    <div class="flex my-5">
-        <img alt="原图" id="image" width="320" />
     </div>
     <div class="flex my-5 justify-center">
         <button type="button" class="bg-primary text-white rounded-md px-3 py-1 text-xl font-bold" @click.prevent="convert()">识别</button>
     </div>
     <div class="flex my-5">
-        <label class="text-slate-700 dark:text-slate-400">识别结果</label>
+        <label class="text-slate-700 dark:text-slate-400">结果</label>
         <div class="flex-1 ml-4">
-            <textarea rows="10" x-model="data" class="placeholder-slate-500 mt-0 block w-full p-2 text-sm border-2 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 focus:ring-0 focus:border-red-500"
+            <textarea rows="10" x-model="data" class="block w-full rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
                       placeholder="这里是识别之后结果">
             </textarea>
         </div>
     </div>
-{% endblock %}
-
-{% block script %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.getElementById('logo').onchange = function () {
-            document.getElementById('image').src = URL.createObjectURL(this.files[0])
-        }
-    </script>
 {% endblock %}
