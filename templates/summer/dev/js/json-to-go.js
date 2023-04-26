@@ -1,5 +1,6 @@
 const jsonToGo = require("json-to-go/json-to-go");
 (function () {
+
   var inputContainer = document.getElementById('inputContainer');
   var outputContainer= document.getElementById('outputContainer');
   var inputJson = document.getElementById('inputJson');
@@ -57,12 +58,8 @@ const jsonToGo = require("json-to-go/json-to-go");
     toConvert(inputJson.value);
   });
   document.getElementById('copy').addEventListener('click', function () {
-    var _this = this;
     navigator.clipboard.writeText(outputContent).then(() => {
-      _this.innerText="已复制";
-      setTimeout(() => {
-        _this.innerText="复制";
-      }, 2000);
+      defaultToast('已复制');
     });
   });
 })();
