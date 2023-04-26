@@ -48,12 +48,24 @@ class ToolController extends Controller
             'title' => '在线二维码生成_快速生成二维码_SVG二维码生成_字符二维码生成_二维码生成器_PHP二维码生成',
             'description' => '二维码生成是基于Rust动态库来实现的一款在线二维码工具，支持图片、文本、SVG等形式来生成二维码',
         ],
-//        'ocr' => [
-//            'name' => '图文识别',
-//            'href' => '/tool/ocr/ocr-recognition',
+        'ocr' => [
+            'name' => '图文识别',
+            'href' => '/tool/ocr/ocr-recognition',
+            'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
+            'description' => '图文识别基于百度paddleOCR扩展库提取图片上的文字信息',
+        ],
+//        'json'=> [
+//            'name' => 'JSON美化',
+//            'href' => '/tool/json/json-beautifier',
 //            'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
 //            'description' => 'OCR图文识别',
 //        ],
+        'json-go' => [
+            'name' => 'JSON转Go结构体',
+            'href' => '/tool/json-go/json-to-golang-struct',
+            'title' => '在线json转Go结构体_json转go_json转golang结构体',
+            'description' => '在线json转go结构体能帮你快速将json内容转换成go语言的结构体，无需手写json内容对应的结构体。',
+        ]
     ];
 
     static array $tags = [
@@ -112,7 +124,7 @@ class ToolController extends Controller
         $optionVariables['options']['social_description'] = '%description%';
         if ($activatedRoute->getRouteName() == 'tools_page') {
             $optionVariables['variables'] = [
-                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成',
+                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体',
                 'description' => '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别等等在线工具',
             ];
         } else {
@@ -126,7 +138,6 @@ class ToolController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return Response
      */
     #[Route('/tools', name: 'tools_page')]
@@ -142,8 +153,8 @@ class ToolController extends Controller
      * @return Response
      */
     #[Route('/tool/{name}/{summary}', name: 'tool_single_page', requirements: [
-        'name' => '(pinyin|opencc|lac|qrcode|ocr)',
-        'summary' => '(chinese-to-pinyin|simplified-chinese-to-traditional-chinese|chinese-word-segmentation|qr-code-generator|ocr-recognition)',
+        'name' => '(pinyin|opencc|lac|qrcode|ocr|json|json-go)',
+        'summary' => '(chinese-to-pinyin|simplified-chinese-to-traditional-chinese|chinese-word-segmentation|qr-code-generator|ocr-recognition|json-beautifier|json-to-golang-struct)',
     ])]
     public function tool(string $name): Response
     {
@@ -157,7 +168,9 @@ class ToolController extends Controller
 
     /**
      * @param Request $request
+     * @param CacheItemPoolInterface $cache
      * @return Response
+     * @throws InvalidArgumentException
      */
     #[Route('/tool/convert', methods: 'POST')]
     public function convert(Request $request, CacheItemPoolInterface $cache): Response
@@ -178,7 +191,7 @@ class ToolController extends Controller
     }
 
     /**
-     * @param array $body
+     * @param CacheItemPoolInterface $cache
      * @param UploadedFile|null $uploadedFile
      * @return Response
      * @throws InvalidArgumentException
@@ -309,15 +322,15 @@ class ToolController extends Controller
                 if (($mode < 3 && ($key + 1) % ($mode == 1 ? 4 : 2) == 1) || $mode == 3) {
                     $tr .= '<tr>';
                 }
-                $tr .= sprintf('<td class="text-center border px-4 py-2 text-gray-600 font-medium">%s</td>', $word);
+                $tr .= sprintf('<td class="text-center border dark:border-slate-900 px-4 py-2 dark:text-slate-300 font-medium">%s</td>', $word);
                 if ($mode > 1) {
                     $tr .= sprintf(
-                        '<td class="text-center border px-4 py-2 text-gray-600 font-medium">%s</td>',
+                        '<td class="text-center border dark:border-slate-900 px-4 py-2 dark:text-slate-300 font-medium">%s</td>',
                         self::$tags[$tags[$key]] ?? '',
                     );
                     if ($mode == 3) {
                         $tr .= sprintf(
-                            '<td class="text-center border px-4 py-2 text-gray-600 font-medium">%s</td>',
+                            '<td class="text-center border dark:border-slate-900 px-4 py-2 dark:text-slate-300 font-medium">%s</td>',
                             self::$weight[$weight[$key]] ?? "无",
                         );
                     }
