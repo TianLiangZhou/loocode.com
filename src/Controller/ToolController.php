@@ -40,13 +40,13 @@ class ToolController extends Controller
             'name' => '中文分词',
             'href' => '/tool/lac/chinese-word-segmentation',
             'title' => '在线百度LAC中文分词_百度LAC分词_LAC分词在线体验_中文分词_中文在线分词_分词权重_在线智能分词_百度LAC在线测试',
-            'description' => '中文分词是基于百库LAC项目的人工智能中文分词在线工具，分词结果准确支持词分类，核心词等强大功能',
+            'description' => '中文分词可以帮助您对中文文本进行精确且快速的分词。无论您是从事中文自然语言处理的研究者，还是需要对中文文本进行分析的业务用户，都可以使用我的工具轻松地进行中文分词。它使用了最新的中文分词算法，能够识别中文词汇的各种不同形式和用法，并生成与之相应的分词结果。',
         ],
         'qrcode' => [
             'name' => '二维码',
             'href' => '/tool/qrcode/qr-code-generator',
             'title' => '在线二维码生成_快速生成二维码_SVG二维码生成_字符二维码生成_二维码生成器_PHP二维码生成',
-            'description' => '二维码生成是基于Rust动态库来实现的一款在线二维码工具，支持图片、文本、SVG等形式来生成二维码',
+            'description' => '在线二维码生成器可以帮助您快速生成用于各种用途的高质量二维码。它支持多种类型的二维码，例如URL、文本、电话号码、电子邮件、Wi-Fi设置、地理位置等，可以满足您的不同需求。您只需输入相关信息并选择二维码的类型，即可生成一个清晰、易于扫描的二维码图像。此外，该工具还支持自定义样式和颜色，让您可以根据需求自由设计二维码的外观，从而使其更能在各种场合使用。',
         ],
         'ocr' => [
             'name' => '图文识别',
@@ -54,17 +54,17 @@ class ToolController extends Controller
             'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
             'description' => '图文识别基于百度paddleOCR扩展库提取图片上的文字信息',
         ],
-//        'json'=> [
-//            'name' => 'JSON美化',
-//            'href' => '/tool/json/json-beautifier',
-//            'title' => '在线OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
-//            'description' => 'OCR图文识别',
-//        ],
+        'json'=> [
+            'name' => 'JSON美化',
+            'href' => '/tool/json/json-beautifier',
+            'title' => '在线JSON美化_JSON格式化_JSON解析',
+            'description' => '在线JSON格式化可以帮助您轻松清晰地格式化和美化任何JSON数据。无论您是开发人员还是普通用户，只需粘贴您的JSON数据即可快速生成可读性更高的格式。它不仅能够识别错误和缺失的括号和逗号，还可以将嵌套的JSON数据更清晰地显示出来。',
+        ],
         'json-go' => [
             'name' => 'JSON转Go结构体',
             'href' => '/tool/json-go/json-to-golang-struct',
-            'title' => '在线json转Go结构体_json转go_json转golang结构体',
-            'description' => '在线json转go结构体能帮你快速将json内容转换成go语言的结构体，无需手写json内容对应的结构体。',
+            'title' => '在线JSON转Go结构体_JSON转go_JSON转golang结构体',
+            'description' => '在线json转go结构体可以帮助您将JSON数据转换为对应的Go语言结构体。无论您是Go开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的Go结构体代码。它可以将JSON字符串的键名和类型信息自动解析为Go结构体的字段名称和类型，省去了手动编写结构体的繁琐步骤。',
         ]
     ];
 
