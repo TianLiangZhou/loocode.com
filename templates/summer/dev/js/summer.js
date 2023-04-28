@@ -4,9 +4,6 @@ import Toastify from "toastify-js"
 (function (root) {
   root.Toastify = Toastify;
 
-  root.closeDefaultToast = function() {
-
-  };
   root.defaultToast = function(text) {
     var id = 'btn-' + new Date().getSeconds();
     var children = '<div class="w-full flex items-center relative">'+
@@ -20,8 +17,8 @@ import Toastify from "toastify-js"
     '<svg aria-hidden="true" class="fill-white w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>'+
     '</button>'+
     '</div>';
-    var toast = Toastify({
-      className: 'absolute right-4 top-4 flex items-center w-full max-w-xs p-4 mx-auto text-white bg-primary rounded-lg shadow',
+    const toast = Toastify({
+      className: 'absolute right-4 top-4 flex items-center w-full max-w-xs p-4 mx-auto text-white bg-primary rounded-lg shadow z-50',
       text: children,
       escapeMarkup: false,
       duration: 3000,
@@ -30,18 +27,24 @@ import Toastify from "toastify-js"
       toast.hideToast();
     });
   };
+  root.getTheme = function() {
+    let theme = window.Cookie.getItem('_theme') || 'System';
+    if (theme === 'System') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light';
+    }
+    return theme;
+  };
 
 
-
-
-
-  var cookie= {
+  const Cookie = {
     getItem: function (sKey) {
       return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
     },
     setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-      if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-      var sExpires = "";
+      if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+        return false;
+      }
+      let sExpires = "";
       if (vEnd) {
         switch (vEnd.constructor) {
           case Number:
@@ -59,20 +62,24 @@ import Toastify from "toastify-js"
       return true;
     },
     removeItem: function (sKey, sPath, sDomain) {
-      if (!sKey || !this.hasItem(sKey)) { return false; }
-      document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
+      if (!sKey || !this.hasItem(sKey)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
       return true;
     },
     hasItem: function (sKey) {
       return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
     },
     keys: /* optional method: you can safely remove it! */ function () {
-      var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-      for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+      const aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+      for (let nIdx = 0; nIdx < aKeys.length; nIdx++) {
+        aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+      }
       return aKeys;
     }
   };
-
+  root.Cookie = Cookie;
   root.Components = {}, root.Components.popover = function ({
                                                               open: e = !1,
                                                               focus: t = !1
@@ -130,7 +137,7 @@ import Toastify from "toastify-js"
   ;
 
   document.addEventListener('alpine:init', () => {
-    let _theme = cookie.getItem('_theme');
+    let _theme = Cookie.getItem('_theme');
     Alpine.store('theme', {
       current: _theme || 'System',
       system: (_theme || 'System') === 'System' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light') : _theme,
@@ -141,7 +148,7 @@ import Toastify from "toastify-js"
         } else {
           this.system = theme;
         }
-        cookie.setItem('_theme', theme, null, '/');
+        Cookie.setItem('_theme', theme, null, '/');
       }
     });
   });

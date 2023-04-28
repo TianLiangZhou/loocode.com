@@ -1,12 +1,18 @@
 const jsonToGo = require("json-to-go/json-to-go");
 (function () {
 
-  var inputContainer = document.getElementById('inputContainer');
-  var outputContainer= document.getElementById('outputContainer');
-  var inputJson = document.getElementById('inputJson');
-  var isInlineType = isOmitEmpty = false;
-  var isAutoConvert = true;
-  var outputContent = "";
+  const inputContainer = document.getElementById('inputContainer');
+  const outputContainer = document.getElementById('outputContainer');
+  const inputJson = document.getElementById('inputJson');
+  const output = document.getElementById('outputStruct');
+  let outputDefaultDisplay = document.defaultView.getComputedStyle(outputContainer).display;
+  let isInlineType = false;
+  let isOmitEmpty = false;
+  const isAutoConvert = true;
+  let outputContent = "";
+  let prevValue = "";
+
+
   document.getElementById('inlineType').addEventListener('change', function() {
     isInlineType = this.checked;
     toConvert(inputJson.value);
@@ -15,49 +21,55 @@ const jsonToGo = require("json-to-go/json-to-go");
     isOmitEmpty = this.checked;
     toConvert(inputJson.value);
   });
-  document.getElementById('autoConvert').addEventListener('change', function() {
-    isAutoConvert = this.checked;
-    if (isAutoConvert) {
-      toConvert(inputJson.value);
+
+  document.getElementById('containerFull').addEventListener('click', () => {
+    const display = document.defaultView.getComputedStyle(inputContainer).display
+    if (display !== 'none') {
+      inputContainer.classList.add('hidden');
+    } else {
+      inputContainer.classList.remove('hidden');
+      if (outputDefaultDisplay === 'none') {
+        outputContainer.classList.add('hidden');
+      }
     }
-  });
-
-
-
-  outputContainer.addEventListener('dblclick', function() {
-    outputContainer.classList.add('hidden');
-    inputContainer.classList.remove('hidden');
-  });
-  inputContainer.addEventListener('dblclick', function() {
-    toConvert(inputJson.value);
   });
   const toConvert = function(value) {
-      if (!value) {
-        inputJson.classList.remove('!border-red-500');
-        return ;
+    prevValue = value;
+    if (!value) {
+      inputJson.classList.remove('!border-red-500');
+      if (outputDefaultDisplay !== 'none') {
+        output.innerHTML = '';
       }
-      var output = document.getElementById('outputStruct');
-      var struct = jsonToGo(value, '', !isInlineType, false, isOmitEmpty);
-      if (struct.error) {
-        inputJson.classList.add('!border-red-500');
-      } else {
-        outputContent = struct.go;
-        const html = Prism.highlight(struct.go, Prism.languages.go, 'go');
-        output.innerHTML = '<pre class="language-go !px-3 !py-2 !m-0 h-full"><code class="prism language-go" >'+html+'</code></pre>';
+      return ;
+    }
+    const struct = jsonToGo(value, '', !isInlineType, false, isOmitEmpty);
+    if (struct.error) {
+      inputJson.classList.add('!border-red-500');
+      if (outputDefaultDisplay !== 'none') {
+        output.innerHTML = '<p class="text-red-500 font-bold p-3">'+ struct.error +'</p>';
+      }
+    } else {
+      outputContent = struct.go;
+      const html = Prism.highlight(struct.go, Prism.languages.go, 'go');
+      output.innerHTML = '<pre class="language-go !px-3 !py-2 !m-0 h-full !rounded-none scrollable"><code class="prism language-go" >'+html+'</code></pre>';
+      if (outputDefaultDisplay === 'none') {
         inputContainer.classList.add('hidden');
-        outputContainer.classList.remove('hidden');
-        inputJson.classList.remove('!border-red-500');
       }
+      outputContainer.classList.remove('hidden');
+      inputJson.classList.remove('!border-red-500');
+    }
   };
   inputJson.addEventListener('keyup', function() {
-    if (isAutoConvert) {
-      toConvert(this.value);
+    if (prevValue != this.value) {
+      if (isAutoConvert) {
+        toConvert(this.value);
+      }
     }
   });
-  document.getElementById('convert').addEventListener('click', function () {
-    toConvert(inputJson.value);
-  });
   document.getElementById('copy').addEventListener('click', function () {
+    if (!outputContent) {
+      return ;
+    }
     navigator.clipboard.writeText(outputContent).then(() => {
       defaultToast('已复制');
     });

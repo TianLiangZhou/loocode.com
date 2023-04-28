@@ -1,12 +1,12 @@
 {% extends '@OctopusPress/base.html.twig' %}
 
 {% block body %}
-    <div class="container mx-auto my-5">
-        <div class="isolate pt-4 px-4">
+    <div class="container mx-auto my-5 px-4">
+        <div class="isolate pt-4">
             {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
         </div>
-        <div class="flex pt-4">
-            <div class="w-full lg:w-80 px-4">
+        <div class="flex pt-4 flex-col lg:flex-row">
+            <div class="grow mt-4 lg:mt-0 order-last lg:order-none lg:max-w-xs">
                 <div class="bg-white p-4 dark:bg-slate-800 rounded-lg">
                     <div class="">
                         <h3 class="text-xl text-slate-500 font-medium border-b pb-1 border-slate-200 after:border-b after:border-red-500 dark:border-slate-700">工具合集</h3>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 lg:mt-0 flex-1 flex-grow px-4 overflow-hidden">
+            <div class="grow lg:ml-2">
                 <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert">
                     <div class="p-6 relative border-b border-opacity-5 dark:border-slate-700">
                         <form name="body" x-ref="form">

@@ -10,7 +10,7 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
       'dev/js/summer.js',
       'dev/js/prismjs.js',
       'dev/js/json-to-go.js',
-      'dev/css/summer.css',
+      'dev/js/json-beautiful.js',
     ],
     bundle: true,
     outdir: './',

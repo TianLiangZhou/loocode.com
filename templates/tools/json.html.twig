@@ -1,39 +1,72 @@
 {% extends '@OctopusPress/base.html.twig' %}
+{% block header %}{% endblock %}
+{% block style %}
+<style>
+    .json-formatter-toggler {
+        position: relative !important;
+    }
+    .json-formatter-dark.json-formatter-row .json-formatter-string, .json-formatter-row .json-formatter-string {
+        white-space: inherit !important;
+        overflow-wrap: inherit !important;
+        word-break: inherit !important;
+    }
+    .json-formatter-row .json-formatter-toggler:after {
+        width: 16px;
+        height: 16px;
+        content: url("{{ asset('images/arrow-right.svg', 'theme') }}") !important;
+    }
+    .json-formatter-dark.json-formatter-row .json-formatter-toggler:after {
+        width: 16px;
+        height: 16px;
+        content: url("{{ asset('images/dark-arrow-right.svg', 'theme') }}") !important;
+    }
 
+</style>
+{% endblock %}
 {% block body %}
-    <div class="container mx-auto my-5">
-        <div class="isolate pt-14 px-4">
+    <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
+        <div class="isolate pt-2 px-4">
             {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
         </div>
-        <div class="flex flex-wrap pt-4">
-            <div class="w-full lg:w-80 px-4">
-                <div class="bg-white p-4 dark:bg-slate-800 rounded-lg">
-                    <div class="">
-                        <h3 class="text-xl text-slate-500 font-medium border-b pb-1 border-slate-200 after:border-b after:border-red-500 dark:border-slate-700">工具合集</h3>
-                        <div class="pt-4">
-                            <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-slate-900 text-left dark:text-slate-500">
-                                {% for item in tools %}
-                                    <li class="flex my-3">
-                                        <a href="{% if tool.name == item.name %}#{% else %} {{item.href}} {% endif %}" class="relative w-full hover:underline hover:text-primary {% if tool.name == item.name %} pl-2 border-l-4 border-primary {% endif %}">
-                                            {{item.name}}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+        <div class="flex">
+            <div class="flex-1 px-4 mt-2">
+                <div class="flex items-start overflow-hidden">
+                    <div class="flex-1 grow" id="inputContainer">
+                        <label>
+                            <textarea id="inputJson" class="h-[calc(100vh-10.75rem)] w-full rounded-md scrollable bg-slate-200 dark:bg-slate-800 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入json..."></textarea>
+                        </label>
                     </div>
-                </div>
-            </div>
-            <div class="mt-4 lg:mt-0 flex-1 flex-grow px-4 overflow-hidden">
-                <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert">
-                    <div class="p-6 relative border-b border-opacity-5 dark:border-slate-700">
-                        <form name="body" x-ref="form">
-                            <input type="hidden" name="tool" value="{{name}}">
-                            {% block child %}{% endblock %}
-                        </form>
+                    <div class="w-1 hidden xl:block"></div>
+                    <div class="flex-1 hidden xl:block" id="outputContainer">
+                        <div class="flex flex-col relative h-[calc(100vh-10.75rem)]">
+                            <div id="toolbar" class="flex py-2 items-center w-full  bg-slate-300 dark:bg-slate-700 rounded-t-md">
+                                <button class="w-5 mx-2" id="expandJson">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-slate-700 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="expand"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M20 5a1 1 0 0 0-1-1h-5a1 1 0 0 0 0 2h2.57l-3.28 3.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0L18 7.42V10a1 1 0 0 0 1 1 1 1 0 0 0 1-1z"/><path d="M10.71 13.29a1 1 0 0 0-1.42 0L6 16.57V14a1 1 0 0 0-1-1 1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 0-2H7.42l3.29-3.29a1 1 0 0 0 0-1.42z"/></g></g></svg>
+                                </button>
+                                <button class="w-5 mx-2" id="containerFull">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-slate-700 dark:fill-slate-200 rotate-45" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="move"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M21.71 11.31l-3-3a1 1 0 0 0-1.42 1.42L18.58 11H13V5.41l1.29 1.3A1 1 0 0 0 15 7a1 1 0 0 0 .71-.29 1 1 0 0 0 0-1.42l-3-3A1 1 0 0 0 12 2a1 1 0 0 0-.7.29l-3 3a1 1 0 0 0 1.41 1.42L11 5.42V11H5.41l1.3-1.29a1 1 0 0 0-1.42-1.42l-3 3A1 1 0 0 0 2 12a1 1 0 0 0 .29.71l3 3A1 1 0 0 0 6 16a1 1 0 0 0 .71-.29 1 1 0 0 0 0-1.42L5.42 13H11v5.59l-1.29-1.3a1 1 0 0 0-1.42 1.42l3 3A1 1 0 0 0 12 22a1 1 0 0 0 .7-.29l3-3a1 1 0 0 0-1.42-1.42L13 18.58V13h5.59l-1.3 1.29a1 1 0 0 0 0 1.42A1 1 0 0 0 18 16a1 1 0 0 0 .71-.29l3-3A1 1 0 0 0 22 12a1 1 0 0 0-.29-.69z"/></g></g></svg>
+                                </button>
+                            </div>
+                            <div class="h-[calc(100vh-10.75rem-36px)] overflow-x-hidden rounded-b-md w-full scrollable bg-slate-200 dark:bg-slate-800 !dark:text-slate-300 text-base font-bold 2xl:text-lg break-words" id="outputStruct">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block footer %}
+    <footer class="p-6 bg-white dark:bg-slate-800 fixed bottom-0 w-full">
+        <div class="mx-auto max-w-screen-xl text-center">
+            <div class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                {% set beian = theme_mod('beian') %}
+                <p>© {{ now|date('Y')}} Powered By <a target="_blank" href="https://octopuspress.dev" class="hover:underline">OctopusPress™</a>. {% if beian %}<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="nofollow">{{ beian }}</a>{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ asset('js/prismjs.js', 'theme') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/json-beautiful.js', 'theme') }}"></script>
 {% endblock %}

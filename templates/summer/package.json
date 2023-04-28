@@ -1,6 +1,6 @@
 {
   "name": "octopus-press-summer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "It is a theme for `OctopusPress` content management system",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,16 +13,21 @@
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "alpinejs": "^3.12.0",
+    "autoprefixer": "^10.4.14",
     "devicon": "^2.15.1",
     "esbuild-plugin-prismjs": "^1.0.8",
+    "json-formatter-js": "^2.3.4",
     "json-to-go": "https://github.com/mholt/json-to-go#master",
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0",
+    "postcss-nesting": "^11.2.2",
     "prismjs": "^1.29.0",
     "toastify-js": "^1.12.0",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "esbuild": "^0.17.14",
-    "tailwindcss": "^3.3.0"
+    "tailwindcss": "^3.3.2"
   },
   "packageManager": "yarn@3.5.0"
 }
