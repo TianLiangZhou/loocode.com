@@ -1,13 +1,16 @@
 {
-  "name": "octopus-press-summer",
-  "version": "1.0.11",
-  "description": "It is a theme for `OctopusPress` content management system",
+  "name": "summer",
+  "version": "1.0.12",
+  "description": "Summer theme for OctopusPress management system",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node esbuild.js",
     "watch": "node esbuild.js --watch"
   },
-  "author": "meshell",
+  "author": {
+    "name": "meshell",
+    "email": "mfkgdyve@gmail.com"
+  },
   "license": "MIT",
   "dependencies": {
     "@tailwindcss/forms": "^0.5.3",
