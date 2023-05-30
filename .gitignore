@@ -10,6 +10,7 @@
 /public/plugins/
 /var/
 /vendor/
+/templates
 /templates/*/node_modules
 /templates/*/.idea
 /templates/*/.yarn
@@ -26,3 +27,4 @@
 ###< symfony/phpunit-bridge ###
 
 .idea
+/plugins
