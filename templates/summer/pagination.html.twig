@@ -23,7 +23,7 @@
             {% if item.link %}
                 <a href="{{ item.link }}" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">{{ item.text }}</a>
             {% else %}
-                <span class="inline-flex items-center border-t-2 border-primary px-4 pt-4 text-sm font-medium text-primary" aria-current="page">{{ item.text }}</span>
+                <span class="inline-flex items-center border-t-2 border-primary px-4 pt-4 text-sm font-medium !text-primary" aria-current="page">{{ item.text }}</span>
             {% endif %}
         {% endfor %}
         {% for item in endLinks %}

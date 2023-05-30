@@ -1,5 +1,5 @@
 {% set navigation = navigation('primary').getIterator() %}
-<header class="bg-white  dark:bg-slate-800 z-[1024] relative shadow-lg sticky top-0">
+<header class="bg-white dark:bg-slate-800 z-[1024] shadow-lg sticky top-0">
     <nav id="navigation" class="container mx-auto" aria-label="Top">
         <div class="flex w-full items-center justify-center py-4 sm:justify-between">
             <a href="{{ site_url }}" rel="nofollow">
@@ -7,7 +7,7 @@
                 <img class="h-14 w-auto" src="{{ asset('images/logo.png', 'theme') }}" alt="{{ site_title }} Logo" />
             </a>
             <div class="flex items-center">
-                <div class="relative hidden md:flex items-center relative">
+                <div class="relative hidden md:flex items-center">
                     <nav>
                         <ul class="flex items-center gap-x-8">
                             {% for nav in navigation %}
@@ -15,7 +15,7 @@
                                 {% set compare = compare_url(link) %}
                                 <li class="relative {% if compare %} after:border-primary after:border-b-[3px] after:w-full after:absolute after:left-0 after:bottom-[-1.5rem] {% endif %}">
                                     <a href="{{ link }}"
-                                       class="text-base font-medium {% if compare %} text-primary {% else %} text-slate-900 dark:text-slate-200 {% endif %} hover:text-primary">{{ nav.title }}</a>
+                                       class="text-base font-medium {% if compare %} !text-primary {% else %} text-slate-900 dark:text-slate-200 {% endif %} hover:text-primary">{{ nav.title }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -54,7 +54,7 @@
                             aria-orientation="vertical"
                             role="listbox" tabindex="0">
                             <li class="py-1 px-2 flex items-center cursor-pointer dark:bg-slate-600/30"
-                                role="option" tabindex="-1" aria-selected="false"  @click="toggleTheme" :class="{'text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='Light'}">
+                                role="option" tabindex="-1" aria-selected="false"  @click="toggleTheme" :class="{'!text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='Light'}">
                                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                      class="w-6 h-6 mr-2">
                                     <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
@@ -67,7 +67,7 @@
                                 Light
                             </li>
                             <li class="py-1 px-2 flex items-center cursor-pointer dark:bg-slate-600/30"
-                                role="option" tabindex="-1" aria-selected="false" @click="toggleTheme" :class="{'text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='Dark'}">
+                                role="option" tabindex="-1" aria-selected="false" @click="toggleTheme" :class="{'!text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='Dark'}">
                                 <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 mr-2">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                           d="M17.715 15.15A6.5 6.5 0 0 1 9 6.035C6.106 6.922 4 9.645 4 12.867c0 3.94 3.153 7.136 7.042 7.136 3.101 0 5.734-2.032 6.673-4.853Z"
@@ -84,7 +84,7 @@
                                 Dark
                             </li>
                             <li class="py-1 px-2 flex items-center cursor-pointer"
-                                role="option" tabindex="-1" aria-selected="true" @click="toggleTheme" :class="{'text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='System'}">
+                                role="option" tabindex="-1" aria-selected="true" @click="toggleTheme" :class="{'!text-primary bg-slate-50 dark:bg-slate-600/30': $store.theme.current=='System'}">
                                 <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 mr-2">
                                     <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z" stroke-width="2"
                                           stroke-linejoin="round"
@@ -110,7 +110,7 @@
                 {% set link = permalink(nav) %}
                 {% set compare = compare_url(link) %}
                 <a href="{{ link }}"
-                   class="text-base font-medium {% if compare %} text-primary {% else %} text-slate-900 dark:text-slate-200 {% endif %} hover:text-primary">{{ nav.title }}</a>
+                   class="text-base font-medium {% if compare %} !text-primary {% else %} text-slate-900 dark:text-slate-200 {% endif %} hover:text-primary">{{ nav.title }}</a>
             {% endfor %}
         </div>
     </nav>

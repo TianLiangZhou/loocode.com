@@ -39,8 +39,8 @@
                     <ul class="flex justify-center flex-wrap">
                         {% for tag in tags %}
                         {% set tagSets = tagSets|merge([tag.getId()])%}
-                        <li class="text-white dark:text-slate-400 bg-primary dark:bg-slate-800 dark:border-slate-800 border border-primary hover:bg-primary/90 dark:hover:bg-slate-800/90 rounded-lg mx-2 px-2">
-                            <a class="tag" href="{{ permalink(tag) }}" target="_blank">{{ tag.getName() }}</a>
+                        <li class="text-white !bg-primary dark:bg-slate-800 dark:border-slate-800 border border-primary hover:bg-primary/90 dark:hover:bg-slate-800/90 rounded-lg mx-2 px-2">
+                            <a class="tag !no-underline" href="{{ permalink(tag) }}" target="_blank">{{ tag.getName() }}</a>
                         </li>
                         {% endfor %}
                     </ul>
