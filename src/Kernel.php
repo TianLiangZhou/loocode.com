@@ -17,1115 +17,1115 @@ class Kernel extends OctopusPressKernel implements PluginInterface
 
         $bridger->getMeta()->registerPost(Post::TYPE_POST, 'devicon', [], [
             'type' => AbstractControl::SELECT,
-            'label'=> '主标签',
+            'label' => '主标签',
             'options' => [
                 [
-                    "value"=> "adonisjs",
-                    "label"=> "adonisjs"
+                    "value" => "devicon-adonisjs-original",
+                    "label" => "adonisjs"
                 ],
                 [
-                    "value"=> "aftereffects",
-                    "label"=> "aftereffects"
+                    "value" => "devicon-aftereffects-plain",
+                    "label" => "aftereffects"
                 ],
                 [
-                    "value"=> "amazonwebservices",
-                    "label"=> "amazonwebservices"
+                    "value" => "devicon-amazonwebservices-original",
+                    "label" => "amazonwebservices"
                 ],
                 [
-                    "value"=> "android",
-                    "label"=> "android"
+                    "value" => "devicon-android-plain",
+                    "label" => "android"
                 ],
                 [
-                    "value"=> "androidstudio",
-                    "label"=> "androidstudio"
+                    "value" => "devicon-androidstudio-plain",
+                    "label" => "androidstudio"
                 ],
                 [
-                    "value"=> "aarch64",
-                    "label"=> "aarch64"
+                    "value" => "devicon-aarch64-plain",
+                    "label" => "aarch64"
                 ],
                 [
-                    "value"=> "angularjs",
-                    "label"=> "angularjs"
+                    "value" => "devicon-angularjs-plain",
+                    "label" => "angularjs"
                 ],
                 [
-                    "value"=> "ansible",
-                    "label"=> "ansible"
+                    "value" => "devicon-ansible-plain",
+                    "label" => "ansible"
                 ],
                 [
-                    "value"=> "apache",
-                    "label"=> "apache"
+                    "value" => "devicon-apache-plain",
+                    "label" => "apache"
                 ],
                 [
-                    "value"=> "apachekafka",
-                    "label"=> "apachekafka"
+                    "value" => "devicon-apachekafka-original",
+                    "label" => "apachekafka"
                 ],
                 [
-                    "value"=> "appcelerator",
-                    "label"=> "appcelerator"
+                    "value" => "devicon-appcelerator-original",
+                    "label" => "appcelerator"
                 ],
                 [
-                    "value"=> "apple",
-                    "label"=> "apple"
+                    "value" => "devicon-apple-original",
+                    "label" => "apple"
                 ],
                 [
-                    "value"=> "appwrite",
-                    "label"=> "appwrite"
+                    "value" => "devicon-appwrite-plain",
+                    "label" => "appwrite"
                 ],
                 [
-                    "value"=> "arduino",
-                    "label"=> "arduino"
+                    "value" => "devicon-arduino-plain",
+                    "label" => "arduino"
                 ],
                 [
-                    "value"=> "atom",
-                    "label"=> "atom"
+                    "value" => "devicon-atom-original",
+                    "label" => "atom"
                 ],
                 [
-                    "value"=> "azure",
-                    "label"=> "azure"
+                    "value" => "devicon-azure-plain",
+                    "label" => "azure"
                 ],
                 [
-                    "value"=> "babel",
-                    "label"=> "babel"
+                    "value" => "devicon-babel-plain",
+                    "label" => "babel"
                 ],
                 [
-                    "value"=> "backbonejs",
-                    "label"=> "backbonejs"
+                    "value" => "devicon-backbonejs-plain",
+                    "label" => "backbonejs"
                 ],
                 [
-                    "value"=> "bamboo",
-                    "label"=> "bamboo"
+                    "value" => "devicon-bamboo-original",
+                    "label" => "bamboo"
                 ],
                 [
-                    "value"=> "bash",
-                    "label"=> "bash"
+                    "value" => "devicon-bash-plain",
+                    "label" => "bash"
                 ],
                 [
-                    "value"=> "behance",
-                    "label"=> "behance"
+                    "value" => "devicon-behance-plain",
+                    "label" => "behance"
                 ],
                 [
-                    "value"=> "bitbucket",
-                    "label"=> "bitbucket"
+                    "value" => "devicon-bitbucket-original",
+                    "label" => "bitbucket"
                 ],
                 [
-                    "value"=> "bootstrap",
-                    "label"=> "bootstrap"
+                    "value" => "devicon-bootstrap-plain",
+                    "label" => "bootstrap"
                 ],
                 [
-                    "value"=> "bulma",
-                    "label"=> "bulma"
+                    "value" => "devicon-bulma-plain",
+                    "label" => "bulma"
                 ],
                 [
-                    "value"=> "bower",
-                    "label"=> "bower"
+                    "value" => "devicon-bower-plain",
+                    "label" => "bower"
                 ],
                 [
-                    "value"=> "c",
-                    "label"=> "c"
+                    "value" => "devicon-c-plain",
+                    "label" => "c"
                 ],
                 [
-                    "value"=> "cakephp",
-                    "label"=> "cakephp"
+                    "value" => "devicon-cakephp-plain",
+                    "label" => "cakephp"
                 ],
                 [
-                    "value"=> "canva",
-                    "label"=> "canva"
+                    "value" => "devicon-canva-original",
+                    "label" => "canva"
                 ],
                 [
-                    "value"=> "centos",
-                    "label"=> "centos"
+                    "value" => "devicon-centos-plain",
+                    "label" => "centos"
                 ],
                 [
-                    "value"=> "ceylon",
-                    "label"=> "ceylon"
+                    "value" => "devicon-ceylon-plain",
+                    "label" => "ceylon"
                 ],
                 [
-                    "value"=> "chrome",
-                    "label"=> "chrome"
+                    "value" => "devicon-chrome-plain",
+                    "label" => "chrome"
                 ],
                 [
-                    "value"=> "circleci",
-                    "label"=> "circleci"
+                    "value" => "devicon-circleci-plain",
+                    "label" => "circleci"
                 ],
                 [
-                    "value"=> "clojure",
-                    "label"=> "clojure"
+                    "value" => "devicon-clojure-line",
+                    "label" => "clojure"
                 ],
                 [
-                    "value"=> "cmake",
-                    "label"=> "cmake"
+                    "value" => "devicon-cmake-plain",
+                    "label" => "cmake"
                 ],
                 [
-                    "value"=> "clojurescript",
-                    "label"=> "clojurescript"
+                    "value" => "devicon-clojurescript-plain",
+                    "label" => "clojurescript"
                 ],
                 [
-                    "value"=> "codecov",
-                    "label"=> "codecov"
+                    "value" => "devicon-codecov-plain",
+                    "label" => "codecov"
                 ],
                 [
-                    "value"=> "codeigniter",
-                    "label"=> "codeigniter"
+                    "value" => "devicon-codeigniter-plain",
+                    "label" => "codeigniter"
                 ],
                 [
-                    "value"=> "codepen",
-                    "label"=> "codepen"
+                    "value" => "devicon-codepen-plain",
+                    "label" => "codepen"
                 ],
                 [
-                    "value"=> "coffeescript",
-                    "label"=> "coffeescript"
+                    "value" => "devicon-coffeescript-original",
+                    "label" => "coffeescript"
                 ],
                 [
-                    "value"=> "composer",
-                    "label"=> "composer"
+                    "value" => "devicon-composer-line",
+                    "label" => "composer"
                 ],
                 [
-                    "value"=> "confluence",
-                    "label"=> "confluence"
+                    "value" => "devicon-confluence-original",
+                    "label" => "confluence"
                 ],
                 [
-                    "value"=> "couchdb",
-                    "label"=> "couchdb"
+                    "value" => "devicon-couchdb-plain",
+                    "label" => "couchdb"
                 ],
                 [
-                    "value"=> "cplusplus",
-                    "label"=> "cplusplus"
+                    "value" => "devicon-cplusplus-plain",
+                    "label" => "cplusplus"
                 ],
                 [
-                    "value"=> "csharp",
-                    "label"=> "csharp"
+                    "value" => "devicon-csharp-plain",
+                    "label" => "csharp"
                 ],
                 [
-                    "value"=> "css3",
-                    "label"=> "css3"
+                    "value" => "devicon-css3-plain",
+                    "label" => "css3"
                 ],
                 [
-                    "value"=> "cucumber",
-                    "label"=> "cucumber"
+                    "value" => "devicon-cucumber-plain",
+                    "label" => "cucumber"
                 ],
                 [
-                    "value"=> "crystal",
-                    "label"=> "crystal"
+                    "value" => "devicon-crystal-original",
+                    "label" => "crystal"
                 ],
                 [
-                    "value"=> "d3js",
-                    "label"=> "d3js"
+                    "value" => "devicon-d3js-plain",
+                    "label" => "d3js"
                 ],
                 [
-                    "value"=> "dart",
-                    "label"=> "dart"
+                    "value" => "devicon-dart-plain",
+                    "label" => "dart"
                 ],
                 [
-                    "value"=> "debian",
-                    "label"=> "debian"
+                    "value" => "devicon-debian-plain",
+                    "label" => "debian"
                 ],
                 [
-                    "value"=> "denojs",
-                    "label"=> "denojs"
+                    "value" => "devicon-denojs-original",
+                    "label" => "denojs"
                 ],
                 [
-                    "value"=> "devicon",
-                    "label"=> "devicon"
+                    "value" => "devicon-devicon-plain",
+                    "label" => "devicon"
                 ],
                 [
-                    "value"=> "django",
-                    "label"=> "django"
+                    "value" => "devicon-django-plain",
+                    "label" => "django"
                 ],
                 [
-                    "value"=> "docker",
-                    "label"=> "docker"
+                    "value" => "devicon-docker-plain",
+                    "label" => "docker"
                 ],
                 [
-                    "value"=> "doctrine",
-                    "label"=> "doctrine"
+                    "value" => "devicon-doctrine-plain",
+                    "label" => "doctrine"
                 ],
                 [
-                    "value"=> "dot-net",
-                    "label"=> "dot-net"
+                    "value" => "devicon-dot-net-plain",
+                    "label" => "dot"
                 ],
                 [
-                    "value"=> "dotnetcore",
-                    "label"=> "dotnetcore"
+                    "value" => "devicon-dotnetcore-plain",
+                    "label" => "dotnetcore"
                 ],
                 [
-                    "value"=> "drupal",
-                    "label"=> "drupal"
+                    "value" => "devicon-drupal-plain",
+                    "label" => "drupal"
                 ],
                 [
-                    "value"=> "digitalocean",
-                    "label"=> "digitalocean"
+                    "value" => "devicon-digitalocean-plain",
+                    "label" => "digitalocean"
                 ],
                 [
-                    "value"=> "discordjs",
-                    "label"=> "discordjs"
+                    "value" => "devicon-discordjs-plain",
+                    "label" => "discordjs"
                 ],
                 [
-                    "value"=> "electron",
-                    "label"=> "electron"
+                    "value" => "devicon-electron-original",
+                    "label" => "electron"
                 ],
                 [
-                    "value"=> "eleventy",
-                    "label"=> "eleventy"
+                    "value" => "devicon-eleventy-plain",
+                    "label" => "eleventy"
                 ],
                 [
-                    "value"=> "elixir",
-                    "label"=> "elixir"
+                    "value" => "devicon-elixir-plain",
+                    "label" => "elixir"
                 ],
                 [
-                    "value"=> "elm",
-                    "label"=> "elm"
+                    "value" => "devicon-elm-plain",
+                    "label" => "elm"
                 ],
                 [
-                    "value"=> "ember",
-                    "label"=> "ember"
+                    "value" => "devicon-ember-original-wordmark",
+                    "label" => "ember"
                 ],
                 [
-                    "value"=> "embeddedc",
-                    "label"=> "embeddedc"
+                    "value" => "devicon-embeddedc-plain",
+                    "label" => "embeddedc"
                 ],
                 [
-                    "value"=> "erlang",
-                    "label"=> "erlang"
+                    "value" => "devicon-erlang-plain",
+                    "label" => "erlang"
                 ],
                 [
-                    "value"=> "eslint",
-                    "label"=> "eslint"
+                    "value" => "devicon-eslint-original",
+                    "label" => "eslint"
                 ],
                 [
-                    "value"=> "express",
-                    "label"=> "express"
+                    "value" => "devicon-express-original",
+                    "label" => "express"
                 ],
                 [
-                    "value"=> "facebook",
-                    "label"=> "facebook"
+                    "value" => "devicon-facebook-plain",
+                    "label" => "facebook"
                 ],
                 [
-                    "value"=> "feathersjs",
-                    "label"=> "feathersjs"
+                    "value" => "devicon-feathersjs-original",
+                    "label" => "feathersjs"
                 ],
                 [
-                    "value"=> "figma",
-                    "label"=> "figma"
+                    "value" => "devicon-figma-plain",
+                    "label" => "figma"
                 ],
                 [
-                    "value"=> "filezilla",
-                    "label"=> "filezilla"
+                    "value" => "devicon-filezilla-plain",
+                    "label" => "filezilla"
                 ],
                 [
-                    "value"=> "firebase",
-                    "label"=> "firebase"
+                    "value" => "devicon-firebase-plain",
+                    "label" => "firebase"
                 ],
                 [
-                    "value"=> "firefox",
-                    "label"=> "firefox"
+                    "value" => "devicon-firefox-plain",
+                    "label" => "firefox"
                 ],
                 [
-                    "value"=> "flask",
-                    "label"=> "flask"
+                    "value" => "devicon-flask-original",
+                    "label" => "flask"
                 ],
                 [
-                    "value"=> "flutter",
-                    "label"=> "flutter"
+                    "value" => "devicon-flutter-plain",
+                    "label" => "flutter"
                 ],
                 [
-                    "value"=> "foundation",
-                    "label"=> "foundation"
+                    "value" => "devicon-foundation-plain",
+                    "label" => "foundation"
                 ],
                 [
-                    "value"=> "fsharp",
-                    "label"=> "fsharp"
+                    "value" => "devicon-fsharp-plain",
+                    "label" => "fsharp"
                 ],
                 [
-                    "value"=> "gatling",
-                    "label"=> "gatling"
+                    "value" => "devicon-gatling-plain",
+                    "label" => "gatling"
                 ],
                 [
-                    "value"=> "gatsby",
-                    "label"=> "gatsby"
+                    "value" => "devicon-gatsby-plain",
+                    "label" => "gatsby"
                 ],
                 [
-                    "value"=> "rect",
-                    "label"=> "rect"
+                    "value" => "devicon-rect-plain",
+                    "label" => "rect"
                 ],
                 [
-                    "value"=> "gcc",
-                    "label"=> "gcc"
+                    "value" => "devicon-gcc-plain",
+                    "label" => "gcc"
                 ],
                 [
-                    "value"=> "gentoo",
-                    "label"=> "gentoo"
+                    "value" => "devicon-gentoo-plain-wordmark",
+                    "label" => "gentoo"
                 ],
                 [
-                    "value"=> "gimp",
-                    "label"=> "gimp"
+                    "value" => "devicon-gimp-plain",
+                    "label" => "gimp"
                 ],
                 [
-                    "value"=> "git",
-                    "label"=> "git"
+                    "value" => "devicon-git-plain",
+                    "label" => "git"
                 ],
                 [
-                    "value"=> "github",
-                    "label"=> "github"
+                    "value" => "devicon-github-original",
+                    "label" => "github"
                 ],
                 [
-                    "value"=> "gitlab",
-                    "label"=> "gitlab"
+                    "value" => "devicon-gitlab-plain",
+                    "label" => "gitlab"
                 ],
                 [
-                    "value"=> "gitter",
-                    "label"=> "gitter"
+                    "value" => "devicon-gitter-plain",
+                    "label" => "gitter"
                 ],
                 [
-                    "value"=> "go",
-                    "label"=> "go"
+                    "value" => "devicon-go-original-wordmark",
+                    "label" => "go"
                 ],
                 [
-                    "value"=> "google",
-                    "label"=> "google"
+                    "value" => "devicon-google-plain",
+                    "label" => "google"
                 ],
                 [
-                    "value"=> "googlecloud",
-                    "label"=> "googlecloud"
+                    "value" => "devicon-googlecloud-plain",
+                    "label" => "googlecloud"
                 ],
                 [
-                    "value"=> "gradle",
-                    "label"=> "gradle"
+                    "value" => "devicon-gradle-plain",
+                    "label" => "gradle"
                 ],
                 [
-                    "value"=> "grafana",
-                    "label"=> "grafana"
+                    "value" => "devicon-grafana-original",
+                    "label" => "grafana"
                 ],
                 [
-                    "value"=> "grails",
-                    "label"=> "grails"
+                    "value" => "devicon-grails-plain",
+                    "label" => "grails"
                 ],
                 [
-                    "value"=> "graphql",
-                    "label"=> "graphql"
+                    "value" => "devicon-graphql-plain",
+                    "label" => "graphql"
                 ],
                 [
-                    "value"=> "groovy",
-                    "label"=> "groovy"
+                    "value" => "devicon-groovy-plain",
+                    "label" => "groovy"
                 ],
                 [
-                    "value"=> "grunt",
-                    "label"=> "grunt"
+                    "value" => "devicon-grunt-plain",
+                    "label" => "grunt"
                 ],
                 [
-                    "value"=> "gulp",
-                    "label"=> "gulp"
+                    "value" => "devicon-gulp-plain",
+                    "label" => "gulp"
                 ],
                 [
-                    "value"=> "godot",
-                    "label"=> "godot"
+                    "value" => "devicon-godot-plain",
+                    "label" => "godot"
                 ],
                 [
-                    "value"=> "haskell",
-                    "label"=> "haskell"
+                    "value" => "devicon-haskell-plain",
+                    "label" => "haskell"
                 ],
                 [
-                    "value"=> "handlebars",
-                    "label"=> "handlebars"
+                    "value" => "devicon-handlebars-plain",
+                    "label" => "handlebars"
                 ],
                 [
-                    "value"=> "haxe",
-                    "label"=> "haxe"
+                    "value" => "devicon-haxe-plain",
+                    "label" => "haxe"
                 ],
                 [
-                    "value"=> "heroku",
-                    "label"=> "heroku"
+                    "value" => "devicon-heroku-original",
+                    "label" => "heroku"
                 ],
                 [
-                    "value"=> "html5",
-                    "label"=> "html5"
+                    "value" => "devicon-html5-plain",
+                    "label" => "html5"
                 ],
                 [
-                    "value"=> "hugo",
-                    "label"=> "hugo"
+                    "value" => "devicon-hugo-plain",
+                    "label" => "hugo"
                 ],
                 [
-                    "value"=> "ie10",
-                    "label"=> "ie10"
+                    "value" => "devicon-ie10-original",
+                    "label" => "ie10"
                 ],
                 [
-                    "value"=> "ifttt",
-                    "label"=> "ifttt"
+                    "value" => "devicon-ifttt-original",
+                    "label" => "ifttt"
                 ],
                 [
-                    "value"=> "illustrator",
-                    "label"=> "illustrator"
+                    "value" => "devicon-illustrator-plain",
+                    "label" => "illustrator"
                 ],
                 [
-                    "value"=> "inkscape",
-                    "label"=> "inkscape"
+                    "value" => "devicon-inkscape-plain",
+                    "label" => "inkscape"
                 ],
                 [
-                    "value"=> "intellij",
-                    "label"=> "intellij"
+                    "value" => "devicon-intellij-plain",
+                    "label" => "intellij"
                 ],
                 [
-                    "value"=> "ionic",
-                    "label"=> "ionic"
+                    "value" => "devicon-ionic-original",
+                    "label" => "ionic"
                 ],
                 [
-                    "value"=> "jamstack",
-                    "label"=> "jamstack"
+                    "value" => "devicon-jamstack-original",
+                    "label" => "jamstack"
                 ],
                 [
-                    "value"=> "jasmine",
-                    "label"=> "jasmine"
+                    "value" => "devicon-jasmine-plain",
+                    "label" => "jasmine"
                 ],
                 [
-                    "value"=> "java",
-                    "label"=> "java"
+                    "value" => "devicon-java-plain",
+                    "label" => "java"
                 ],
                 [
-                    "value"=> "javascript",
-                    "label"=> "javascript"
+                    "value" => "devicon-javascript-plain",
+                    "label" => "javascript"
                 ],
                 [
-                    "value"=> "jeet",
-                    "label"=> "jeet"
+                    "value" => "devicon-jeet-plain",
+                    "label" => "jeet"
                 ],
                 [
-                    "value"=> "jest",
-                    "label"=> "jest"
+                    "value" => "devicon-jest-plain",
+                    "label" => "jest"
                 ],
                 [
-                    "value"=> "jenkins",
-                    "label"=> "jenkins"
+                    "value" => "devicon-jenkins-line",
+                    "label" => "jenkins"
                 ],
                 [
-                    "value"=> "jetbrains",
-                    "label"=> "jetbrains"
+                    "value" => "devicon-jetbrains-plain",
+                    "label" => "jetbrains"
                 ],
                 [
-                    "value"=> "jira",
-                    "label"=> "jira"
+                    "value" => "devicon-jira-plain",
+                    "label" => "jira"
                 ],
                 [
-                    "value"=> "jquery",
-                    "label"=> "jquery"
+                    "value" => "devicon-jquery-plain",
+                    "label" => "jquery"
                 ],
                 [
-                    "value"=> "julia",
-                    "label"=> "julia"
+                    "value" => "devicon-julia-plain",
+                    "label" => "julia"
                 ],
                 [
-                    "value"=> "jupyter",
-                    "label"=> "jupyter"
+                    "value" => "devicon-jupyter-plain",
+                    "label" => "jupyter"
                 ],
                 [
-                    "value"=> "kaggle",
-                    "label"=> "kaggle"
+                    "value" => "devicon-kaggle-original",
+                    "label" => "kaggle"
                 ],
                 [
-                    "value"=> "karma",
-                    "label"=> "karma"
+                    "value" => "devicon-karma-plain",
+                    "label" => "karma"
                 ],
                 [
-                    "value"=> "kotlin",
-                    "label"=> "kotlin"
+                    "value" => "devicon-kotlin-plain",
+                    "label" => "kotlin"
                 ],
                 [
-                    "value"=> "knockout",
-                    "label"=> "knockout"
+                    "value" => "devicon-knockout-plain-wordmark",
+                    "label" => "knockout"
                 ],
                 [
-                    "value"=> "krakenjs",
-                    "label"=> "krakenjs"
+                    "value" => "devicon-krakenjs-plain",
+                    "label" => "krakenjs"
                 ],
                 [
-                    "value"=> "kubernetes",
-                    "label"=> "kubernetes"
+                    "value" => "devicon-kubernetes-plain",
+                    "label" => "kubernetes"
                 ],
                 [
-                    "value"=> "labview",
-                    "label"=> "labview"
+                    "value" => "devicon-labview-plain",
+                    "label" => "labview"
                 ],
                 [
-                    "value"=> "laravel",
-                    "label"=> "laravel"
+                    "value" => "devicon-laravel-plain",
+                    "label" => "laravel"
                 ],
                 [
-                    "value"=> "latex",
-                    "label"=> "latex"
+                    "value" => "devicon-latex-original",
+                    "label" => "latex"
                 ],
                 [
-                    "value"=> "less",
-                    "label"=> "less"
+                    "value" => "devicon-less-plain-wordmark",
+                    "label" => "less"
                 ],
                 [
-                    "value"=> "linkedin",
-                    "label"=> "linkedin"
+                    "value" => "devicon-linkedin-plain",
+                    "label" => "linkedin"
                 ],
                 [
-                    "value"=> "lua",
-                    "label"=> "lua"
+                    "value" => "devicon-lua-plain",
+                    "label" => "lua"
                 ],
                 [
-                    "value"=> "linux",
-                    "label"=> "linux"
+                    "value" => "devicon-linux-plain",
+                    "label" => "linux"
                 ],
                 [
-                    "value"=> "materialui",
-                    "label"=> "materialui"
+                    "value" => "devicon-materialui-plain",
+                    "label" => "materialui"
                 ],
                 [
-                    "value"=> "matlab",
-                    "label"=> "matlab"
+                    "value" => "devicon-matlab-plain",
+                    "label" => "matlab"
                 ],
                 [
-                    "value"=> "magento",
-                    "label"=> "magento"
+                    "value" => "devicon-magento-original",
+                    "label" => "magento"
                 ],
                 [
-                    "value"=> "markdown",
-                    "label"=> "markdown"
+                    "value" => "devicon-markdown-original",
+                    "label" => "markdown"
                 ],
                 [
-                    "value"=> "maya",
-                    "label"=> "maya"
+                    "value" => "devicon-maya-plain",
+                    "label" => "maya"
                 ],
                 [
-                    "value"=> "meteor",
-                    "label"=> "meteor"
+                    "value" => "devicon-meteor-plain",
+                    "label" => "meteor"
                 ],
                 [
-                    "value"=> "minitab",
-                    "label"=> "minitab"
+                    "value" => "devicon-minitab-plain",
+                    "label" => "minitab"
                 ],
                 [
-                    "value"=> "mocha",
-                    "label"=> "mocha"
+                    "value" => "devicon-mocha-plain",
+                    "label" => "mocha"
                 ],
                 [
-                    "value"=> "modx",
-                    "label"=> "modx"
+                    "value" => "devicon-modx-plain",
+                    "label" => "modx"
                 ],
                 [
-                    "value"=> "mongodb",
-                    "label"=> "mongodb"
+                    "value" => "devicon-mongodb-plain",
+                    "label" => "mongodb"
                 ],
                 [
-                    "value"=> "moodle",
-                    "label"=> "moodle"
+                    "value" => "devicon-moodle-plain",
+                    "label" => "moodle"
                 ],
                 [
-                    "value"=> "msdos",
-                    "label"=> "msdos"
+                    "value" => "devicon-msdos-line",
+                    "label" => "msdos"
                 ],
                 [
-                    "value"=> "mysql",
-                    "label"=> "mysql"
+                    "value" => "devicon-mysql-plain",
+                    "label" => "mysql"
                 ],
                 [
-                    "value"=> "neo4j",
-                    "label"=> "neo4j"
+                    "value" => "devicon-neo4j-plain",
+                    "label" => "neo4j"
                 ],
                 [
-                    "value"=> "nestjs",
-                    "label"=> "nestjs"
+                    "value" => "devicon-nestjs-plain",
+                    "label" => "nestjs"
                 ],
                 [
-                    "value"=> "networkx",
-                    "label"=> "networkx"
+                    "value" => "devicon-networkx-original",
+                    "label" => "networkx"
                 ],
                 [
-                    "value"=> "nextjs",
-                    "label"=> "nextjs"
+                    "value" => "devicon-nextjs-original",
+                    "label" => "nextjs"
                 ],
                 [
-                    "value"=> "nginx",
-                    "label"=> "nginx"
+                    "value" => "devicon-nginx-original",
+                    "label" => "nginx"
                 ],
                 [
-                    "value"=> "nixos",
-                    "label"=> "nixos"
+                    "value" => "devicon-nixos-plain",
+                    "label" => "nixos"
                 ],
                 [
-                    "value"=> "nodejs",
-                    "label"=> "nodejs"
+                    "value" => "devicon-nodejs-plain",
+                    "label" => "nodejs"
                 ],
                 [
-                    "value"=> "nodewebkit",
-                    "label"=> "nodewebkit"
+                    "value" => "devicon-nodewebkit-plain",
+                    "label" => "nodewebkit"
                 ],
                 [
-                    "value"=> "npm",
-                    "label"=> "npm"
+                    "value" => "devicon-npm-original-wordmark",
+                    "label" => "npm"
                 ],
                 [
-                    "value"=> "nuget",
-                    "label"=> "nuget"
+                    "value" => "devicon-nuget-original",
+                    "label" => "nuget"
                 ],
                 [
-                    "value"=> "numpy",
-                    "label"=> "numpy"
+                    "value" => "devicon-numpy-original",
+                    "label" => "numpy"
                 ],
                 [
-                    "value"=> "nuxtjs",
-                    "label"=> "nuxtjs"
+                    "value" => "devicon-nuxtjs-plain",
+                    "label" => "nuxtjs"
                 ],
                 [
-                    "value"=> "objectivec",
-                    "label"=> "objectivec"
+                    "value" => "devicon-objectivec-plain",
+                    "label" => "objectivec"
                 ],
                 [
-                    "value"=> "opera",
-                    "label"=> "opera"
+                    "value" => "devicon-opera-plain",
+                    "label" => "opera"
                 ],
                 [
-                    "value"=> "ocaml",
-                    "label"=> "ocaml"
+                    "value" => "devicon-ocaml-plain",
+                    "label" => "ocaml"
                 ],
                 [
-                    "value"=> "openal",
-                    "label"=> "openal"
+                    "value" => "devicon-openal-plain",
+                    "label" => "openal"
                 ],
                 [
-                    "value"=> "opengl",
-                    "label"=> "opengl"
+                    "value" => "devicon-opengl-plain",
+                    "label" => "opengl"
                 ],
                 [
-                    "value"=> "opensuse",
-                    "label"=> "opensuse"
+                    "value" => "devicon-opensuse-plain",
+                    "label" => "opensuse"
                 ],
                 [
-                    "value"=> "oracle",
-                    "label"=> "oracle"
+                    "value" => "devicon-oracle-original",
+                    "label" => "oracle"
                 ],
                 [
-                    "value"=> "pandas",
-                    "label"=> "pandas"
+                    "value" => "devicon-pandas-original",
+                    "label" => "pandas"
                 ],
                 [
-                    "value"=> "perl",
-                    "label"=> "perl"
+                    "value" => "devicon-perl-plain",
+                    "label" => "perl"
                 ],
                 [
-                    "value"=> "phalcon",
-                    "label"=> "phalcon"
+                    "value" => "devicon-phalcon-plain",
+                    "label" => "phalcon"
                 ],
                 [
-                    "value"=> "photoshop",
-                    "label"=> "photoshop"
+                    "value" => "devicon-photoshop-plain",
+                    "label" => "photoshop"
                 ],
                 [
-                    "value"=> "php",
-                    "label"=> "php"
+                    "value" => "devicon-php-plain",
+                    "label" => "php"
                 ],
                 [
-                    "value"=> "phpstorm",
-                    "label"=> "phpstorm"
+                    "value" => "devicon-phpstorm-plain",
+                    "label" => "phpstorm"
                 ],
                 [
-                    "value"=> "podman",
-                    "label"=> "podman"
+                    "value" => "devicon-podman-plain",
+                    "label" => "podman"
                 ],
                 [
-                    "value"=> "polygon",
-                    "label"=> "polygon"
+                    "value" => "devicon-polygon-plain",
+                    "label" => "polygon"
                 ],
                 [
-                    "value"=> "postgresql",
-                    "label"=> "postgresql"
+                    "value" => "devicon-postgresql-plain",
+                    "label" => "postgresql"
                 ],
                 [
-                    "value"=> "premierepro",
-                    "label"=> "premierepro"
+                    "value" => "devicon-premierepro-plain",
+                    "label" => "premierepro"
                 ],
                 [
-                    "value"=> "processing",
-                    "label"=> "processing"
+                    "value" => "devicon-processing-plain",
+                    "label" => "processing"
                 ],
                 [
-                    "value"=> "protractor",
-                    "label"=> "protractor"
+                    "value" => "devicon-protractor-plain",
+                    "label" => "protractor"
                 ],
                 [
-                    "value"=> "putty",
-                    "label"=> "putty"
+                    "value" => "devicon-putty-plain",
+                    "label" => "putty"
                 ],
                 [
-                    "value"=> "pycharm",
-                    "label"=> "pycharm"
+                    "value" => "devicon-pycharm-plain",
+                    "label" => "pycharm"
                 ],
                 [
-                    "value"=> "python",
-                    "label"=> "python"
+                    "value" => "devicon-python-plain",
+                    "label" => "python"
                 ],
                 [
-                    "value"=> "pytorch",
-                    "label"=> "pytorch"
+                    "value" => "devicon-pytorch-original",
+                    "label" => "pytorch"
                 ],
                 [
-                    "value"=> "raspberrypi",
-                    "label"=> "raspberrypi"
+                    "value" => "devicon-raspberrypi-line",
+                    "label" => "raspberrypi"
                 ],
                 [
-                    "value"=> "phoenix",
-                    "label"=> "phoenix"
+                    "value" => "devicon-phoenix-plain",
+                    "label" => "phoenix"
                 ],
                 [
-                    "value"=> "qt",
-                    "label"=> "qt"
+                    "value" => "devicon-qt-original",
+                    "label" => "qt"
                 ],
                 [
-                    "value"=> "r",
-                    "label"=> "r"
+                    "value" => "devicon-r-original",
+                    "label" => "r"
                 ],
                 [
-                    "value"=> "rails",
-                    "label"=> "rails"
+                    "value" => "devicon-rails-plain",
+                    "label" => "rails"
                 ],
                 [
-                    "value"=> "react",
-                    "label"=> "react"
+                    "value" => "devicon-react-original",
+                    "label" => "react"
                 ],
                 [
-                    "value"=> "redhat",
-                    "label"=> "redhat"
+                    "value" => "devicon-redhat-plain",
+                    "label" => "redhat"
                 ],
                 [
-                    "value"=> "redis",
-                    "label"=> "redis"
+                    "value" => "devicon-redis-plain",
+                    "label" => "redis"
                 ],
                 [
-                    "value"=> "redux",
-                    "label"=> "redux"
+                    "value" => "devicon-redux-original",
+                    "label" => "redux"
                 ],
                 [
-                    "value"=> "rocksdb",
-                    "label"=> "rocksdb"
+                    "value" => "devicon-rocksdb-plain",
+                    "label" => "rocksdb"
                 ],
                 [
-                    "value"=> "ruby",
-                    "label"=> "ruby"
+                    "value" => "devicon-ruby-plain",
+                    "label" => "ruby"
                 ],
                 [
-                    "value"=> "rubymine",
-                    "label"=> "rubymine"
+                    "value" => "devicon-rubymine-plain",
+                    "label" => "rubymine"
                 ],
                 [
-                    "value"=> "rust",
-                    "label"=> "rust"
+                    "value" => "devicon-rust-plain",
+                    "label" => "rust"
                 ],
                 [
-                    "value"=> "safari",
-                    "label"=> "safari"
+                    "value" => "devicon-safari-plain",
+                    "label" => "safari"
                 ],
                 [
-                    "value"=> "salesforce",
-                    "label"=> "salesforce"
+                    "value" => "devicon-salesforce-plain",
+                    "label" => "salesforce"
                 ],
                 [
-                    "value"=> "sdl",
-                    "label"=> "sdl"
+                    "value" => "devicon-sdl-plain",
+                    "label" => "sdl"
                 ],
                 [
-                    "value"=> "rstudio",
-                    "label"=> "rstudio"
+                    "value" => "devicon-rstudio-plain",
+                    "label" => "rstudio"
                 ],
                 [
-                    "value"=> "sass",
-                    "label"=> "sass"
+                    "value" => "devicon-sass-original",
+                    "label" => "sass"
                 ],
                 [
-                    "value"=> "scala",
-                    "label"=> "scala"
+                    "value" => "devicon-scala-plain",
+                    "label" => "scala"
                 ],
                 [
-                    "value"=> "selenium",
-                    "label"=> "selenium"
+                    "value" => "devicon-selenium-original",
+                    "label" => "selenium"
                 ],
                 [
-                    "value"=> "sequelize",
-                    "label"=> "sequelize"
+                    "value" => "devicon-sequelize-plain",
+                    "label" => "sequelize"
                 ],
                 [
-                    "value"=> "shopware",
-                    "label"=> "shopware"
+                    "value" => "devicon-shopware-original",
+                    "label" => "shopware"
                 ],
                 [
-                    "value"=> "shotgrid",
-                    "label"=> "shotgrid"
+                    "value" => "devicon-shotgrid-plain",
+                    "label" => "shotgrid"
                 ],
                 [
-                    "value"=> "sketch",
-                    "label"=> "sketch"
+                    "value" => "devicon-sketch-line",
+                    "label" => "sketch"
                 ],
                 [
-                    "value"=> "slack",
-                    "label"=> "slack"
+                    "value" => "devicon-slack-plain",
+                    "label" => "slack"
                 ],
                 [
-                    "value"=> "socketio",
-                    "label"=> "socketio"
+                    "value" => "devicon-socketio-original",
+                    "label" => "socketio"
                 ],
                 [
-                    "value"=> "solidity",
-                    "label"=> "solidity"
+                    "value" => "devicon-solidity-plain",
+                    "label" => "solidity"
                 ],
                 [
-                    "value"=> "sourcetree",
-                    "label"=> "sourcetree"
+                    "value" => "devicon-sourcetree-original",
+                    "label" => "sourcetree"
                 ],
                 [
-                    "value"=> "spring",
-                    "label"=> "spring"
+                    "value" => "devicon-spring-plain",
+                    "label" => "spring"
                 ],
                 [
-                    "value"=> "spss",
-                    "label"=> "spss"
+                    "value" => "devicon-spss-plain",
+                    "label" => "spss"
                 ],
                 [
-                    "value"=> "sqlalchemy",
-                    "label"=> "sqlalchemy"
+                    "value" => "devicon-sqlalchemy-plain",
+                    "label" => "sqlalchemy"
                 ],
                 [
-                    "value"=> "sqlite",
-                    "label"=> "sqlite"
+                    "value" => "devicon-sqlite-plain",
+                    "label" => "sqlite"
                 ],
                 [
-                    "value"=> "subversion",
-                    "label"=> "subversion"
+                    "value" => "devicon-subversion-original",
+                    "label" => "subversion"
                 ],
                 [
-                    "value"=> "microsoftsqlserver",
-                    "label"=> "microsoftsqlserver"
+                    "value" => "devicon-microsoftsqlserver-plain",
+                    "label" => "microsoftsqlserver"
                 ],
                 [
-                    "value"=> "ssh",
-                    "label"=> "ssh"
+                    "value" => "devicon-ssh-original",
+                    "label" => "ssh"
                 ],
                 [
-                    "value"=> "stylus",
-                    "label"=> "stylus"
+                    "value" => "devicon-stylus-original",
+                    "label" => "stylus"
                 ],
                 [
-                    "value"=> "svelte",
-                    "label"=> "svelte"
+                    "value" => "devicon-svelte-plain",
+                    "label" => "svelte"
                 ],
                 [
-                    "value"=> "swift",
-                    "label"=> "swift"
+                    "value" => "devicon-swift-plain",
+                    "label" => "swift"
                 ],
                 [
-                    "value"=> "symfony",
-                    "label"=> "symfony"
+                    "value" => "devicon-symfony-original",
+                    "label" => "symfony"
                 ],
                 [
-                    "value"=> "storybook",
-                    "label"=> "storybook"
+                    "value" => "devicon-storybook-plain",
+                    "label" => "storybook"
                 ],
                 [
-                    "value"=> "tailwindcss",
-                    "label"=> "tailwindcss"
+                    "value" => "devicon-tailwindcss-original-wordmark",
+                    "label" => "tailwindcss"
                 ],
                 [
-                    "value"=> "tensorflow",
-                    "label"=> "tensorflow"
+                    "value" => "devicon-tensorflow-original",
+                    "label" => "tensorflow"
                 ],
                 [
-                    "value"=> "terraform",
-                    "label"=> "terraform"
+                    "value" => "devicon-terraform-plain",
+                    "label" => "terraform"
                 ],
                 [
-                    "value"=> "threejs",
-                    "label"=> "threejs"
+                    "value" => "devicon-threejs-original",
+                    "label" => "threejs"
                 ],
                 [
-                    "value"=> "tomcat",
-                    "label"=> "tomcat"
+                    "value" => "devicon-tomcat-line",
+                    "label" => "tomcat"
                 ],
                 [
-                    "value"=> "tortoisegit",
-                    "label"=> "tortoisegit"
+                    "value" => "devicon-tortoisegit-plain",
+                    "label" => "tortoisegit"
                 ],
                 [
-                    "value"=> "towergit",
-                    "label"=> "towergit"
+                    "value" => "devicon-towergit-plain",
+                    "label" => "towergit"
                 ],
                 [
-                    "value"=> "travis",
-                    "label"=> "travis"
+                    "value" => "devicon-travis-plain",
+                    "label" => "travis"
                 ],
                 [
-                    "value"=> "thealgorithms",
-                    "label"=> "thealgorithms"
+                    "value" => "devicon-thealgorithms-plain",
+                    "label" => "thealgorithms"
                 ],
                 [
-                    "value"=> "trello",
-                    "label"=> "trello"
+                    "value" => "devicon-trello-plain",
+                    "label" => "trello"
                 ],
                 [
-                    "value"=> "twitter",
-                    "label"=> "twitter"
+                    "value" => "devicon-twitter-original",
+                    "label" => "twitter"
                 ],
                 [
-                    "value"=> "typescript",
-                    "label"=> "typescript"
+                    "value" => "devicon-typescript-plain",
+                    "label" => "typescript"
                 ],
                 [
-                    "value"=> "typo3",
-                    "label"=> "typo3"
+                    "value" => "devicon-typo3-plain",
+                    "label" => "typo3"
                 ],
                 [
-                    "value"=> "ubuntu",
-                    "label"=> "ubuntu"
+                    "value" => "devicon-ubuntu-plain",
+                    "label" => "ubuntu"
                 ],
                 [
-                    "value"=> "unity",
-                    "label"=> "unity"
+                    "value" => "devicon-unity-original",
+                    "label" => "unity"
                 ],
                 [
-                    "value"=> "unix",
-                    "label"=> "unix"
+                    "value" => "devicon-unix-original",
+                    "label" => "unix"
                 ],
                 [
-                    "value"=> "unrealengine",
-                    "label"=> "unrealengine"
+                    "value" => "devicon-unrealengine-original",
+                    "label" => "unrealengine"
                 ],
                 [
-                    "value"=> "uwsgi",
-                    "label"=> "uwsgi"
+                    "value" => "devicon-uwsgi-plain",
+                    "label" => "uwsgi"
                 ],
                 [
-                    "value"=> "vagrant",
-                    "label"=> "vagrant"
+                    "value" => "devicon-vagrant-plain",
+                    "label" => "vagrant"
                 ],
                 [
-                    "value"=> "vim",
-                    "label"=> "vim"
+                    "value" => "devicon-vim-plain",
+                    "label" => "vim"
                 ],
                 [
-                    "value"=> "visualstudio",
-                    "label"=> "visualstudio"
+                    "value" => "devicon-visualstudio-plain",
+                    "label" => "visualstudio"
                 ],
                 [
-                    "value"=> "vuejs",
-                    "label"=> "vuejs"
+                    "value" => "devicon-vuejs-plain",
+                    "label" => "vuejs"
                 ],
                 [
-                    "value"=> "vuestorefront",
-                    "label"=> "vuestorefront"
+                    "value" => "devicon-vuestorefront-plain",
+                    "label" => "vuestorefront"
                 ],
                 [
-                    "value"=> "vscode",
-                    "label"=> "vscode"
+                    "value" => "devicon-vscode-plain",
+                    "label" => "vscode"
                 ],
                 [
-                    "value"=> "webflow",
-                    "label"=> "webflow"
+                    "value" => "devicon-webflow-original",
+                    "label" => "webflow"
                 ],
                 [
-                    "value"=> "weblate",
-                    "label"=> "weblate"
+                    "value" => "devicon-weblate-plain",
+                    "label" => "weblate"
                 ],
                 [
-                    "value"=> "webpack",
-                    "label"=> "webpack"
+                    "value" => "devicon-webpack-plain",
+                    "label" => "webpack"
                 ],
                 [
-                    "value"=> "webstorm",
-                    "label"=> "webstorm"
+                    "value" => "devicon-webstorm-plain",
+                    "label" => "webstorm"
                 ],
                 [
-                    "value"=> "windows8",
-                    "label"=> "windows8"
+                    "value" => "devicon-windows8-original",
+                    "label" => "windows8"
                 ],
                 [
-                    "value"=> "woocommerce",
-                    "label"=> "woocommerce"
+                    "value" => "devicon-woocommerce-plain",
+                    "label" => "woocommerce"
                 ],
                 [
-                    "value"=> "wordpress",
-                    "label"=> "wordpress"
+                    "value" => "devicon-wordpress-plain",
+                    "label" => "wordpress"
                 ],
                 [
-                    "value"=> "xamarin",
-                    "label"=> "xamarin"
+                    "value" => "devicon-xamarin-original",
+                    "label" => "xamarin"
                 ],
                 [
-                    "value"=> "xcode",
-                    "label"=> "xcode"
+                    "value" => "devicon-xcode-plain",
+                    "label" => "xcode"
                 ],
                 [
-                    "value"=> "xd",
-                    "label"=> "xd"
+                    "value" => "devicon-xd-plain",
+                    "label" => "xd"
                 ],
                 [
-                    "value"=> "yarn",
-                    "label"=> "yarn"
+                    "value" => "devicon-yarn-plain",
+                    "label" => "yarn"
                 ],
                 [
-                    "value"=> "yii",
-                    "label"=> "yii"
+                    "value" => "devicon-yii-plain",
+                    "label" => "yii"
                 ],
                 [
-                    "value"=> "yunohost",
-                    "label"=> "yunohost"
+                    "value" => "devicon-yunohost-plain",
+                    "label" => "yunohost"
                 ],
                 [
-                    "value"=> "zend",
-                    "label"=> "zend"
+                    "value" => "devicon-zend-plain",
+                    "label" => "zend"
                 ],
                 [
-                    "value"=> "zig",
-                    "label"=> "zig"
+                    "value" => "devicon-zig-original",
+                    "label" => "zig"
                 ],
                 [
-                    "value"=> "pytest",
-                    "label"=> "pytest"
+                    "value" => "devicon-pytest-plain",
+                    "label" => "pytest"
                 ],
                 [
-                    "value"=> "opencv",
-                    "label"=> "opencv"
+                    "value" => "devicon-opencv-plain",
+                    "label" => "opencv"
                 ],
                 [
-                    "value"=> "fastapi",
-                    "label"=> "fastapi"
+                    "value" => "devicon-fastapi-plain",
+                    "label" => "fastapi"
                 ],
                 [
-                    "value"=> "k3s",
-                    "label"=> "k3s"
+                    "value" => "devicon-k3s-original",
+                    "label" => "k3s"
                 ],
                 [
-                    "value"=> "packer",
-                    "label"=> "packer"
+                    "value" => "devicon-packer-original",
+                    "label" => "packer"
                 ],
                 [
-                    "value"=> "anaconda",
-                    "label"=> "anaconda"
+                    "value" => "devicon-anaconda-original",
+                    "label" => "anaconda"
                 ],
                 [
-                    "value"=> "rspec",
-                    "label"=> "rspec"
+                    "value" => "devicon-rspec-original",
+                    "label" => "rspec"
                 ],
                 [
-                    "value"=> "argocd",
-                    "label"=> "argocd"
+                    "value" => "devicon-argocd-plain",
+                    "label" => "argocd"
                 ],
                 [
-                    "value"=> "prometheus",
-                    "label"=> "prometheus"
+                    "value" => "devicon-prometheus-original",
+                    "label" => "prometheus"
                 ],
                 [
-                    "value"=> "blender",
-                    "label"=> "blender"
+                    "value" => "devicon-blender-original",
+                    "label" => "blender"
                 ],
                 [
-                    "value"=> "dropwizard",
-                    "label"=> "dropwizard"
+                    "value" => "devicon-dropwizard-plain",
+                    "label" => "dropwizard"
                 ],
                 [
-                    "value"=> "vuetify",
-                    "label"=> "vuetify"
+                    "value" => "devicon-vuetify-line",
+                    "label" => "vuetify"
                 ],
                 [
-                    "value"=> "fedora",
-                    "label"=> "fedora"
+                    "value" => "devicon-fedora-plain",
+                    "label" => "fedora"
                 ]
             ]
         ]);
