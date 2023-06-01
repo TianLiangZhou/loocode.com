@@ -181,11 +181,11 @@ class ToolController extends Controller
         $tool = $request->request->get('tool', '');
         $body = $request->request->all();
         return match ($tool) {
-            'pinyin' => $this->pinyin($body),
-            'opencc' => $this->opencc($body),
-            'lac' => $this->lac($body),
-            'qrcode' => $this->qrcode($body, $request->files->get('logo')),
-            'ocr' => $this->ocr($cache, $request->files->get('logo')),
+            'chinese-to-pinyin' => $this->pinyin($body),
+            'simplified-chinese-to-traditional-chinese' => $this->opencc($body),
+            'chinese-word-segmentation' => $this->lac($body),
+            'qr-code-generator' => $this->qrcode($body, $request->files->get('logo')),
+            'ocr-recognition' => $this->ocr($cache, $request->files->get('logo')),
             default => $this->json(null),
         };
     }
