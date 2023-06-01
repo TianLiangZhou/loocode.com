@@ -1,0 +1,56 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block header %}{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
+{% endblock %}
+{% block body %}
+    <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
+        <div class="isolate pt-2 px-4">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex flex-col">
+            <div class="flex-1 px-4 mt-2">
+                <div class="flex flex-col items-start overflow-hidden">
+                    <div class="w-full relative h-[calc(100vh-10.75rem)] flex items-center justify-center bg-slate-200 dark:bg-slate-800" id="inputContainer">
+                        <div class="relative"  x-data="{}">
+                            <button @click="$refs.file.click()" class="btn medium !bg-primary text-white w-48 !border-primary tracking-widest">选择图片</button>
+                            <input x-ref="file" id="inputFile" type="file" accept=".jpg, .jpeg, .png, .webp" class="absolute left-0 btn medium !bg-primary text-white invisible" value="" />
+                        </div>
+                    </div>
+                    <div class="w-full hidden relative" id="outputContainer">
+                        <label>
+                            <textarea id="outputString" disabled class="h-[calc(100vh-10.75rem)] w-full rounded-md scrollable bg-slate-200 dark:bg-slate-800 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="编码解码结果..."></textarea>
+                        </label>
+                        <div class="absolute top-2 right-2 z-50 flex flex-col">
+                            <button title="复制" aria-label="复制" id="btnCopy" class="btn bg-slate-300 dark:bg-slate-900 text-white small border-slate-300 dark:border-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-slate-800 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="clipboard"><rect width="24" height="24" opacity="0"/><path d="M18 4v3a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/><rect x="7" y="2" width="10" height="6" rx="1" ry="1"/></g></g></svg>
+                            </button>
+                            <button title="重新选择" aria-label="重新选择" id="btnRefresh" class="mt-2 btn bg-slate-300 dark:bg-slate-900 text-white small border-slate-300 dark:border-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-slate-800 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="refresh"><rect width="24" height="24" opacity="0"/><path d="M20.3 13.43a1 1 0 0 0-1.25.65A7.14 7.14 0 0 1 12.18 19 7.1 7.1 0 0 1 5 12a7.1 7.1 0 0 1 7.18-7 7.26 7.26 0 0 1 4.65 1.67l-2.17-.36a1 1 0 0 0-1.15.83 1 1 0 0 0 .83 1.15l4.24.7h.17a1 1 0 0 0 .34-.06.33.33 0 0 0 .1-.06.78.78 0 0 0 .2-.11l.09-.11c0-.05.09-.09.13-.15s0-.1.05-.14a1.34 1.34 0 0 0 .07-.18l.75-4a1 1 0 0 0-2-.38l-.27 1.45A9.21 9.21 0 0 0 12.18 3 9.1 9.1 0 0 0 3 12a9.1 9.1 0 0 0 9.18 9A9.12 9.12 0 0 0 21 14.68a1 1 0 0 0-.7-1.25z"/></g></g></svg>
+                            </button>
+                            <button title="预览" aria-label="预览" id="btnView" class="mt-2 btn bg-slate-300 dark:bg-slate-900 text-white small border-slate-300 dark:border-slate-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-slate-800 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="image"><rect width="24" height="24" opacity="0"/><path d="M18 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3zM6 5h12a1 1 0 0 1 1 1v8.36l-3.2-2.73a2.77 2.77 0 0 0-3.52 0L5 17.7V6a1 1 0 0 1 1-1zm12 14H6.56l7-5.84a.78.78 0 0 1 .93 0L19 17v1a1 1 0 0 1-1 1z"/><circle cx="8" cy="8.5" r="1.5"/></g></g></svg>
+                            </button>
+                        </div>
+                        <div id="imageContainer" class="hidden absolute top-1/4 left-1/2 max-w-sm z-100 bg-white p-8">
+                            <img alt="image-to-base64" src="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    <footer class="p-6 bg-white dark:bg-slate-800 fixed bottom-0 w-full">
+        <div class="mx-auto max-w-screen-xl text-center">
+            <div class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                {% set beian = theme_mod('beian') %}
+                <p>© {{ now|date('Y')}} Powered By <a target="_blank" href="https://octopuspress.dev" class="hover:underline">OctopusPress™</a>. {% if beian %}<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="nofollow">{{ beian }}</a>{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ asset('assets/js/image-base64.js') }}"></script>
+{% endblock %}

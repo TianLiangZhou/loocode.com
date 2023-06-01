@@ -4,15 +4,15 @@
         <label for="logo" class="text-slate-700 dark:text-slate-400">图片</label>
         <div class="flex-1 ml-4 flex flex-col relative">
             <div class="relative" x-data="{img: ''}">
-                <button type="button" @click="$refs.logo.click()" class="absolute left-0 top-0 w-36 text-white py-1 rounded-md font-medium text-center bg-primary border-2 border-solid border-primary">上传图片</button>
-                <input accept="image/*" id="logo" x-ref="logo" @change="img=window.URL.createObjectURL($el.files[0])" placeholder="上传logo" class="w-36 opacity-0 invisible" name="logo" value="选择图片" type="file" />
+                <button type="button" @click="$refs.logo.click()" class="absolute left-0 top-0 w-36 text-white py-1 rounded-md font-medium text-center !bg-primary border-2 border-solid !border-primary">上传图片</button>
+                <input id="logo" x-ref="logo" accept=".jpg, .jpeg, .png, .webp" @change="img=window.URL.createObjectURL($el.files[0])" placeholder="上传logo" class="w-36 opacity-0 invisible" name="logo" value="选择图片" type="file" />
                 <img class="mt-4" x-show="img!=''" :src="img" />
             </div>
             <span class="text-sm text-slate-400 mt-2">限制最大为2M</span>
         </div>
     </div>
     <div class="flex my-5 justify-center">
-        <button type="button" class="bg-primary text-white rounded-md px-3 py-1 text-xl font-bold" @click.prevent="convert()">识别</button>
+        <button type="button" class="!bg-primary text-white rounded-md px-3 py-1 text-xl font-bold" @click.prevent="convert()">识别</button>
     </div>
     <div class="flex my-5">
         <label class="text-slate-700 dark:text-slate-400">结果</label>

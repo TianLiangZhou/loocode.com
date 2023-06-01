@@ -1,5 +1,8 @@
 {% extends '@OctopusPress/base.html.twig' %}
 {% block header %}{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
+{% endblock %}
 {% block body %}
     <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
         <div class="isolate pt-2 px-4">
@@ -24,10 +27,10 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="fill-slate-700 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="clipboard"><rect width="24" height="24" opacity="0"/><path d="M18 4v3a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/><rect x="7" y="2" width="10" height="6" rx="1" ry="1"/></g></g></svg>
                                 </button>
                                 <label class="dark:text-slate-300">
-                                    <input id="inlineType" class="text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 内联类型
+                                    <input id="inlineType" class="!text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 内联类型
                                 </label>
                                 <label class="mx-2 dark:text-slate-300">
-                                    <input id="omitEmpty" class="text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 省略空
+                                    <input id="omitEmpty" class="!text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 省略空
                                 </label>
                             </div>
                             <div class="h-[calc(100vh-10.75rem-36px)] rounded-b-md w-full bg-slate-200 dark:bg-slate-800 !dark:text-slate-300 text-base font-bold 2xl:text-lg break-words" id="outputStruct">
@@ -50,6 +53,6 @@
 </footer>
 {% endblock %}
 {% block script %}
-    <script type="text/javascript" src="{{ asset('js/prismjs.js', 'theme') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/json-to-go.js', 'theme') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/prismjs.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/json-to-go.js') }}"></script>
 {% endblock %}

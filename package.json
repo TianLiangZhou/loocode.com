@@ -1,0 +1,30 @@
+{
+  "name": "symfony-loocode",
+  "version": "1.0.0",
+  "description": "loocode.com",
+  "scripts": {
+    "build": "node esbuild.js",
+    "dev": "node esbuild.js --dev",
+    "watch": "node esbuild.js --dev --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.4.14",
+    "esbuild-plugin-prismjs": "^1.0.8",
+    "js-base64": "^3.7.5",
+    "json-formatter-js": "^2.3.4",
+    "json-to-go": "https://github.com/mholt/json-to-go#master",
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0",
+    "postcss-nesting": "^11.2.2",
+    "prismjs": "^1.29.0",
+    "toastify-js": "^1.12.0",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.19",
+    "tailwindcss": "^3.3.2"
+  },
+  "packageManager": "yarn@3.5.0"
+}
