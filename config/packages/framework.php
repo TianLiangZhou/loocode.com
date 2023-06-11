@@ -33,7 +33,7 @@ return static function (FrameworkConfig $frameworkConfig, ContainerBuilder $cont
     }
     $assetsConfig = $frameworkConfig->assets();
     $assetsConfig->baseUrls(env('ASSETS_URL'));
-    $assetsConfig->version(OctopusPress\Bundle\OctopusPressKernel::OCTOPUS_PRESS_VERSION);
+    $assetsConfig->version('1.0.12');
     $assetsConfig->versionFormat("%%s?v=%%s");
 
     $frameworkConfig->httpClient()
