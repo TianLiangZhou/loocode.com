@@ -13,9 +13,13 @@ use OctopusPress\Bundle\Bridge\Bridger;
 use OctopusPress\Bundle\Controller\Controller;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -84,6 +88,12 @@ class ToolController extends Controller
             'title' => '在线图片转Base64_图片Base64解码_图片Base64编码',
             'description' => '在线图片转Base64编码可以帮助您将图片转换为对应的Base64数据。只需选择您的图片文件即可快速转换成对应的Base64数据。',
         ],
+        'image-compression' => [
+            'name' => 'PNG|WEBP|JPEG|JPG图片压缩',
+            'href' => '/tool/image-compression',
+            'title' => '在线压缩WebP、PNG、JPEG、JPG、GIF图片',
+            'description' => '图片压缩将您的WebP、PNG 和 JPEG图片优化50-80%，同时保持完全透明！节省您的存储空间，节省您的带宽，更快加载时间，更快的访问速度！',
+        ],
     ];
 
     static array $tags = [
@@ -142,8 +152,8 @@ class ToolController extends Controller
         $optionVariables['options']['social_description'] = '%description%';
         if ($activatedRoute->getRouteName() == 'tools_page') {
             $optionVariables['variables'] = [
-                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体',
-                'description' => '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别等等在线工具',
+                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体_PNG|WEBP|JPEG图片压缩',
+                'description' => '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别，图片压缩等等在线工具',
             ];
         } else {
             $name = $this->bridger->getRequest()->attributes->get('name');
@@ -186,9 +196,79 @@ class ToolController extends Controller
             'chinese-word-segmentation' => $this->lac($body),
             'qr-code-generator' => $this->qrcode($body, $request->files->get('logo')),
             'ocr-recognition' => $this->ocr($cache, $request->files->get('logo')),
+            'image-compression' => $this->imageCompression($request->files->get('image')),
             default => $this->json(null),
         };
     }
+
+
+    /**
+     * @param string $name
+     * @return BinaryFileResponse
+     */
+    #[Route('/tool/image-compression/{name}', requirements: ['name' => '([a-z0-9]{32})\-(png|webp|jpeg)'])]
+    public function downloadCompressionImage(string $name): BinaryFileResponse
+    {
+        $file = $this->bridger->getTempDir() . '/' . str_replace('-', '.', $name);
+        if (!file_exists($file)) {
+            throw $this->createNotFoundException();
+        }
+        return $this->file($file);
+    }
+
+        /**
+     * @param UploadedFile $uploadedFile
+     * @return JsonResponse
+     */
+    private function imageCompression(UploadedFile $uploadedFile): JsonResponse
+    {
+        $file = $this->uploadLogo($uploadedFile, 5);
+        if ($file === 'error-type') {
+            return $this->json([
+                'message' => '错误的图片类型',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        if ($file === 'error-max') {
+            return $this->json([
+                'message' => '超出文件大小',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $pathInfo = pathinfo($file);
+        $name = $pathInfo['basename'];
+        $path = ($this->bridger->getBuildAssetsDir() ? : $this->bridger->getPublicDir())
+        . '/upload/images/compression/' . date('Ymd');
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+        $output = $path . '/' . $name;
+        switch (strtolower($pathInfo['extension'])) {
+            case 'webp':
+                $process = Process::fromShellCommandline('cwebp '. $file . ' -o ' . $output . ' -q 100 -m 6 -lossless');
+                break;
+            case 'png':
+                $process = Process::fromShellCommandline('oxipng '. $file . ' --out ' . $output . ' --opt max --strip safe');
+                break;
+            case 'jpeg':
+            case 'jpg':
+                $process = Process::fromShellCommandline('convert '. $file . ' -quality 70% ' . $output);
+                break;
+            default:
+                return $this->json([
+                    'message' => '错误的图片类型',
+                ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        if (0 !== $process->run()) {
+            return $this->json([
+                'message' => $process->getErrorOutput(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        unlink($file);
+        return $this->json([
+            'size'     => filesize($output),
+            'download' => $this->bridger->getPackages()->getUrl('/upload/images/compression/' .date('Ymd').'/'.$name),
+        ]);
+    }
+
 
     /**
      * @param string $name
@@ -205,6 +285,7 @@ class ToolController extends Controller
             'tools' => $this->tools,
             'tool' => $tool,
             'name' => $name,
+            'upload_size' => ini_get('upload_max_filesize'),
         ]);
     }
 
@@ -481,9 +562,9 @@ EOF;
         ]);
     }
 
-    private function uploadLogo(UploadedFile $logo): string
+    private function uploadLogo(UploadedFile $logo, int $max = 2): string
     {
-        if ($logo->getSize() > 2 * 1024 * 1024) {
+        if ($logo->getSize() > $max * 1024 * 1024) {
             // 超出大小
             return "error-max";
         }
@@ -491,10 +572,9 @@ EOF;
             // mime类型错误;
             return "error-type";
         }
-        $filename = md5($logo->getClientOriginalName()) . '.' . $logo->getClientOriginalExtension();
-        $path = dirname($this->bridger->getCacheDir(), 2) . '/temp';
-        $logo->move($path, $filename);
-        return $path . '/' . $filename;
+        $filename = $logo->getClientOriginalName();
+        $logo->move($this->bridger->getTempDir(), $filename);
+        return $this->bridger->getTempDir() . '/' . $filename;
     }
 
 
