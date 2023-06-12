@@ -201,21 +201,6 @@ class ToolController extends Controller
         };
     }
 
-
-    /**
-     * @param string $name
-     * @return BinaryFileResponse
-     */
-    #[Route('/tool/image-compression/{name}', requirements: ['name' => '([a-z0-9]{32})\-(png|webp|jpeg)'])]
-    public function downloadCompressionImage(string $name): BinaryFileResponse
-    {
-        $file = $this->bridger->getTempDir() . '/' . str_replace('-', '.', $name);
-        if (!file_exists($file)) {
-            throw $this->createNotFoundException();
-        }
-        return $this->file($file);
-    }
-
         /**
      * @param UploadedFile $uploadedFile
      * @return JsonResponse
