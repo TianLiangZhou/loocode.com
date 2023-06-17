@@ -13,12 +13,10 @@ use OctopusPress\Bundle\Bridge\Bridger;
 use OctopusPress\Bundle\Controller\Controller;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -94,6 +92,120 @@ class ToolController extends Controller
             'title' => '在线压缩WebP、PNG、JPEG、JPG、GIF图片',
             'description' => '图片压缩将您的WebP、PNG 和 JPEG图片优化50-80%，同时保持完全透明！节省您的存储空间，节省您的带宽，更快加载时间，更快的访问速度！',
         ],
+        'png-to-webp' => [
+            'name' => 'PNG转WEBP',
+            'href' => '/tool/png-to-webp',
+            'title' => '在线PNG图像转换webp图像',
+            'description' => '在线图像转换工具将您的png图像转换成webp格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'png-to-jpeg' => [
+            'name' => 'PNG转JPEG',
+            'href' => '/tool/png-to-jpeg',
+            'title' => '在线PNG图像转换JPEG图像',
+            'description' => '在线图像转换工具将您的png图像转换成jpeg格式文件，同时支持png,webp,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'png-to-jpg'  => [
+            'name' => 'PNG转JPG',
+            'href' => '/tool/png-to-jpg',
+            'title' => '在线PNG图像转换jpg图像',
+            'description' => '在线图像转换工具将您的png图像转换成jpg格式文件，同时支持jpeg,webp,png,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'webp-to-png' => [
+            'name' => 'WEBP转PNG',
+            'href' => '/tool/webp-to-png',
+            'title' => '在线WEBP图像转换PNG图像',
+            'description' => '在线图像转换工具将您的webp图像转换成png格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'webp-to-jpeg' => [
+            'name' => 'WEBP转JPEG',
+            'href' => '/tool/webp-to-jpeg',
+            'title' => '在线WEBP图像转换JPEG图像',
+            'description' => '在线图像转换工具将您的webp图像转换成jpeg格式文件，同时支持png,webp,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'jpeg-to-png' => [
+            'name' => 'JPEG转PNG',
+            'href' => '/tool/jpeg-to-png',
+            'title' => '在线jpeg图像转换png图像',
+            'description' => '在线图像转换工具将您的jpeg图像转换成png格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'jpeg-to-webp' => [
+            'name' => 'JPEG转WEBP',
+            'href' => '/tool/jpeg-to-webp',
+            'title' => '在线jpeg图像转换webp图像',
+            'description' => '在线图像转换工具将您的jpeg图像转换成webp格式文件，同时支持jpeg,png,jpg,heic,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'heic-to-webp' => [
+            'name' => 'HEIC转WEBP',
+            'href' => '/tool/heic-to-webp',
+            'title' => '在线heic图像转换WEBP图像',
+            'description' => '在线图像转换工具将您的heic图像转换成webp格式文件，同时支持jpeg,png,jpg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'heic-to-png' => [
+            'name' => 'HEIC转PNG',
+            'href' => '/tool/heic-to-png',
+            'title' => '在线heic图像转换png图像',
+            'description' => '在线图像转换工具将您的heic图像转换成png格式文件，同时支持jpeg,heic,jpg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'heic-to-jpeg' => [
+            'name' => 'HEIC转JPEG',
+            'href' => '/tool/heic-to-jpeg',
+            'title' => '在线heic图像转换jpeg图像',
+            'description' => '在线图像转换工具将您的heic图像转换成jpeg格式文件，同时支持png,heic,jpg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'heic-to-jpg' => [
+            'name' => 'HEIC转JPG',
+            'href' => '/tool/heic-to-jpg',
+            'title' => '在线heic图像转换jpg图像',
+            'description' => '在线图像转换工具将您的heic图像转换成jpeg格式文件，同时支持png,heic,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'heic-to-avif' => [
+            'name' => 'HEIC转AVIF',
+            'href' => '/tool/heic-to-avif',
+            'title' => '在线heic图像转换avif图像',
+            'description' => '在线图像转换工具将您的heic图像转换成avif格式文件，同时支持png,heic,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'avif-to-heic' => [
+            'name' => 'AVIF转HEIC',
+            'href' => '/tool/avif-to-heic',
+            'title' => '在线avif图像转换heic图像',
+            'description' => '在线图像转换工具将您的avif图像转换成heic格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+
+        'avif-to-jpeg' => [
+            'name' => 'AVIF转JPEG',
+            'href' => '/tool/avif-to-jpeg',
+            'title' => '在线avif图像转换jpeg图像',
+            'description' => '在线图像转换工具将您的avif图像转换成jpeg格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'avif-to-png' => [
+            'name' => 'AVIF转PNG',
+            'href' => '/tool/avif-to-png',
+            'title' => '在线avif图像转换png图像',
+            'description' => '在线图像转换工具将您的avif图像转换成png格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+        'avif-to-webp' => [
+            'name' => 'AVIF转WEBP',
+            'href' => '/tool/avif-to-webp',
+            'title' => '在线avif图像转换webp图像',
+            'description' => '在线图像转换工具将您的avif图像转换成webp格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
+            'group' => 'image-convert',
+        ],
+
     ];
 
     static array $tags = [
@@ -190,6 +302,9 @@ class ToolController extends Controller
          */
         $tool = $request->request->get('tool', '');
         $body = $request->request->all();
+        if (isset($this->tools[$tool]['group']) && $this->tools[$tool]['group'] == 'image-convert') {
+            return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
+        }
         return match ($tool) {
             'chinese-to-pinyin' => $this->pinyin($body),
             'simplified-chinese-to-traditional-chinese' => $this->opencc($body),
@@ -254,6 +369,45 @@ class ToolController extends Controller
         ]);
     }
 
+    /**
+     * @param array $features
+     * @param UploadedFile $uploadedFile
+     * @return JsonResponse
+     */
+    public function imageConvert(array $features, UploadedFile $uploadedFile): JsonResponse
+    {
+        $file = $this->uploadLogo($uploadedFile, 5);
+        if ($file === 'error-type') {
+            return $this->json([
+                'message' => '错误的图片类型',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        if ($file === 'error-max') {
+            return $this->json([
+                'message' => '超出文件大小',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $pathInfo = pathinfo($file);
+        $name = $pathInfo['filename'] . '.' . $features[2];
+        $path = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir())
+            . '/upload/images/compression/' . date('Ymd');
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+        $output = $path . '/' . $name;
+        $process = Process::fromShellCommandline('convert '. $file . ' ' . $output);
+        if (0 !== $process->run()) {
+            return $this->json([
+                'message' => $process->getErrorOutput(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        unlink($file);
+        return $this->json([
+            'size'     => filesize($output),
+            'download' => $this->bridger->getPackages()->getUrl('/upload/images/compression/' .date('Ymd').'/'.$name),
+        ]);
+    }
+
 
     /**
      * @param string $name
@@ -266,10 +420,16 @@ class ToolController extends Controller
             throw $this->createNotFoundException();
         }
         $tool = $this->tools[$name];
-        return $this->render('tools/' . $name . '.html.twig', [
+        $template = 'tools/' . $name . '.html.twig';
+        $features = explode('-', $name);
+        if (isset($tool['group']) && $tool['group'] === 'image-convert') {
+            $template = 'tools/image-convert.html.twig';
+        }
+        return $this->render($template, [
             'tools' => $this->tools,
             'tool' => $tool,
             'name' => $name,
+            'features'    => $features,
             'upload_size' => ini_get('upload_max_filesize'),
         ]);
     }
@@ -553,7 +713,7 @@ EOF;
             // 超出大小
             return "error-max";
         }
-        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
+        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['heic', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
             // mime类型错误;
             return "error-type";
         }
