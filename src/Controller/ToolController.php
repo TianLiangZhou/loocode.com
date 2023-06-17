@@ -713,7 +713,7 @@ EOF;
             // 超出大小
             return "error-max";
         }
-        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['heic', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
+        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['heic', 'avif', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
             // mime类型错误;
             return "error-type";
         }
