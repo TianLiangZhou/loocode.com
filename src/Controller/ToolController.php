@@ -255,22 +255,24 @@ class ToolController extends Controller
         return $crumbs;
     }
 
-
-
-    public function seo(array $optionVariables)
+    /**
+     * @param array $optionVariables
+     * @return array
+     */
+    public function seo(array $optionVariables): array
     {
         $activatedRoute = $this->bridger->getActivatedRoute();
         $optionVariables['options']['description'] = '%description%';
         $optionVariables['options']['social_description'] = '%description%';
         if ($activatedRoute->getRouteName() == 'tools_page') {
             $optionVariables['variables'] = [
-                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体_PNG|WEBP|JPEG图片压缩',
+                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体_PNG|WEBP|JPEG图片压缩 - 在线工具',
                 'description' => '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别，图片压缩等等在线工具',
             ];
         } else {
             $name = $this->bridger->getRequest()->attributes->get('name');
             $optionVariables['variables'] = [
-                'title' => $this->tools[$name]['title'],
+                'title' => $this->tools[$name]['title'] . ' - 在线工具',
                 'description' =>  $this->tools[$name]['description'],
             ];
         }
