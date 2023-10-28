@@ -19,7 +19,7 @@ return static function(MonologConfig $monologConfig, ContainerConfigurator $conf
                 ->bufferSize(50);
             $monologConfig->handler('nested')
                 ->type('stream')
-                ->path('php://stderr')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
                 ->formatter('monolog.formatter.json')
                 ->level('debug');
             $monologConfig->handler('console')
