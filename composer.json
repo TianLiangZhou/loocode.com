@@ -106,11 +106,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "../octopuspress-bundle",
-            "options": {
-              "symlink": true
-            }
+          "type": "vcs",
+          "url": "https://github.com/TianLiangZhou/octopuspress-bundle"
         }
     ]
 }
