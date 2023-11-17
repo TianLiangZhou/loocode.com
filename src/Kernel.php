@@ -16,7 +16,7 @@ class Kernel extends OctopusPressKernel implements PluginInterface
     {
 
         $bridger->getMeta()->registerPost(Post::TYPE_POST, 'devicon', [], [
-            'type' => AbstractControl::SELECT,
+            'type' => AbstractControl::SELECT_SEARCH,
             'label' => '主标签',
             'options' => [
                 [
