@@ -5,7 +5,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 return function (ContainerConfigurator $configurator, ContainerBuilder $container) {
     if ($configurator->env() === 'prod') {

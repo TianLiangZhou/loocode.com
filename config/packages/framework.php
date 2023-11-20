@@ -6,6 +6,7 @@ use Symfony\Config\FrameworkConfig;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 return static function (FrameworkConfig $frameworkConfig, ContainerBuilder $container) {
+    $frameworkConfig->enabledLocales(['en']);
     $sessionConfig = $frameworkConfig->secret(env('APP_SECRET'))
         ->httpMethodOverride(false)
         ->session();
