@@ -33,7 +33,7 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
     plugins: [
       prismjsPlugin.prismjsPlugin({
         inline: true,
-        languages: ['typescript', 'javascript', 'css', 'markup', 'bash', 'php', 'go', 'java', 'sh', 'shell', 'html', 'sql', 'json', 'py', 'nginx', 'kt'],
+        languages: ['typescript', 'javascript', 'css', 'markup', 'bash', 'php', 'go', 'java', 'sh', 'shell', 'html', 'sql', 'json', 'py', 'nginx', 'kt', 'rust', 'ini', 'py', 'jsx', 'json', 'json5', 'scss', 'less', 'c', 'cpp', 'cs', 'twig', 'toml', 'git'],
         plugins: [
           'autoloader',
           'line-highlight',

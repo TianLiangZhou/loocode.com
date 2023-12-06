@@ -46,19 +46,30 @@
             Alpine.data("toolConvert", () => ({
                 mode: 0,
                 data: null,
+                loading: false,
                 convert() {
+                    if (this.loading) {
+                        return;
+                    }
+                    /** @type {HTMLFormElement} */
+                    var form = this.$refs.form;
+                    if (!form.checkValidity()) {
+                        alert('必填项不能为空！');
+                        return ;
+                    }
+                    this.loading = true;
                     window.fetch('/tool/convert', {
                         method: 'POST',
                         body: new FormData(this.$refs.form),
-                    })
-                    .then((response) => {
+                    }).then((response) => {
+                        this.loading = false;
                         response.json().then((body) => {
                             this.data = body.data;
                         }).catch((err) => {
                             console.log(err);
                         });
-                    })
-                    .catch((err) => {
+                    }).catch((err) => {
+                        this.loading = false;
                         console.log(err);
                     })
                 }})

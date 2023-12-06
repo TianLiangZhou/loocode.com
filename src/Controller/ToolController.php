@@ -231,6 +231,21 @@ class ToolController extends Controller
         $hook->add('_seo_tools_page', [$this, 'seo']);
         $hook->add('_seo_tool_single_page', [$this, 'seo']);
         $hook->add('breadcrumb', [$this, 'breadcrumb']);
+        $hook->add('compare_url', [$this, 'compareUrl']);
+    }
+
+    /**
+     * @param bool $current
+     * @param string $link
+     * @param string $pathInfo
+     * @return bool
+     */
+    public function compareUrl(bool $current, string $link, string $pathInfo): bool
+    {
+        if ($link === '/tools' && $this->bridger->getActivatedRoute()->getRouteName() === 'tool_single_page') {
+            return true;
+        }
+        return $current;
     }
 
     /**
@@ -444,7 +459,7 @@ class ToolController extends Controller
      */
     private function ocr(CacheItemPoolInterface $cache, UploadedFile $uploadedFile = null): Response
     {
-        if ($cache->hasItem('ocr:threading')) {
+        if ($cache->hasItem('ocr_threading')) {
             return $this->json([
                 'message' => '请等待其它任务完成!',
             ], Response::HTTP_SERVICE_UNAVAILABLE);
@@ -465,7 +480,7 @@ class ToolController extends Controller
                     ], Response::HTTP_SERVICE_UNAVAILABLE);
             }
             $OCR = OCR::new(['use_mkldnn' => 0]);
-            $cacheItem = $cache->getItem('ocr:threading');
+            $cacheItem = $cache->getItem('ocr_threading');
             $cacheItem->expiresAfter(60);
             $cacheItem->set(1);
             $cache->save($cacheItem);
