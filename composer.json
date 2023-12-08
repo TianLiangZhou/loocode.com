@@ -44,7 +44,8 @@
         "symfony/yaml": "6.3.*",
         "twig/extra-bundle": "^3.0",
         "twig/twig": "^3.0",
-        "ext-redis": "*"
+        "ext-redis": "*",
+        "ext-openssl": "*"
     },
     "config": {
         "allow-plugins": {

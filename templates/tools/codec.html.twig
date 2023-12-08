@@ -1,0 +1,60 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block header %}{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
+{% endblock %}
+{% block body %}
+    <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
+        <div class="isolate pt-2 px-4">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex flex-col">
+            <div class="flex-1 px-4 mt-2">
+                {% if name == 'url-encode-decode' %}
+                    {% include 'tools/url-encode-decode.html.twig' %}
+                {% elseif name == 'base64-encode-decode' %}
+                    {% include 'tools/base64-encode-decode.html.twig' %}
+                {% elseif name == 'image-to-base64' %}
+                    {% include 'tools/image-to-base64.html.twig' %}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    <footer class="p-6 bg-white dark:bg-slate-800 fixed bottom-0 w-full">
+        <div class="mx-auto max-w-screen-xl text-center">
+            <div class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                {% set beian = theme_mod('beian') %}
+                <p>© {{ now|date('Y')}} Powered By <a target="_blank" href="https://octopuspress.dev" class="hover:underline">OctopusPress™</a>. {% if beian %}<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="nofollow">{{ beian }}</a>{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block script %}
+    {% if name == 'url-encode-decode' %}
+        <script type="text/javascript">
+            var input = document.getElementById('inputString');
+            var output = document.getElementById('outputString');
+            input.addEventListener('keyup', function(event) {
+                var value = event.target.value;
+                var matches = value.match(/(%[A-F0-9]{2})/ig);
+                if (matches && matches.length > 0) {
+                    try {
+                        output.value = decodeURIComponent(value);
+                    } catch (e) {
+                        output.value = "";
+                    }
+                } else {
+                    output.value = encodeURIComponent(value);
+                }
+            });
+        </script>
+    {% elseif name == 'base64-encode-decode' %}
+        <script type="text/javascript" src="{{ asset('/assets/js/base64.js') }}"></script>
+    {% elseif name == 'image-to-base64' %}
+        <script type="text/javascript" src="{{ asset('assets/js/image-base64.js') }}"></script>
+    {% else %}
+    {% endif %}
+{% endblock %}

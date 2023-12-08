@@ -41,6 +41,7 @@
     <script>
         // fix https://github.com/alpinejs/alpine/discussions/1705
         // <!-- ✅ After -->
+        var randomString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         document.addEventListener('alpine:init', () => {
             // Will be executed before initializing Alpine.
             Alpine.data("toolConvert", () => ({
@@ -64,7 +65,7 @@
                     }).then((response) => {
                         this.loading = false;
                         response.json().then((body) => {
-                            this.data = body.data;
+                            this.data = body.data || body.message;
                         }).catch((err) => {
                             console.log(err);
                         });
@@ -72,8 +73,25 @@
                         this.loading = false;
                         console.log(err);
                     })
-                }})
-            );
+                },
+                randomIV() {
+                    var formData = new FormData();
+                    formData.append('algo', this.$refs.form.algo.value);
+                    this.$refs.form.iv_base64.checked = true;
+                    window.fetch('/tool/random_iv', {
+                        method: 'POST',
+                        body: formData,
+                    }).then((response) => {
+                        response.json().then((body) => {
+                            this.$refs.form.iv.value = body.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
+            }));
         });
     </script>
 {% endblock %}

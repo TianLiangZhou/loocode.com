@@ -1,0 +1,135 @@
+{% extends 'tools/tool.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% block child %}
+    {% if name == 'to-hash' %}
+        <div class="flex">
+            <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
+            <div class="flex-1 ml-4">
+                <select class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                    {% for algo in algos %}
+                    <option value="{{ algo }}">{{ algo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="flex my-5">
+            <label for="key" class="text-slate-700 dark:text-slate-400">密钥</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <input id="key" placeholder="密钥" type="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="key" value="" maxlength="128" minlength="1" />
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'to-md5' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" checked="" type="radio" /> MD5</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> MD4</label>
+                    <label><input name="mode" value="3" type="radio" class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> MD2</label>
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'to-sha1' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="4" checked="" type="radio" /> sha1</label>
+                    <label class="mx-2"><input name="mode" value="5" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> sha224</label>
+                    <label><input name="mode" value="6" type="radio" class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> sha256</label>
+                    <label><input name="mode" value="7" type="radio" class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> sha512</label>
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'to-crc32' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="8" checked="" type="radio" /> CRC32</label>
+                    <label class="mx-2"><input name="mode" value="9" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> CRC32b</label>
+                    <label><input name="mode" value="10" type="radio" class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> CRC32c</label>
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'aes-encryption-and-decryption' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" checked="" type="radio" /> 解密</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> 加密</label>
+                </div>
+            </div>
+        </div>
+        <div class="flex my-5">
+            <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
+            <div class="flex-1 ml-4">
+                <select class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                    {% for algo in algos %}
+                        <option value="{{ algo }}">{{ algo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="flex my-5">
+            <label for="key" class="text-slate-700 dark:text-slate-400">密钥</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300 flex">
+                    <input id="key" required aria-required="true" placeholder="密钥" type="text" class="flex-1 w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="key" value="" />
+                    <label for="key_base64"><input id="key_base64" name="key_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
+                </div>
+            </div>
+        </div>
+        <div class="flex my-5">
+            <label for="IV" class="text-slate-700 dark:text-slate-400">&nbsp;&nbsp;&nbsp;&nbsp;IV</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300 flex">
+                    <input id="IV" required aria-required="true" placeholder="IV" type="text" class="flex-1 w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="iv" value="" maxlength="512" minlength="1" />
+                    <label for="iv_base64"><input id="iv_base64" name="iv_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
+                    <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary ml-3" @click.prevent="randomIV()">随机</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="flex my-5">
+            <label for="option" class="text-slate-700 dark:text-slate-400">补齐</label>
+            <div class="flex-1 ml-4">
+                <select class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="option" name="option">
+                    <option selected value="0">无</option>
+                    <option value="1">原码</option>
+                    <option value="2">零</option>
+                </select>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <div class="flex my-5">
+        <label for="summary" class="text-slate-700 dark:text-slate-400">文本</label>
+        <div class="flex-1 ml-4">
+            <textarea required id="summary" aria-required="true" name="text" rows="10" class="block w-full rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你要计算的内容"></textarea>
+        </div>
+    </div>
+    <div class="flex my-5 justify-center">
+        {{ forms.button('计算') }}
+    </div>
+    <div class="flex my-5">
+        <label for="result" class="text-slate-700 dark:text-slate-400">结果</label>
+        <div class="flex-1 ml-4">
+            <textarea id="result" rows="10" x-model="data" class="block w-full  rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="这里是计算之后结果"></textarea>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+
+    </script>
+{% endblock %}

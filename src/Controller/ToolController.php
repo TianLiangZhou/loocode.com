@@ -27,13 +27,13 @@ class ToolController extends Controller
 {
     private array $tools = [
         'chinese-to-pinyin' => [
-            'name' => '汉字拼音',
+            'name' => '汉字转拼音',
             'href' => '/tool/chinese-to-pinyin',
             'title' => '在线工具汉字转拼音_汉字音标_汉字汉语转拼单_汉字音标_汉字首字母_中文转拼音_中文转音标',
             'description' => '在线汉字转拼音是通过将中文汉字转换成汉字拼音形式，它支持多种模式无音标、首字母、多音字等等',
         ],
         'simplified-chinese-to-traditional-chinese' => [
-            'name' => '简体繁体',
+            'name' => '简体转繁体',
             'href' => '/tool/simplified-chinese-to-traditional-chinese',
             'title' => '在线工具简体转繁体_繁体转简体_简体转台湾繁体_简体转香港繁体_繁体转中文简体_opencc在线测试',
             'description' => '中文简体转繁体是通过OpenCC库快速将简体转成繁体、繁体转简体、简体转台湾繁体、简体转香港繁体的在线工具',
@@ -73,18 +73,56 @@ class ToolController extends Controller
             'href' => '/tool/url-encode-decode',
             'title' => '在线工具URL编码_URL解码_URI编码_URI解码_URL编码解码',
             'description' => '在线URL编码解码可以帮助您将数据转换为对应的URL编码解码数据。只需粘贴您的数据即可快速转换成对应的数据。',
+            'group' => 'codec',
         ],
         'base64-encode-decode' => [
             'name' => 'Base64编码解码',
             'href' => '/tool/base64-encode-decode',
             'title' => '在线工具base64编码_Base64解码_base64编码解码',
             'description' => '在线base64编码解码可以帮助您将base64数据转换为对应的base64编码解码数据。只需粘贴您的数据即可快速转换成对应的数据。',
+            'group' => 'codec',
+        ],
+        'to-md5' => [
+            'name' => 'MD5',
+            'href' => '/tool/to-md5',
+            'title' => '在线工具计算MD5、MD2、MD4值',
+            'description' => '在线计算字符MD5、MD2、MD4工具可帮助您快速计算从字符串或二进制计算MD5哈希值。MD5消息摘要算法是一种广泛使用的哈希函数，可生成128位哈希值。MD5可用作校验和来验证数据完整性，防止意外损坏。',
+            'group' => 'codec',
+        ],
+        'to-sha1' => [
+            'name' => 'SHA1',
+            'href' => '/tool/to-sha1',
+            'title' => '在线工具计算sha1、sha225、sha256、sha512值',
+            'description' => '在线计算字符sha1、sha225、sha256、sha512工具可帮助您快速计算从字符串或二进制计算sha1哈希值。',
+            'group' => 'codec',
+        ],
+        'to-crc32' => [
+            'name' => 'CRC32',
+            'href' => '/tool/to-crc32',
+            'title' => '在线工具计算crc32、crc32b、crc32c值',
+            'description' => '在线计算字符crc32、crc32b、crc32c工具可帮助您快速计算从字符串或二进制计算crc32哈希值。',
+            'group' => 'codec',
+        ],
+        'to-hash' => [
+            'name' => 'HASH',
+            'href' => '/tool/to-hash',
+            'title' => '在线工具计算hash值',
+            'description' => '在线计算字符Hash工具可帮助您快速计算从字符串或二进制计算哈希值。它支持md5、sha1、sha256、crc32、sha3、ripemd、tiger、haval、xxh等多种hash算法，同时也支持hmac形式计算。',
+            'group' => 'codec',
+        ],
+        'aes-encryption-and-decryption' => [
+            'name' => 'AES加密与解密',
+            'href' => '/tool/aes-encryption-and-decryption',
+            'title' => '在线工具AES加密与解密',
+            'description' => '在线AES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持AES-128-CBC、AES-192-CBC、AES-256-CBC、AES-128-ECB、AES-192-ECB、AES-256-ECB等多种加密解密算法。',
+            'group' => 'codec',
         ],
         'image-to-base64' => [
             'name' => '图片转Base64',
             'href' => '/tool/image-to-base64',
             'title' => '在线工具图片转Base64_图片Base64解码_图片Base64编码',
             'description' => '在线图片转Base64编码可以帮助您将图片转换为对应的Base64数据。只需选择您的图片文件即可快速转换成对应的Base64数据。',
+            'group' => 'codec',
         ],
         'image-compression' => [
             'name' => 'PNG|WEBP|JPEG|JPG图片压缩',
@@ -305,6 +343,51 @@ class ToolController extends Controller
         ]);
     }
 
+
+    /**
+     * @param string $name
+     * @return Response
+     */
+    #[Route('/tool/{name}', name: 'tool_single_page', requirements: ['name' => '[a-z0-9\-_]{2,}',], methods: 'GET')]
+    public function tool(string $name): Response
+    {
+        if (!isset($this->tools[$name])) {
+            throw $this->createNotFoundException();
+        }
+        $tool = $this->tools[$name];
+        $template = 'tools/' . $name . '.html.twig';
+        $features = explode('-', $name);
+        $data = [
+            'tools' => $this->tools,
+            'tool' => $tool,
+            'name' => $name,
+            'features'    => $features,
+            'upload_size' => ini_get('upload_max_filesize'),
+        ];
+        if (isset($tool['group'])) {
+            switch ($tool['group']) {
+                case 'image-convert':
+                    $template = 'tools/image-convert.html.twig';
+                    break;
+                case 'codec':
+                    $template = 'tools/codec-form.html.twig';
+                    if (in_array($name, ['base64-encode-decode', 'url-encode-decode', 'image-to-base64'])) {
+                        $template = 'tools/codec.html.twig';
+                    }
+                    if ($name === 'aes-encryption-and-decryption') {
+                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                            return str_starts_with($value, 'aes-');
+                        });
+                    } else {
+                        $data['algos'] = hash_algos();
+                        $data['hmac_algos'] = hash_hmac_algos();
+                    }
+                    break;
+            }
+        }
+        return $this->render($template, $data);
+    }
+
     /**
      * @param Request $request
      * @param CacheItemPoolInterface $cache
@@ -319,8 +402,13 @@ class ToolController extends Controller
          */
         $tool = $request->request->get('tool', '');
         $body = $request->request->all();
-        if (isset($this->tools[$tool]['group']) && $this->tools[$tool]['group'] == 'image-convert') {
-            return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
+        if (isset($this->tools[$tool]['group'])) {
+            switch ($this->tools[$tool]['group']) {
+                case 'image-convert':
+                    return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
+                case 'codec':
+                    return $this->toCodec($body);
+            }
         }
         return match ($tool) {
             'chinese-to-pinyin' => $this->pinyin($body),
@@ -331,6 +419,98 @@ class ToolController extends Controller
             'image-compression' => $this->imageCompression($request->files->get('image')),
             default => $this->json(null),
         };
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    #[Route('/tool/random_iv', methods: 'POST')]
+    public function randomIv(Request $request): JsonResponse
+    {
+        $algo = $request->get('algo', '');
+        if (in_array(!$algo, openssl_get_cipher_methods())) {
+            return $this->json([
+                'message' => '不支持的算法',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        return $this->json([
+            'data' => base64_encode(openssl_random_pseudo_bytes(openssl_cipher_iv_length($algo))),
+        ]);
+    }
+
+    /**
+     * @param array $body
+     * @return JsonResponse
+     */
+    private function toCodec(array $body): JsonResponse
+    {
+        $text = $body['text'];
+        $value = "";
+        switch ($body['tool']) {
+            case 'to-md5':
+            case 'to-sha1':
+            case 'to-crc32':
+                $mode = (int) ($body['mode'] ?? 1);
+                $algo = ['md5', 'md4', 'md2', 'sha1', 'sha224', 'sha256', 'sha512', 'crc32b', 'crc32', 'crc32c',][$mode - 1] ?? 'md5';
+                $value = hash($algo, $text);
+                if (in_array($mode, [8, 9, 10])) {
+                    $value = hexdec($value);
+                }
+                break;
+            case 'to-hash':
+                $algo = $body['algo'] ?? 'md5';
+                $key = $body['key'] ?? '';
+                if ($key) {
+                    $value = hash_hmac($algo, $text, $key);
+                } else {
+                    $value = hash($algo, $text);
+                }
+                break;
+            case 'aes-encryption-and-decryption':
+                $mode = (int) ($body['mode'] ?? 1);
+                $algo = $body['algo'] ?? '';
+                if (in_array(!$algo, openssl_get_cipher_methods())) {
+                    return $this->json([
+                        'message' => '不支持的算法',
+                    ], Response::HTTP_NOT_ACCEPTABLE);
+                }
+                $iv = $body['iv'] ?? '';
+                if ($iv && isset($body['iv_base64']) && $body['iv_base64'] === "1") {
+                    $iv = base64_decode($iv);
+                }
+                $ivLen = openssl_cipher_iv_length($algo);
+                if ($iv && strlen($iv) !== $ivLen) {
+                    return $this->json([
+                        'message' => sprintf('算法[%s]IV长度必须是: %d', $algo, $ivLen),
+                    ], Response::HTTP_NOT_ACCEPTABLE);
+                }
+                $key = $body['key'] ?? '';
+                if ($key && isset($body['key_base64']) && $body['key_base64'] === "1") {
+                    $key = base64_decode($key);
+                }
+                $option = (int) ($body['option'] ?? 0);
+                if ($mode === 1) {
+                    if ($option === 1) {
+                        $text = base64_decode($text);
+                    }
+                    $value = openssl_decrypt($text, $algo, $key, $option, $iv);
+                } else {
+                    $value = openssl_encrypt($text, $algo, $key, $option, $iv);
+                    if ($option === 1) {
+                        $value = base64_encode($value);
+                    }
+                }
+                if ($value === false) {
+                    return $this->json([
+                        'message' => openssl_error_string(),
+                    ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+                break;
+        }
+        return $this->json([
+            'data' => $value,
+        ]);
     }
 
         /**
@@ -391,7 +571,7 @@ class ToolController extends Controller
      * @param UploadedFile $uploadedFile
      * @return JsonResponse
      */
-    public function imageConvert(array $features, UploadedFile $uploadedFile): JsonResponse
+    private function imageConvert(array $features, UploadedFile $uploadedFile): JsonResponse
     {
         $file = $this->uploadLogo($uploadedFile, 5);
         if ($file === 'error-type') {
@@ -422,32 +602,6 @@ class ToolController extends Controller
         return $this->json([
             'size'     => filesize($output),
             'download' => $this->bridger->getPackages()->getUrl('/upload/images/compression/' .date('Ymd').'/'.$name),
-        ]);
-    }
-
-
-    /**
-     * @param string $name
-     * @return Response
-     */
-    #[Route('/tool/{name}', name: 'tool_single_page', requirements: ['name' => '[a-z0-9\-_]{2,}',], methods: 'GET')]
-    public function tool(string $name): Response
-    {
-        if (!isset($this->tools[$name])) {
-            throw $this->createNotFoundException();
-        }
-        $tool = $this->tools[$name];
-        $template = 'tools/' . $name . '.html.twig';
-        $features = explode('-', $name);
-        if (isset($tool['group']) && $tool['group'] === 'image-convert') {
-            $template = 'tools/image-convert.html.twig';
-        }
-        return $this->render($template, [
-            'tools' => $this->tools,
-            'tool' => $tool,
-            'name' => $name,
-            'features'    => $features,
-            'upload_size' => ini_get('upload_max_filesize'),
         ]);
     }
 
