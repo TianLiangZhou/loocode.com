@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-    {% elseif name == 'aes-encryption-and-decryption' %}
+    {% elseif name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption'  %}
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
@@ -68,7 +68,7 @@
         <div class="flex my-5">
             <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
             <div class="flex-1 ml-4">
-                <select class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                <select x-model="algo" class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
                     {% for algo in algos %}
                         <option value="{{ algo }}">{{ algo }}</option>
                     {% endfor %}
@@ -84,17 +84,16 @@
                 </div>
             </div>
         </div>
-        <div class="flex my-5">
+        <div class="flex my-5" x-show="algo != 'rc4' && algo != 'rc4-40' && algo != 'rc4-hmac-md5'">
             <label for="IV" class="text-slate-700 dark:text-slate-400">&nbsp;&nbsp;&nbsp;&nbsp;IV</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300 flex">
-                    <input id="IV" required aria-required="true" placeholder="IV" type="text" class="flex-1 w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="iv" value="" maxlength="512" minlength="1" />
+                    <input id="IV" :required="algo != 'rc4' && algo != 'rc4-40' && algo != 'rc4-hmac-md5'" aria-required="true" placeholder="IV" type="text" class="flex-1 w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="iv" value="" maxlength="512" minlength="1" />
                     <label for="iv_base64"><input id="iv_base64" name="iv_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
                     <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary ml-3" @click.prevent="randomIV()">随机</button>
                 </div>
             </div>
         </div>
-
 
         <div class="flex my-5">
             <label for="option" class="text-slate-700 dark:text-slate-400">补齐</label>
@@ -102,7 +101,8 @@
                 <select class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="option" name="option">
                     <option selected value="0">无</option>
                     <option value="1">原码</option>
-                    <option value="2">零</option>
+                    <option value="2">零补齐</option>
+                    <option value="3">不补齐</option>
                 </select>
             </div>
         </div>

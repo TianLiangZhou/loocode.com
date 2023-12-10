@@ -117,6 +117,27 @@ class ToolController extends Controller
             'description' => '在线AES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持AES-128-CBC、AES-192-CBC、AES-256-CBC、AES-128-ECB、AES-192-ECB、AES-256-ECB等多种加密解密算法。',
             'group' => 'codec',
         ],
+        'des-encryption-and-decryption' => [
+            'name' => 'DES、3DES加密与解密',
+            'href' => '/tool/des-encryption-and-decryption',
+            'title' => '在线工具DES加密与解密',
+            'description' => '在线DES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持DES-EDE-CBC、DES-EDE-CFB、DES-EDE-ECB、DES-EDE-OFB、DES-EDE3-CBC、DES-EDE3-CFB、DES-EDE3-ECB、DES-EDE3-OFB等多种加密解密算法。',
+            'group' => 'codec',
+        ],
+        'sm4-encryption-and-decryption' => [
+            'name' => 'SM4加密与解密',
+            'href' => '/tool/sm4-encryption-and-decryption',
+            'title' => '在线工具sm4加密与解密',
+            'description' => '在线sm4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持SM4-CBC、SM4-CCM、SM4-CFB、SM4-CTR、SM4-ECB、SM4-GCM、SM4-OFB等多种加密解密算法。',
+            'group' => 'codec',
+        ],
+        'rc24-encryption-and-decryption' => [
+            'name' => 'RC2、RC4加密与解密',
+            'href' => '/tool/rc24-encryption-and-decryption',
+            'title' => '在线工具RC2、RC4加密与解密',
+            'description' => '在线RC2、RC4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持RC2-40-CBC、RC4-64-CBC、RC2-CFB、RC2-ECB、RC2-CBC、RC2-OFB、RC4、RC4-40等多种加密解密算法。',
+            'group' => 'codec',
+        ],
         'image-to-base64' => [
             'name' => '图片转Base64',
             'href' => '/tool/image-to-base64',
@@ -378,6 +399,18 @@ class ToolController extends Controller
                         $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
                             return str_starts_with($value, 'aes-');
                         });
+                    } elseif ($name === 'des-encryption-and-decryption') {
+                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                            return str_starts_with($value, 'des-');
+                        });
+                    } elseif ($name === 'sm4-encryption-and-decryption') {
+                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                            return str_starts_with($value, 'sm4-');
+                        });
+                    } elseif ($name === 'rc24-encryption-and-decryption') {
+                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                            return str_starts_with($value, 'rc');
+                        });
                     } else {
                         $data['algos'] = hash_algos();
                         $data['hmac_algos'] = hash_hmac_algos();
@@ -434,8 +467,14 @@ class ToolController extends Controller
                 'message' => '不支持的算法',
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
+        $len = openssl_cipher_iv_length($algo);
+        if ($len < 1) {
+            return $this->json([
+                'data' => '',
+            ]);
+        }
         return $this->json([
-            'data' => base64_encode(openssl_random_pseudo_bytes(openssl_cipher_iv_length($algo))),
+            'data' => base64_encode(openssl_random_pseudo_bytes($len)),
         ]);
     }
 
@@ -468,6 +507,9 @@ class ToolController extends Controller
                 }
                 break;
             case 'aes-encryption-and-decryption':
+            case 'des-encryption-and-decryption':
+            case 'sm4-encryption-and-decryption':
+            case 'rc24-encryption-and-decryption':
                 $mode = (int) ($body['mode'] ?? 1);
                 $algo = $body['algo'] ?? '';
                 if (in_array(!$algo, openssl_get_cipher_methods())) {
@@ -480,7 +522,7 @@ class ToolController extends Controller
                     $iv = base64_decode($iv);
                 }
                 $ivLen = openssl_cipher_iv_length($algo);
-                if ($iv && strlen($iv) !== $ivLen) {
+                if ($ivLen > 0 && $iv && strlen($iv) !== $ivLen) {
                     return $this->json([
                         'message' => sprintf('算法[%s]IV长度必须是: %d', $algo, $ivLen),
                     ], Response::HTTP_NOT_ACCEPTABLE);
@@ -494,9 +536,9 @@ class ToolController extends Controller
                     if ($option === 1) {
                         $text = base64_decode($text);
                     }
-                    $value = openssl_decrypt($text, $algo, $key, $option, $iv);
+                    $value = openssl_decrypt($text, $algo, $key, $option, $ivLen > 0 ? $iv : '');
                 } else {
-                    $value = openssl_encrypt($text, $algo, $key, $option, $iv);
+                    $value = openssl_encrypt($text, $algo, $key, $option, $ivLen > 0 ? $iv : '');
                     if ($option === 1) {
                         $value = base64_encode($value);
                     }
