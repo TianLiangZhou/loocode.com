@@ -138,6 +138,20 @@ class ToolController extends Controller
             'description' => '在线RC2、RC4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持RC2-40-CBC、RC4-64-CBC、RC2-CFB、RC2-ECB、RC2-CBC、RC2-OFB、RC4、RC4-40等多种加密解密算法。',
             'group' => 'codec',
         ],
+        'rsa-encryption-and-decryption' => [
+            'name' => 'RSA加密与解密',
+            'href' => '/tool/rsa-encryption-and-decryption',
+            'title' => '在线工具RSA加密与解密',
+            'description' => '在线RSA加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持私钥加密、公钥加密、公钥解密、公钥解密。',
+            'group' => 'codec',
+        ],
+        'rsa-sign-and-verify' => [
+            'name' => 'RSA签名与校验',
+            'href' => '/tool/rsa-sign-and-verify',
+            'title' => '在线工具RSA签名与校验',
+            'description' => '在线RSA签名与校验工具可帮助您快速创建签名和校验签名，它支持sha1、sha224、md5等多种签名算法',
+            'group' => 'codec',
+        ],
         'image-to-base64' => [
             'name' => '图片转Base64',
             'href' => '/tool/image-to-base64',
@@ -411,6 +425,8 @@ class ToolController extends Controller
                         $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
                             return str_starts_with($value, 'rc');
                         });
+                    } elseif ($name === 'rsa-sign-and-verify') {
+                        $data['algos'] = openssl_get_md_methods();
                     } else {
                         $data['algos'] = hash_algos();
                         $data['hmac_algos'] = hash_hmac_algos();
@@ -549,10 +565,96 @@ class ToolController extends Controller
                     ], Response::HTTP_INTERNAL_SERVER_ERROR);
                 }
                 break;
+            case 'rsa-encryption-and-decryption':
+                $certMode = (int) ($body['cert_mode'] ?? 4);
+                $mode = ((int) ($body['mode'] ?? 1)) + $certMode;
+                $certContent = $body['cert'] ?? '';
+                $cert = $certMode === 4
+                        ? $this->getPrivateKey($certContent, $body['cert_pass'] ?? '')
+                        : $this->getPublicKey($certContent);
+                if ($cert === false) {
+                    return $this->json([
+                        'data' => openssl_error_string(),
+                    ]);
+                }
+                $encryptedData = $decryptedData = "";
+                switch ($mode) {
+                    case 5:
+                        openssl_private_decrypt(base64_decode($text), $decryptedData, $cert); // 解密由public_key加密的数据
+                        break;
+                    case 6:
+                        openssl_private_encrypt($text, $encryptedData, $cert);
+                        break;
+                    case 9:
+                        openssl_public_decrypt(base64_decode($text), $decryptedData, $cert); // 解密由private_key加密的数据
+                        break;
+                    case 10:
+                        openssl_public_encrypt($text, $encryptedData, $cert);
+                        break;
+                }
+                if ($encryptedData) {
+                    $value = base64_encode($encryptedData);
+                }
+                if ($decryptedData) {
+                    $value = $decryptedData;
+                }
+                break;
+            case 'rsa-sign-and-verify':
+                if ((int) $body['mode'] == 1) {
+                    if (openssl_sign($text, $signature, $this->getPrivateKey($body['cert'], $body['cert_pass'] ?? ''), $body['algo']) === false) {
+                        return $this->json([
+                            'data' => openssl_error_string(),
+                        ]);
+                    }
+                    return $this->json([
+                        'data' => base64_encode($signature),
+                    ]);
+                }
+                if (openssl_verify($text, base64_decode($body['sign']), $this->getPublicKey($body['cert']), $body['algo']) === 1) {
+                    return $this->json([
+                        'data' => '校验成功',
+                    ]);
+                }
+                return $this->json([
+                    'data' => '校验失败:' . openssl_error_string(),
+                ]);
         }
         return $this->json([
             'data' => $value,
         ]);
+    }
+
+    /**
+     * @param string $certContent
+     * @param string $pass
+     * @return false|\OpenSSLAsymmetricKey
+     */
+    private function getPrivateKey(string $certContent, string $pass): \OpenSSLAsymmetricKey|bool
+    {
+        if (!str_starts_with($certContent, '-----BEGIN')) {
+            $certContent = <<<EOF
+-----BEGIN PRIVATE KEY-----
+$certContent
+-----END PRIVATE KEY-----
+EOF;
+        }
+        return openssl_get_privatekey($certContent, $pass);
+    }
+
+    /**
+     * @param string $certContent
+     * @return false|\OpenSSLAsymmetricKey
+     */
+    private function getPublicKey(string $certContent): \OpenSSLAsymmetricKey|bool
+    {
+        if (!str_starts_with($certContent, '-----BEGIN')) {
+            $certContent = <<<EOF
+-----BEGIN PUBLIC KEY-----
+$certContent
+-----END PUBLIC KEY-----
+EOF;
+        }
+        return openssl_get_publickey($certContent);
     }
 
         /**

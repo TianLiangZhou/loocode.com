@@ -106,7 +106,56 @@
                 </select>
             </div>
         </div>
+    {% elseif name == 'rsa-encryption-and-decryption' or name == 'rsa-sign-and-verify' %}
+        <div class="flex  my-5">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300" x-init="mode = 1">
+                    <label><input x-model="mode" name="mode" value="1" checked="" type="radio" class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> {% if name == 'rsa-encryption-and-decryption' %}解密{% else %}签名{% endif %}</label>
+                    <label class="mx-2"><input  x-model="mode" name="mode" value="2" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}加密{% else %}校验{% endif %}</label>
+                </div>
+            </div>
+        </div>
+        {% if name == 'rsa-sign-and-verify' %}
+        <div class="flex my-5">
+            <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
+            <div class="flex-1 ml-4">
+                <select x-model="algo" class="!text-primary rounded-md bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                    {% for algo in algos %}
+                        <option value="{{ algo }}">{{ algo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="flex my-5" x-show="mode == 2">
+            <label for="sign" class="text-slate-700 dark:text-slate-400">签名</label>
+            <div class="flex-1 ml-4">
+                <textarea :required="mode==2" id="sign" aria-required="true" name="sign" class="block w-full rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="填写签名内容"></textarea>
+            </div>
+        </div>
 
+        {% endif %}
+
+        <div class="flex  my-5">
+            <label class="text-slate-700 dark:text-slate-400" for="cert">证书</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <textarea required id="cert" aria-required="true" name="cert" rows="10" class="block w-full rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="填写证书内容"></textarea>
+                </div>
+                <div class="dark:text-slate-300 my-5">
+                    <label><input class="!text-primary bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="cert_mode" value="4" checked="" type="radio" /> 私钥</label>
+                    <label class="mx-2"><input name="cert_mode" value="8" type="radio" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> 公钥</label>
+                    <label><input class="rounded-md bg-slate-200 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="私钥密码" name="cert_pass" type="text" /></label>
+                </div>
+                <div class="dark:text-slate-300 my-5">
+                </div>
+                {% if name == 'rsa-encryption-and-decryption' %}
+                    <span class="text-danger">该服务不会收集保存您的任何证书密码信息。使用私钥加密的信息必须使用公钥解密，公钥加密的信息必须使用私钥解密。</span>
+                {% else %}
+                    <span class="text-danger">该服务不会收集保存您的任何证书密码信息。使用私钥创建签名，使用公钥校验签名。</span>
+                {% endif %}
+            </div>
+        </div>
     {% endif %}
 
     <div class="flex my-5">
