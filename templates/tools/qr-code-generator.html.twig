@@ -42,7 +42,7 @@
     <div class="flex my-5" x-show="mode == 3">
         <label for="char" class="text-slate-700 dark:text-slate-400">字符</label>
         <div class="flex-1 ml-4">
-            <input required aria-required="true" id="char" placeholder="二维码字符" type="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="char" value="" maxlength="1" minlength="1" />
+            <input :required="mode == 3" aria-required="true" id="char" placeholder="二维码字符" type="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="char" value="" maxlength="1" minlength="1" />
         </div>
     </div>
     <div class="flex my-5">
