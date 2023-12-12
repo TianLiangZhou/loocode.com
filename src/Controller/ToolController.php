@@ -87,70 +87,84 @@ class ToolController extends Controller
             'href' => '/tool/to-md5',
             'title' => '在线工具计算MD5、MD2、MD4值',
             'description' => '在线计算字符MD5、MD2、MD4工具可帮助您快速计算从字符串或二进制计算MD5哈希值。MD5消息摘要算法是一种广泛使用的哈希函数，可生成128位哈希值。MD5可用作校验和来验证数据完整性，防止意外损坏。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'to-sha1' => [
             'name' => 'SHA1',
             'href' => '/tool/to-sha1',
             'title' => '在线工具计算sha1、sha225、sha256、sha512值',
             'description' => '在线计算字符sha1、sha225、sha256、sha512工具可帮助您快速计算从字符串或二进制计算sha1哈希值。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'to-crc32' => [
             'name' => 'CRC32',
             'href' => '/tool/to-crc32',
             'title' => '在线工具计算crc32、crc32b、crc32c值',
             'description' => '在线计算字符crc32、crc32b、crc32c工具可帮助您快速计算从字符串或二进制计算crc32哈希值。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'to-hash' => [
             'name' => 'HASH',
             'href' => '/tool/to-hash',
             'title' => '在线工具计算hash值',
             'description' => '在线计算字符Hash工具可帮助您快速计算从字符串或二进制计算哈希值。它支持md5、sha1、sha256、crc32、sha3、ripemd、tiger、haval、xxh等多种hash算法，同时也支持hmac形式计算。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'aes-encryption-and-decryption' => [
             'name' => 'AES加密与解密',
             'href' => '/tool/aes-encryption-and-decryption',
             'title' => '在线工具AES加密与解密',
             'description' => '在线AES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持AES-128-CBC、AES-192-CBC、AES-256-CBC、AES-128-ECB、AES-192-ECB、AES-256-ECB等多种加密解密算法。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'des-encryption-and-decryption' => [
             'name' => 'DES、3DES加密与解密',
             'href' => '/tool/des-encryption-and-decryption',
             'title' => '在线工具DES加密与解密',
             'description' => '在线DES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持DES-EDE-CBC、DES-EDE-CFB、DES-EDE-ECB、DES-EDE-OFB、DES-EDE3-CBC、DES-EDE3-CFB、DES-EDE3-ECB、DES-EDE3-OFB等多种加密解密算法。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'sm4-encryption-and-decryption' => [
             'name' => 'SM4加密与解密',
             'href' => '/tool/sm4-encryption-and-decryption',
             'title' => '在线工具sm4加密与解密',
             'description' => '在线sm4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持SM4-CBC、SM4-CCM、SM4-CFB、SM4-CTR、SM4-ECB、SM4-GCM、SM4-OFB等多种加密解密算法。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'rc24-encryption-and-decryption' => [
             'name' => 'RC2、RC4加密与解密',
             'href' => '/tool/rc24-encryption-and-decryption',
             'title' => '在线工具RC2、RC4加密与解密',
             'description' => '在线RC2、RC4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持RC2-40-CBC、RC4-64-CBC、RC2-CFB、RC2-ECB、RC2-CBC、RC2-OFB、RC4、RC4-40等多种加密解密算法。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'rsa-encryption-and-decryption' => [
             'name' => 'RSA加密与解密',
             'href' => '/tool/rsa-encryption-and-decryption',
             'title' => '在线工具RSA加密与解密',
             'description' => '在线RSA加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持私钥加密、公钥加密、公钥解密、公钥解密。',
-            'group' => 'codec',
+            'group' => 'cipher',
         ],
         'rsa-sign-and-verify' => [
             'name' => 'RSA签名与校验',
             'href' => '/tool/rsa-sign-and-verify',
             'title' => '在线工具RSA签名与校验',
-            'description' => '在线RSA签名与校验工具可帮助您快速创建签名和校验签名，它支持sha1、sha224、md5等多种签名算法',
-            'group' => 'codec',
+            'description' => '在线RSA签名与校验工具可帮助您快速创建签名和校验签名，它支持sha1、sha224、md5等多种签名算法。',
+            'group' => 'cipher',
+        ],
+        'hex-to-rgb' => [
+            'name' => 'Hex转RGB',
+            'href' => '/tool/hex-to-rgb',
+            'title' => '在线工具Hex转RGB',
+            'description' => '在线Hex转RGB工具可帮助您快速转换十六进制颜色值到RGB颜色值。',
+            'group' => 'color',
+        ],
+        'rgb-to-hex' => [
+            'name' => 'RGB转Hex',
+            'href' => '/tool/rgb-to-hex',
+            'title' => '在线工具RGB转Hex',
+            'description' => '在RGB转Hex工具可帮助您快速转换RGB颜色值到十六进制颜色值。',
+            'group' => 'color',
         ],
         'image-to-base64' => [
             'name' => '图片转Base64',
@@ -396,42 +410,33 @@ class ToolController extends Controller
             'tools' => $this->tools,
             'tool' => $tool,
             'name' => $name,
+            'group'=> $tool['group'] ?? '',
             'features'    => $features,
             'upload_size' => ini_get('upload_max_filesize'),
         ];
         if (isset($tool['group'])) {
-            switch ($tool['group']) {
-                case 'image-convert':
-                    $template = 'tools/image-convert.html.twig';
-                    break;
-                case 'codec':
-                    $template = 'tools/codec-form.html.twig';
-                    if (in_array($name, ['base64-encode-decode', 'url-encode-decode', 'image-to-base64'])) {
-                        $template = 'tools/codec.html.twig';
-                    }
-                    if ($name === 'aes-encryption-and-decryption') {
-                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
-                            return str_starts_with($value, 'aes-');
-                        });
-                    } elseif ($name === 'des-encryption-and-decryption') {
-                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
-                            return str_starts_with($value, 'des-');
-                        });
-                    } elseif ($name === 'sm4-encryption-and-decryption') {
-                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
-                            return str_starts_with($value, 'sm4-');
-                        });
-                    } elseif ($name === 'rc24-encryption-and-decryption') {
-                        $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
-                            return str_starts_with($value, 'rc');
-                        });
-                    } elseif ($name === 'rsa-sign-and-verify') {
-                        $data['algos'] = openssl_get_md_methods();
-                    } else {
-                        $data['algos'] = hash_algos();
-                        $data['hmac_algos'] = hash_hmac_algos();
-                    }
-                    break;
+            $template = 'tools/' . $tool['group'] .'.html.twig';
+            if ($name === 'aes-encryption-and-decryption') {
+                $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                    return str_starts_with($value, 'aes-');
+                });
+            } elseif ($name === 'des-encryption-and-decryption') {
+                $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                    return str_starts_with($value, 'des-');
+                });
+            } elseif ($name === 'sm4-encryption-and-decryption') {
+                $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                    return str_starts_with($value, 'sm4-');
+                });
+            } elseif ($name === 'rc24-encryption-and-decryption') {
+                $data['algos'] = array_filter(openssl_get_cipher_methods(), function ($value) {
+                    return str_starts_with($value, 'rc');
+                });
+            } elseif ($name === 'rsa-sign-and-verify') {
+                $data['algos'] = openssl_get_md_methods();
+            } else {
+                $data['algos'] = hash_algos();
+                $data['hmac_algos'] = hash_hmac_algos();
             }
         }
         return $this->render($template, $data);
@@ -455,8 +460,10 @@ class ToolController extends Controller
             switch ($this->tools[$tool]['group']) {
                 case 'image-convert':
                     return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
-                case 'codec':
-                    return $this->toCodec($body);
+                case 'cipher':
+                    return $this->toCipher($body);
+                case 'color':
+                    return $this->toColor($body);
             }
         }
         return match ($tool) {
@@ -468,6 +475,40 @@ class ToolController extends Controller
             'image-compression' => $this->imageCompression($request->files->get('image')),
             default => $this->json(null),
         };
+    }
+
+    public function toColor(array $body)
+    {
+        $text = $body['text'];
+        $tool = $body['tool'];
+        if ($tool == 'hex-to-rgb') {
+            $text = str_replace('#', '', $text);
+            $len = strlen($text) ;
+            if ($len == 3) {
+                $text = $text[0].$text[0].$text[1].$text[1].$text[2].$text[2];
+            } elseif ($len < 6) {
+                $text = $text . str_repeat('0', 6 - $len);
+            } else {
+                $text = substr($text,0, 6);
+            }
+            [$r, $g, $b] = sscanf('#' . $text, "#%02x%02x%02x");
+            return $this->json([
+                'data' => "rgb($r, $g, $b)",
+            ]);
+        } elseif ($tool == 'rgb-to-hex') {
+            $text = str_ireplace(['rgb', '(', ')'], '', $text);
+            $rgb = explode(',', $text);
+            $r = (int)trim($rgb[0] ?? '255');
+            $g = (int)trim($rgb[1] ?? '255');
+            $b = (int)trim($rgb[2] ?? '255');
+            return $this->json([
+                'data' => '#' . dechex($r) . dechex($g) . dechex($b),
+            ]);
+        }
+
+        return $this->json([
+            'data' => '',
+        ]);
     }
 
     /**
@@ -498,7 +539,7 @@ class ToolController extends Controller
      * @param array $body
      * @return JsonResponse
      */
-    private function toCodec(array $body): JsonResponse
+    private function toCipher(array $body): JsonResponse
     {
         $text = $body['text'];
         $value = "";

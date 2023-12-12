@@ -34,7 +34,7 @@ return static function (FrameworkConfig $frameworkConfig, ContainerBuilder $cont
     }
     $assetsConfig = $frameworkConfig->assets();
     $assetsConfig->baseUrls(env('ASSETS_URL'));
-    $assetsConfig->version('1.0.14');
+    $assetsConfig->version('1.0.15');
     $assetsConfig->versionFormat("%%s?v=%%s");
 
     $frameworkConfig->httpClient()
