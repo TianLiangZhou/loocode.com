@@ -1,0 +1,31 @@
+{% extends 'tools/tab.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% block child %}
+<div class="flex justify-between flex-col md:flex-row">
+    <div class="flex my-5 flex-1">
+        <label for="summary" class="text-slate-700 dark:text-slate-400"></label>
+        <div class="flex-1">
+            {% if name == 'hex-to-rgb' %}
+            <input required id="summary" type="text" aria-required="true" name="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="待转换的十六进制: #FFFFFF" maxlength="7" minlength="3" />
+            {% else %}
+            <input required id="summary" type="text" aria-required="true" name="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="待转换的RGB值: 64,100,255" />
+            {% endif %}
+        </div>
+    </div>
+    <div class="flex my-5 justify-center mx-4">
+        {{ forms.button('转换') }}
+    </div>
+    <div class="flex my-5 flex-1">
+        <label for="result" class="text-slate-700 dark:text-slate-400"></label>
+        <div class="flex-1">
+            <input id="result" rows="10" x-model="data" type="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="转换结果" />
+        </div>
+    </div>
+</div>
+<div class="flex my-5 flex-1">
+    <label for="color_preview" class="text-slate-700 dark:text-slate-400"></label>
+    <div class="flex-1">
+        <input x-bind:style="data && {backgroundColor: data}" id="color_preview" readonly disabled type="text" class="w-full rounded-md bg-slate-200 dark:bg-slate-900 border-transparent focus:ring-0 focus:border-primary" />
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block body %}
+    <div class="container mx-auto my-5 px-4">
+        <div class="isolate pt-4">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex pt-4 flex-col lg:flex-row">
+            <div class="grow mt-4 lg:mt-0 order-last lg:order-none lg:max-w-xs">
+                <div class="bg-white p-4 dark:bg-slate-800 rounded-lg">
+                    <div class="">
+                        <h3 class="text-xl text-slate-500 font-medium border-b pb-1 border-slate-200 after:border-b after:border-red-500 dark:border-slate-700">工具合集</h3>
+                        <div class="pt-4">
+                            <ul class="grid grid-cols-2 lg:grid-cols-1 gap-4 font-semibold text-slate-900 text-left dark:text-slate-500">
+                                {% for item in tools %}
+                                    <li class="flex my-3">
+                                        {% if tool.name == item.name %}
+                                            <span class="relative w-full pl-2 border-l-4 border-primary !text-primary">{{ item.name }}</span>
+                                        {% else %}
+                                            <a href="{{item.href}}" class="relative w-full hover:underline hover:text-primary">{{item.name}}</a>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grow lg:ml-2">
+                <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert">
+                    <div class="p-6 relative dark:border-slate-700">
+                        <form name="body" x-ref="form">
+                            <input type="hidden" name="tool" value="{{name}}">
+                            {% block child %}{% endblock %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
+    <script>
+        // fix https://github.com/alpinejs/alpine/discussions/1705
+        // <!-- ✅ After -->
+        document.addEventListener('alpine:init', () => {
+            // Will be executed before initializing Alpine.
+            Alpine.data("toolConvert", () => ({
+                mode: 0,
+                data: null,
+                algo: '',
+                loading: false,
+                convert() {
+                    if (this.loading) {
+                        return;
+                    }
+                    /** @type {HTMLFormElement} */
+                    var form = this.$refs.form;
+                    if (!form.checkValidity()) {
+                        alert('必填项不能为空！');
+                        return ;
+                    }
+                    this.loading = true;
+                    window.fetch('/tool/convert', {
+                        method: 'POST',
+                        body: new FormData(this.$refs.form),
+                    }).then((response) => {
+                        this.loading = false;
+                        response.json().then((body) => {
+                            this.data = body.data || body.message;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    }).catch((err) => {
+                        this.loading = false;
+                        console.log(err);
+                    })
+                },
+                randomIV() {
+                    var formData = new FormData();
+                    formData.append('algo', this.$refs.form.algo.value);
+                    this.$refs.form.iv_base64.checked = true;
+                    window.fetch('/tool/random_iv', {
+                        method: 'POST',
+                        body: formData,
+                    }).then((response) => {
+                        response.json().then((body) => {
+                            this.$refs.form.iv.value = body.data;
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
+            }));
+        });
+    </script>
+{% endblock %}
