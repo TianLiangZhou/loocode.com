@@ -1,0 +1,172 @@
+{% extends 'tools/tab.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% block child %}
+    <div class="flex my-5 flex-col justify-center" x-data="crontab" @example.window="selectExample($event.detail.select)">
+        <div class="ml-2 flex-1">
+            <div class="flex flex-row py-2 text-slate-500">
+                <p class="flex-1 text-center">
+                    <span x-show="name" x-text="name"></span>
+                </p>
+                <p class="font-bold">
+                    <a href="javascript:" @click="random()">随机</a>
+                    <a href="#example">示例</a>
+                </p>
+            </div>
+            <label class="w-full">
+                <input x-ref="crontab" @mouseup="focus" :class="{'border-red-500': !format}" required id="summary" x-model="value" @blur="blur()"
+                       type="text" aria-required="true" name="text"
+                       class="w-full tracking-wide rounded-full text-center text-6xl bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                       placeholder=""/>
+            </label>
+        </div>
+        <div class="text-center">
+            <p class="py-4 font-bold dark:text-slate-500">
+                <a href="javascript:" :class="{'!text-primary': active==0}" class="mx-4" @click="activated(0)" x-show="second">秒</a>
+                <a href="javascript:" :class="{'!text-primary': active==1}" @click="activated('1')" class="mx-4">分</a>
+                <a href="javascript:" :class="{'!text-primary': active==2}" @click="activated('2')" class="mx-4">时</a>
+                <a href="javascript:" :class="{'!text-primary': active==3}" @click="activated('3')" class="mx-4">天</a>
+                <a href="javascript:" :class="{'!text-primary': active==4}" @click="activated('4')" class="mx-4">月</a>
+                <a href="javascript:" :class="{'!text-primary': active==5}" @click="activated('5')" class="mx-4">周</a>
+            </p>
+            <table class="mx-auto border-collapse w-full max-w-sm">
+                <tbody>
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">*</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">任何值</td>
+                </tr>
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">,</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">值分隔</td>
+                </tr>
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">-</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">值范围</td>
+                </tr>
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">/</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">值间隔</td>
+                </tr>
+                </tbody>
+                <tbody x-show="active == 0 || active == 1">
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">0-59</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">可用值</td>
+                </tr>
+                </tbody>
+                <tbody x-show="active == 2">
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">0-23</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">可用值</td>
+                </tr>
+                </tbody>
+                <tbody x-show="active == 3">
+                <tr>
+                    <th class="text-right  w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">1-31</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">可用值</td>
+                </tr>
+                </tbody>
+                <tbody x-show="active == 4">
+                <tr>
+                    <th class="text-right  w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">1-12</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">可用值</td>
+                </tr>
+                </tbody>
+                <tbody x-show="active == 5">
+                <tr>
+                    <th class="text-right w-1/2 border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">0-6</th>
+                    <td class="text-left border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">可用值</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex-1 text-center" x-show="nextMultiple.length > 0">
+            <table class="border-collapse table-auto w-full mt-6 max-w-sm mx-auto">
+                <caption class="py-4 caption-top bg-slate-200 dark:bg-slate-900 dark:text-slate-300">最近计划</caption>
+                <tbody>
+                <template x-for="(date, index) in nextMultiple">
+                    <tr>
+                        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"
+                            x-text="'#' + (index + 1)"></td>
+                        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400" x-text="date"></td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block append %}
+    <div class="bg-white dark:bg-slate-800 rounded-b-lg mt-6" id="example" x-data>
+        <div>
+            <table class="mx-auto border-collapse w-full">
+                <caption class="py-4 caption-top bg-slate-200 dark:bg-slate-800 dark:text-slate-300 font-bold">常用示例</caption>
+                <tbody>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 0})">每分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 1})">每偶数分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 2})">每奇数分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 3})">每3分钟</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 4})">每4分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 5})">每5分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 6})">每6分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 7})">每10分钟</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 8})">每15分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 9})">每20分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 10})">每30分钟</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 11})">每小时的30分钟</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 12})">每小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 13})">每2小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 14})">每3小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 15})">每4小时</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 16})">每6小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 17})">每8小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 18})">每12小时</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 19})">9点到17点内每小时</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 20})">每天零点</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 21})">每天凌晨1点</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 22})">每天凌晨2点</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 23})">每天早上8点</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 24})">每天上午9点</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 25})">每个星期一</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 26})">每个星期二</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 27})">每个星期三</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 28})">每个星期四</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 29})">每个星期五</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 30})">每个工作日</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a  href="#containerBody" @click="$dispatch('example',{select: 31})">每个周六周日</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 32})">仅限周末</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 33})">每月</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 34})">每隔一个月</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 35})">每个季度</a></td>
+                </tr>
+                <tr>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 36})">每半年</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><a href="#containerBody" @click="$dispatch('example',{select: 37})">每年</a></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
+                    <td class="text-center border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("assets/js/crontab.js") }}"></script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block header %}{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
+{% endblock %}
+{% block body %}
+    <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
+        <div class="isolate pt-2 px-4">
+            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+        </div>
+        <div class="flex">
+            <div class="flex-1 px-4 mt-2">
+                <div class="flex items-start overflow-hidden">
+                    <div class="flex-1 shrink-0" id="inputContainer">
+                        <label>
+                            <textarea id="inputJson" class="h-[calc(100vh-10.75rem)] scrollable w-full rounded-md bg-slate-200 dark:bg-slate-800 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入json数据..."></textarea>
+                        </label>
+                    </div>
+                    <div class="w-1 hidden xl:block"></div>
+                    <div class="flex-1 hidden xl:block" id="outputContainer">
+                        <div class="flex flex-col relative h-[calc(100vh-10.75rem)] max-w-[calc(100vw-32px)]">
+                            <div id="toolbar" class="flex py-2 items-center w-full bg-slate-300 dark:bg-slate-700 rounded-t-md">
+                                <button class="w-5 mx-2" id="containerFull" aria-label="全屏">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-slate-700 dark:fill-slate-200 rotate-45" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="move"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M21.71 11.31l-3-3a1 1 0 0 0-1.42 1.42L18.58 11H13V5.41l1.29 1.3A1 1 0 0 0 15 7a1 1 0 0 0 .71-.29 1 1 0 0 0 0-1.42l-3-3A1 1 0 0 0 12 2a1 1 0 0 0-.7.29l-3 3a1 1 0 0 0 1.41 1.42L11 5.42V11H5.41l1.3-1.29a1 1 0 0 0-1.42-1.42l-3 3A1 1 0 0 0 2 12a1 1 0 0 0 .29.71l3 3A1 1 0 0 0 6 16a1 1 0 0 0 .71-.29 1 1 0 0 0 0-1.42L5.42 13H11v5.59l-1.29-1.3a1 1 0 0 0-1.42 1.42l3 3A1 1 0 0 0 12 22a1 1 0 0 0 .7-.29l3-3a1 1 0 0 0-1.42-1.42L13 18.58V13h5.59l-1.3 1.29a1 1 0 0 0 0 1.42A1 1 0 0 0 18 16a1 1 0 0 0 .71-.29l3-3A1 1 0 0 0 22 12a1 1 0 0 0-.29-.69z"/></g></g></svg>
+                                </button>
+                                <button class="w-5 mx-2" id="copy" aria-label="复制">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-slate-700 dark:fill-slate-200" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="clipboard"><rect width="24" height="24" opacity="0"/><path d="M18 4v3a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/><rect x="7" y="2" width="10" height="6" rx="1" ry="1"/></g></g></svg>
+                                </button>
+                                <label class="dark:text-slate-300 hidden">
+                                    <input id="inlineType" class="!text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 内联类型
+                                </label>
+                                <label class="mx-2 dark:text-slate-300 hidden">
+                                    <input id="omitEmpty" class="!text-primary bg-slate-100 dark:bg-slate-800 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="checkbox" /> 省略空
+                                </label>
+                            </div>
+                            <div class="h-[calc(100vh-10.75rem-36px)] rounded-b-md w-full bg-slate-200 dark:bg-slate-800 !dark:text-slate-300 text-base font-bold 2xl:text-lg break-words" id="outputStruct">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+<footer class="p-6 bg-white dark:bg-slate-800 fixed bottom-0 w-full">
+    <div class="mx-auto max-w-screen-xl text-center">
+        <div class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+            {% set beian = theme_mod('beian') %}
+            <p>© {{ now|date('Y')}} Powered By <a target="_blank" href="https://octopuspress.dev" class="hover:underline">OctopusPress™</a>. {% if beian %}<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="nofollow">{{ beian }}</a>{% endif %}</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ asset('/assets/js/prismjs.js') }}"></script>
+    <script>
+        var prismElement = document.createElement('link');
+        Alpine.effect(() => {
+            var theme = Alpine.store('theme').current;
+            if (theme === 'System') {
+                theme = window.getTheme();
+            }
+            switch (theme) {
+                case 'Dark':
+                    document.head.removeChild(prismElement);
+                    break;
+                case 'Light':
+                    prismElement.id = "prismPrism";
+                    prismElement.href = "{{ asset('/assets/css/prism.css') }}";
+                    prismElement.rel = "stylesheet";
+                    document.head.appendChild(prismElement);
+                    break;
+            }
+        });
+        window.ConvertOptions = {
+            lang: "{{ features[2] == 'golang' ? 'go' : features[2] }}",
+            rendererOptions: {
+                'just-types': true,
+                'features': 'attributes-only',
+                'framework': "{{ features[2] == 'csharp' ? 'SystemTextJson' : 'just-types' }}",
+                'package': "LooCode",
+                'namespace': "LooCode",
+            }
+        };
+    </script>
+    <script type="text/javascript" src="{{ asset('/assets/js/json-to-class.js') }}"></script>
+{% endblock %}
