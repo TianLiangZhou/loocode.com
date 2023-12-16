@@ -11,20 +11,22 @@
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^10.4.14",
+    "croner": "^8.0.0",
+    "date-fns": "^2.30.0",
     "esbuild-plugin-prismjs": "^1.0.8",
     "js-base64": "^3.7.5",
     "json-formatter-js": "^2.3.4",
-    "json-to-go": "https://github.com/mholt/json-to-go#master",
     "postcss": "^8.4.23",
     "postcss-cli": "^10.1.0",
     "postcss-nesting": "^11.2.2",
     "prismjs": "^1.29.0",
+    "quicktype-core": "^23.0.80",
     "toastify-js": "^1.12.0",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.19.9",
     "tailwindcss": "^3.3.2"
   },
-  "packageManager": "yarn@3.5.0"
+  "packageManager": "yarn@4.0.2"
 }

@@ -8,10 +8,12 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
     logLevel: 'info',
     entryPoints: [
       'assets/js/prismjs.js',
-      'assets/js/json-to-go.js',
+      'assets/js/json-to-class.js',
       'assets/js/json-beautiful.js',
       'assets/js/base64.js',
       'assets/js/image-base64.js',
+      'assets/js/crontab.js',
+      'assets/css/prism.css',
     ],
     bundle: true,
     outdir: 'public/assets',
@@ -29,7 +31,7 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
       '.woff': 'file',
       '.woff2': 'file',
     },
-    target: ['chrome58', 'firefox57', 'safari11', 'edge95'],
+    target: ['es2020'],
     plugins: [
       prismjsPlugin.prismjsPlugin({
         inline: true,

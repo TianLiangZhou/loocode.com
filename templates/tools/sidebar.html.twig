@@ -14,7 +14,7 @@
                                 {% for item in tools %}
                                     <li class="flex my-3">
                                         {% if tool.name == item.name %}
-                                            <span class="relative w-full pl-2 border-l-4 border-primary !text-primary">{{ item.name }}</span>
+                                            <h2 class="relative w-full pl-2 border-l-4 border-primary !text-primary">{{ item.name }}</h2>
                                         {% else %}
                                             <a href="{{item.href}}" class="relative w-full hover:underline hover:text-primary">{{item.name}}</a>
                                         {% endif %}
@@ -35,12 +35,13 @@
                     </div>
                 </div>
             </div>
+            {% block append %}{% endblock %}
         </div>
     </div>
 {% endblock %}
 {% block style %}
     <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
-    <script>
+    <script type="text/javascript">
         // fix https://github.com/alpinejs/alpine/discussions/1705
         // <!-- ✅ After -->
         document.addEventListener('alpine:init', () => {

@@ -1,7 +1,7 @@
 {% extends '@OctopusPress/base.html.twig' %}
 {% block style %}
 <link rel="stylesheet" href="{{ asset('assets/css/tools.css') }}" />
-<script>
+<script type="text/javascript">
     // fix https://github.com/alpinejs/alpine/discussions/1705
     // <!-- ✅ After -->
     document.addEventListener('alpine:init', () => {
@@ -59,7 +59,7 @@
 </script>
 {% endblock %}
 {% block body %}
-    <div class="container mx-auto my-5 px-4">
+    <div class="container mx-auto my-5 px-4" id="containerBody">
         <div class="isolate pt-4">
             {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
         </div>
@@ -71,7 +71,7 @@
                             {% for item in tools|filter(v => v.group is defined and v.group == group) %}
                                 <li class="flex py-3 ml-6 {% if tool.name == item.name %} border-b-4 border-primary {% endif %}">
                                     {% if tool.name == item.name %}
-                                        <span class="!text-primary">{{ item.name }}</span>
+                                        <h2 class="!text-primary">{{ item.name }}</h2>
                                     {% else %}
                                         <a href="{{ item.href }}" class="relative w-full hover:underline hover:text-primary">{{item.name}}</a>
                                     {% endif %}
@@ -91,6 +91,7 @@
                     </div>
                 </div>
             </div>
+            {% block append %}{% endblock %}
         </div>
     </div>
 {% endblock %}
