@@ -13,6 +13,7 @@ const prismjsPlugin=require('esbuild-plugin-prismjs');
       'assets/js/base64.js',
       'assets/js/image-base64.js',
       'assets/js/crontab.js',
+      'assets/js/table-data-generator.js',
       'assets/css/prism.css',
     ],
     bundle: true,

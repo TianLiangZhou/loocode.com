@@ -6,7 +6,7 @@
 {% block body %}
     <div class="w-screen mx-auto my-2 md:px-3 lg:px-8">
         <div class="isolate pt-2 px-4">
-            {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
+            {{ widget('breadcrumb', {template: theme ~ '/breadcrumb.html.twig'}) }}
         </div>
         <div class="flex flex-col">
             <div class="flex-1 px-4 mt-2">
@@ -21,11 +21,11 @@
                         {% endfor %}
                     </ul>
                     <div class="flex items-center justify-center w-full">
-                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-800 hover:bg-slate-100 dark:border-gray-600 dark:hover:border-slate-500">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:border-gray-600 dark:hover:border-slate-500">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                                 <p class="mb-2 text-sm text-slate-500 dark:text-slate-400">
-                                    <span class="font-semibold">Click to upload</span> (.{{ features[0]|lower }} file) or Drag and Drop (MAX: {{ upload_size }})
+                                    <span class="font-semibold">点击上传或拖放图片</span>: *.{{ features[0]|lower }} 文件, 最大: {{ upload_size }}
                                 </p>
                             </div>
                             <input id="dropzone-file" max="2" type="file" multiple accept=".{{ features[0] }}" class="hidden" />

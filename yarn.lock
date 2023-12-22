@@ -431,6 +431,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"big-integer@npm:^1.6.48":
+  version: 1.6.52
+  resolution: "big-integer@npm:1.6.52"
+  checksum: 9604224b4c2ab3c43c075d92da15863077a9f59e5d4205f4e7e76acd0cd47e8d469ec5e5dba8d9b32aa233951893b29329ca56ac80c20ce094b4a647a66abae0
+  languageName: node
+  linkType: hard
+
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -1556,6 +1563,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-sql-parser@npm:^4.17.0":
+  version: 4.17.0
+  resolution: "node-sql-parser@npm:4.17.0"
+  dependencies:
+    big-integer: "npm:^1.6.48"
+  checksum: 151c8d1c4ad8b827f2ec9811f0c704a99e1521317990ffd25cad35c9775ee2112b9598b051eb85c582f23c74bb4f92e467be8ec8d6f01f9870a8744d8d873492
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^7.0.0":
   version: 7.2.0
   resolution: "nopt@npm:7.2.0"
@@ -2200,6 +2216,7 @@ __metadata:
     esbuild-plugin-prismjs: "npm:^1.0.8"
     js-base64: "npm:^3.7.5"
     json-formatter-js: "npm:^2.3.4"
+    node-sql-parser: "npm:^4.17.0"
     postcss: "npm:^8.4.23"
     postcss-cli: "npm:^10.1.0"
     postcss-nesting: "npm:^11.2.2"

@@ -1,5 +1,5 @@
 <div class="flex flex-col items-start overflow-hidden">
-    <div class="w-full relative h-[calc(100vh-10.75rem)] flex items-center justify-center bg-slate-200 dark:bg-slate-800" id="inputContainer">
+    <div class="w-full relative h-[calc(100vh-10.75rem)] flex items-center justify-center bg-slate-100 dark:bg-slate-800" id="inputContainer">
         <div class="relative"  x-data="{}">
             <button @click="$refs.file.click()" class="btn medium !bg-primary text-white w-48 !border-primary tracking-widest">选择图片</button>
             <input x-ref="file" id="inputFile" type="file" accept=".jpg, .jpeg, .png, .webp" class="absolute left-0 btn medium !bg-primary text-white invisible" value="" />
@@ -7,7 +7,7 @@
     </div>
     <div class="w-full hidden relative" id="outputContainer">
         <label>
-            <textarea id="outputString" disabled class="h-[calc(100vh-10.75rem)] w-full rounded-md scrollable bg-slate-200 dark:bg-slate-800 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="编码解码结果..."></textarea>
+            <textarea id="outputString" disabled class="h-[calc(100vh-10.75rem)] w-full rounded-md scrollable bg-slate-100 dark:bg-slate-800 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="编码解码结果..."></textarea>
         </label>
         <div class="absolute top-2 right-2 z-50 flex flex-col">
             <button title="复制" aria-label="复制" id="btnCopy" class="btn bg-slate-300 dark:bg-slate-900 text-white small border-slate-300 dark:border-slate-900">

@@ -1,0 +1,61 @@
+{% extends 'tools/tab.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% block child %}
+    <div class="flex flex-col max-w-screen-sm mx-auto">
+        <div class="flex">
+            <label for="sql" class="text-slate-700 dark:text-slate-400">DDL</label>
+            <div class="flex-1 ml-4">
+            <textarea id="sql" required aria-required="true" rows="10"
+                      class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                      placeholder="create table `example` (id int(10), `name` varchar(255)) engine=innodb;"></textarea>
+            </div>
+        </div>
+        <div class="flex my-5"  x-show="extra.columns">
+            <label for="sql" class="text-slate-700 dark:text-slate-400">数量</label>
+            <div class="flex-1 ml-4">
+                <input id="count" placeholder="数量" type="number"
+                       class="rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                       name="count" value="100" min="1" max="1000"/>
+                <label><input x-model="extra.showResult" type="checkbox" value="1" class="rounded-md !text-primary bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"/>显示生成数据</label>
+            </div>
+        </div>
+
+        <div class="flex my-5" x-show="extra.columns">
+            <label for="sql" class="text-slate-700 dark:text-slate-400">设置</label>
+            <div class="flex-1 ml-4" x-show="!extra.columnsExpanded">
+                <button class="btn basic small" type="button" @click="extra.columnsExpanded=true">展开</button>
+            </div>
+            <div class="flex-1 ml-4" x-show="extra.columnsExpanded">
+                <label class="label text-red-500">自定义数据提供了值，将始终使用自定义数据。自定义数据以'||'分割将会分割后随机。字段名为`password`、`pwd`会以'123456'的MD5作为字段值。</label>
+                <template x-for="(column, index) in extra.columns">
+                    <div :class="{'hidden': column.autoIncrement,'my-5': index != 0}" class="flex flex-row flex-wrap items-center justify-between">
+                        <label :for="column.name" class="w-36 text-slate-700 dark:text-slate-400" x-text="column.name"></label>
+                        <input :id="column.name" :name="column.name" x-model="column.customValue" type="text" placeholder="自定义字段数据"
+                               class="rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"/>
+                        <label>
+                            <input type="checkbox" value="1" x-model="column.forceDefault"
+                               class="rounded-md !text-primary bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"/>
+                            强制默认
+                        </label>
+                    </div>
+                </template>
+                <button x-show="extra.columnsExpanded" class="btn basic small" type="button" @click="extra.columnsExpanded=false">折叠</button>
+            </div>
+        </div>
+        <div class="flex my-5 justify-center">
+            {{ forms.button('解析', 'parseSql') }}
+            <div class="mx-2" x-show="extra.isParsed">
+                {{ forms.button('生成数据', 'convertSqlGenerator') }}
+            </div>
+        </div>
+
+        <div class="flex my-5 justify-center" x-show="data && extra.showResult">
+            <div class="flex-1">
+                <label><textarea x-model="data" rows="20" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"></textarea></label>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('assets/js/table-data-generator.js') }}"></script>
+{% endblock %}

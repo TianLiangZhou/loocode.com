@@ -104,6 +104,12 @@ class ToolController extends Controller
             'description' => '在线json转Kotlin类可以帮助您将JSON数据转换为对应的Kotlin语言类。无论您是Kotlin开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的Kotlin类代码。它可以将JSON字符串的键名和类型信息自动解析为Kotlin类的字段名称和类型，省去了手动编写类的繁琐步骤。',
             'group' => 'json-convertor',
         ],
+        'sql-table-data-generator' => [
+            'name' => 'SQL表数据生成',
+            'href' => '/tool/sql-table-data-generator',
+            'title' => '在线工具SQL表数据生成',
+            'description' => '在线工具SQL表数据生成是一个方便的工具，用于生成SQL表数据。无论是在开发环境中模拟数据，还是在测试中生成测试数据，这个工具都能帮助用户快速创建数据库表格所需的数据内容。支持MySQL、Oracle、MariaDB和PostgreSQL等多种数据库源',
+        ],
         'url-encode-decode' => [
             'name' => 'URL编码解码',
             'href' => '/tool/url-encode-decode',

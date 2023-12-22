@@ -5,9 +5,9 @@
         <label class="text-slate-700 dark:text-slate-400">模式</label>
         <div class="flex-1 ml-4">
             <div class="flex items-center dark:text-slate-300" x-init="mode = 1">
-                <label><input name="mode" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" value="1"  type="radio" /> 图片</label>
-                <label class="mx-2"><input class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" name="mode" value="2" type="radio" /> SVG</label>
-                <label><input name="mode" class="!text-primary  bg-slate-300 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" value="3" type="radio"/> 字符</label>
+                <label><input name="mode" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" value="1"  type="radio" /> 图片</label>
+                <label class="mx-2"><input class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" name="mode" value="2" type="radio" /> SVG</label>
+                <label><input name="mode" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" x-model="mode" value="3" type="radio"/> 字符</label>
             </div>
         </div>
     </div>
@@ -42,19 +42,19 @@
     <div class="flex my-5" x-show="mode == 3">
         <label for="char" class="text-slate-700 dark:text-slate-400">字符</label>
         <div class="flex-1 ml-4">
-            <input :required="mode == 3" aria-required="true" id="char" placeholder="二维码字符" type="text" class="w-full rounded-md bg-slate-200 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="char" value="" maxlength="1" minlength="1" />
+            <input :required="mode == 3" aria-required="true" id="char" placeholder="二维码字符" type="text" class="w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="char" value="" maxlength="1" minlength="1" />
         </div>
     </div>
     <div class="flex my-5">
         <label for="slogan" class="text-slate-700 dark:text-slate-400">文本</label>
         <div class="flex-1 ml-4 ">
-            <textarea required id="slogan" aria-required="true" name="text" rows="10" class="w-full rounded-md bg-slate-200 dark:text-slate-300 border-transparent dark:bg-slate-900  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你需要生成二维码的文本"></textarea>
+            <textarea required id="slogan" aria-required="true" name="text" rows="10" class="w-full rounded-md bg-slate-100 dark:text-slate-300 border-transparent dark:bg-slate-900  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你需要生成二维码的文本"></textarea>
         </div>
     </div>
     <div class="flex my-5 justify-center">
         {{ forms.button('生成') }}
     </div>
-    <div class="flex my-5">
+    <div class="flex my-5" x-show="data">
         <label class="text-slate-700 dark:text-slate-400">二维码</label>
         <div class="flex-1 ml-4 text-slate-900 dark:text-slate-300" x-html="data">
         </div>
