@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\ToolController;
 use OctopusPress\Bundle\Bridge\Bridger;
 use OctopusPress\Bundle\Customize\AbstractControl;
 use OctopusPress\Bundle\Entity\Post;
@@ -1129,6 +1130,13 @@ class Kernel extends OctopusPressKernel implements PluginInterface
                 ]
             ]
         ]);
+        $bridger->getHook()->add('_seo_sitemap_generator', function (string $domain) {
+            $urls = [];
+            foreach (ToolController::$tools as $tool) {
+                $urls[] = $domain . $tool['href'];
+            }
+            return $urls;
+        });
     }
 
     public function activate(Bridger $bridger): void

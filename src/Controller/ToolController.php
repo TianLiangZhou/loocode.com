@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ToolController extends Controller
 {
-    private array $tools = [
+    public static array $tools = [
         'chinese-to-pinyin' => [
             'name' => '汉字转拼音',
             'href' => '/tool/chinese-to-pinyin',
@@ -399,7 +399,7 @@ class ToolController extends Controller
         if ($activatedRoute->getRouteName() !== 'tools_page') {
             $name = $this->bridger->getRequest()->attributes->get('name');
             $crumbs[] = (object) [
-                'title' => $this->tools[$name]['name'],
+                'title' => static::$tools[$name]['name'],
             ];
         }
         return $crumbs;
@@ -422,8 +422,8 @@ class ToolController extends Controller
         } else {
             $name = $this->bridger->getRequest()->attributes->get('name');
             $optionVariables['variables'] = [
-                'title' => $this->tools[$name]['title'],
-                'description' =>  $this->tools[$name]['description'],
+                'title' => static::$tools[$name]['title'],
+                'description' =>  static::$tools[$name]['description'],
             ];
         }
         return $optionVariables;
@@ -436,7 +436,7 @@ class ToolController extends Controller
     public function index(): Response
     {
         return $this->render('tools/index.html.twig', [
-            'tools' => $this->tools,
+            'tools' => static::$tools,
         ]);
     }
 
@@ -448,14 +448,14 @@ class ToolController extends Controller
     #[Route('/tool/{name}', name: 'tool_single_page', requirements: ['name' => '[a-z0-9\-_]{2,}',], methods: 'GET')]
     public function tool(string $name): Response
     {
-        if (!isset($this->tools[$name])) {
+        if (!isset(static::$tools[$name])) {
             throw $this->createNotFoundException();
         }
-        $tool = $this->tools[$name];
+        $tool = static::$tools[$name];
         $template = 'tools/' . $name . '.html.twig';
         $features = explode('-', $name);
         $data = [
-            'tools' => $this->tools,
+            'tools' => static::$tools,
             'tool' => $tool,
             'name' => $name,
             'group'=> $tool['group'] ?? '',
@@ -504,8 +504,8 @@ class ToolController extends Controller
          */
         $tool = $request->request->get('tool', '');
         $body = $request->request->all();
-        if (isset($this->tools[$tool]['group'])) {
-            switch ($this->tools[$tool]['group']) {
+        if (isset(static::$tools[$tool]['group'])) {
+            switch (static::$tools[$tool]['group']) {
                 case 'image-convert':
                     return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
                 case 'cipher':
