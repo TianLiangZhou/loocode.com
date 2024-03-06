@@ -15,7 +15,11 @@
                         {% for item in tools %}
                             {% if item['group'] is defined and item['group'] == 'image-convert' %}
                             <li class="mr-4 mb-2">
-                                <a class="text-slate-600 dark:text-slate-400 font-bold" title="{{ item['title'] }}" href="{{ item['href'] }}">{{ item['name'] }}</a>
+                                {% if item['name'] == tool['name'] %}
+                                    <h2 class="!text-primary font-bold">{{ item['name'] }}</h2>
+                                {% else %}
+                                    <a class="text-slate-600 dark:text-slate-400 font-bold" title="{{ item['title'] }}" href="{{ item['href'] }}">{{ item['name'] }}</a>
+                                {% endif %}
                             </li>
                             {% endif %}
                         {% endfor %}

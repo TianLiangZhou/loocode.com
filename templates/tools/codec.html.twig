@@ -8,6 +8,7 @@
         <div class="isolate pt-2 px-4">
             {{ widget('breadcrumb', {template: 'summer/breadcrumb.html.twig'}) }}
         </div>
+        <h2 class="sr-only">{{ tool['name'] }}</h2>
         <div class="flex flex-col">
             <div class="flex-1 px-4 mt-2">
                 {% if name == 'url-encode-decode' %}

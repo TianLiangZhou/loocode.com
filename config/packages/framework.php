@@ -24,7 +24,7 @@ return static function (FrameworkConfig $frameworkConfig, ContainerBuilder $cont
     }
 
     $frameworkConfig->phpErrors()
-        ->log();
+        ->log(true);
     $frameworkConfig->csrfProtection()
         ->enabled(false);
     $env = $container->getParameter('kernel.environment');
@@ -33,7 +33,7 @@ return static function (FrameworkConfig $frameworkConfig, ContainerBuilder $cont
         $sessionConfig->storageFactoryId('session.storage.factory.mock_file');
     }
     $assetsConfig = $frameworkConfig->assets();
-    $assetsConfig->baseUrls(env('ASSETS_URL'));
+    $assetsConfig->baseUrls('%env(ASSETS_URL)%');
     $assetsConfig->version('1.0.15');
     $assetsConfig->versionFormat("%%s?v=%%s");
 
