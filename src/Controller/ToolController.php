@@ -389,13 +389,11 @@ class ToolController extends Controller
      */
     public function breadcrumb(array $crumbs): array
     {
-
         $activatedRoute = $this->bridger->getActivatedRoute();
         array_unshift($crumbs, (object) [
             'title' => '在线工具',
             'route' => 'tools_page',
         ]);
-
         if ($activatedRoute->getRouteName() !== 'tools_page') {
             $name = $this->bridger->getRequest()->attributes->get('name');
             $crumbs[] = (object) [
@@ -435,6 +433,16 @@ class ToolController extends Controller
     #[Route('/tools', name: 'tools_page')]
     public function index(): Response
     {
+        $title = function (string $title) {
+            return '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体_PNG|WEBP|JPEG图片压缩 - 在线工具';
+        };
+        $description = function () {
+            return '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别，图片压缩等等在线工具';
+        };
+        $this->bridger->getHook()->add('_seo_title', $title);
+        $this->bridger->getHook()->add('_seo_graph_title', $title);
+        $this->bridger->getHook()->add('_seo_description', $description);
+        $this->bridger->getHook()->add('_seo_graph_description', $description);
         return $this->render('tools/index.html.twig', [
             'tools' => static::$tools,
         ]);
@@ -451,6 +459,18 @@ class ToolController extends Controller
         if (!isset(static::$tools[$name])) {
             throw $this->createNotFoundException();
         }
+        $title = function (string $title) use ($name) {
+            return static::$tools[$name]['title'] . ' - 在线工具';
+        };
+        $description = function (string $description) use ($name) {
+            return static::$tools[$name]['description'];
+        };
+        $this->bridger->getHook()->add('_seo_title', $title);
+        $this->bridger->getHook()->add('_seo_graph_title', $title);
+        $this->bridger->getHook()->add('_seo_description', $description);
+        $this->bridger->getHook()->add('_seo_graph_description', $description);
+
+
         $tool = static::$tools[$name];
         $template = 'tools/' . $name . '.html.twig';
         $features = explode('-', $name);
