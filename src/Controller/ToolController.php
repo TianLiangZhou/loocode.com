@@ -31,36 +31,48 @@ class ToolController extends Controller
             'href' => '/tool/chinese-to-pinyin',
             'title' => '在线工具汉字转拼音_汉字音标_汉字汉语转拼单_汉字音标_汉字首字母_中文转拼音_中文转音标',
             'description' => '在线汉字转拼音是通过将中文汉字转换成汉字拼音形式，它支持多种模式无音标、首字母、多音字等等',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2143',
         ],
         'simplified-chinese-to-traditional-chinese' => [
             'name' => '简体转繁体',
             'href' => '/tool/simplified-chinese-to-traditional-chinese',
             'title' => '在线工具简体转繁体_繁体转简体_简体转台湾繁体_简体转香港繁体_繁体转中文简体_opencc在线测试',
             'description' => '中文简体转繁体是通过OpenCC库快速将简体转成繁体、繁体转简体、简体转台湾繁体、简体转香港繁体的在线工具',
+            'ratingValue' => '4.8',
+            'ratingCount' => '3143',
         ],
         'chinese-word-segmentation' => [
             'name' => '中文分词',
             'href' => '/tool/chinese-word-segmentation',
             'title' => '在线工具百度LAC中文分词_百度LAC分词_LAC分词在线体验_中文分词_中文在线分词_分词权重_在线智能分词_百度LAC在线测试',
             'description' => '中文分词可以帮助您对中文文本进行精确且快速的分词。无论您是从事中文自然语言处理的研究者，还是需要对中文文本进行分析的业务用户，都可以使用我的工具轻松地进行中文分词。它使用了最新的中文分词算法，能够识别中文词汇的各种不同形式和用法，并生成与之相应的分词结果。',
+            'ratingValue' => '4.8',
+            'ratingCount' => '4143',
         ],
         'qr-code-generator' => [
             'name' => '二维码',
             'href' => '/tool/qr-code-generator',
             'title' => '在线工具二维码生成_快速生成二维码_SVG二维码生成_字符二维码生成_二维码生成器_PHP二维码生成',
             'description' => '在线二维码生成器可以帮助您快速生成用于各种用途的高质量二维码。它支持多种类型的二维码，例如URL、文本、电话号码、电子邮件、Wi-Fi设置、地理位置等，可以满足您的不同需求。您只需输入相关信息并选择二维码的类型，即可生成一个清晰、易于扫描的二维码图像。此外，该工具还支持自定义样式和颜色，让您可以根据需求自由设计二维码的外观，从而使其更能在各种场合使用。',
+            'ratingValue' => '4.8',
+            'ratingCount' => '1143',
         ],
         'ocr-recognition' => [
             'name' => '图文识别',
             'href' => '/tool/ocr-recognition',
             'title' => '在线工具OCR识别_图文识别_百度paddleOCR在线测试_OCR识别_paddleOCR测试',
             'description' => '图文识别基于百度paddleOCR扩展库提取图片上的文字信息',
+            'ratingValue' => '4.8',
+            'ratingCount' => '143',
         ],
         'json-beautifier'=> [
             'name' => 'JSON美化',
             'href' => '/tool/json-beautifier',
             'title' => '在线工具JSON美化_JSON格式化_JSON解析',
             'description' => '在线JSON格式化可以帮助您轻松清晰地格式化和美化任何JSON数据。无论您是开发人员还是普通用户，只需粘贴您的JSON数据即可快速生成可读性更高的格式。它不仅能够识别错误和缺失的括号和逗号，还可以将嵌套的JSON数据更清晰地显示出来。',
+            'ratingValue' => '4.8',
+            'ratingCount' => '8912',
         ],
         'json-to-golang-struct' => [
             'name' => 'JSON转Go结构体',
@@ -68,6 +80,8 @@ class ToolController extends Controller
             'title' => '在线工具JSON转Go结构体_JSON转go_JSON转golang结构体',
             'description' => '在线json转go结构体可以帮助您将JSON数据转换为对应的Go语言结构体。无论您是Go开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的Go结构体代码。它可以将JSON字符串的键名和类型信息自动解析为Go结构体的字段名称和类型，省去了手动编写结构体的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2243',
         ],
         'json-to-java' => [
             'name' => 'JSON转Java类',
@@ -75,6 +89,8 @@ class ToolController extends Controller
             'title' => '在线工具JSON转Java类',
             'description' => '在线json转Java类可以帮助您将JSON数据转换为对应的Java语言类。无论您是Java开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的Go结构体代码。它可以将JSON字符串的键名和类型信息自动解析为Java类的字段名称和类型，省去了手动编写类的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2143',
         ],
         'json-to-php' => [
             'name' => 'JSON转PHP类',
@@ -82,6 +98,8 @@ class ToolController extends Controller
             'title' => '在线工具JSON转PHP类',
             'description' => '在线json转PHP类可以帮助您将JSON数据转换为对应的PHP语言类。无论您是PHP开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的PHP类代码。它可以将JSON字符串的键名和类型信息自动解析为PHP类的字段名称和类型，省去了手动编写类的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '3143',
         ],
         'json-to-typescript' => [
             'name' => 'JSON转TypeScript接口',
@@ -89,6 +107,8 @@ class ToolController extends Controller
             'title' => '在线工具JSON转TypeScript接口',
             'description' => '在线json转TypeScript接口可以帮助您将JSON数据转换为对应的TypeScript语言接口。无论您是TypeScript开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的TypeScript接口代码。它可以将JSON字符串的键名和类型信息自动解析为TypeScript接口的字段名称和类型，省去了手动编写接口的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '5143',
         ],
         'json-to-csharp' => [
             'name' => 'JSON转C#类',
@@ -96,6 +116,8 @@ class ToolController extends Controller
             'title' => '在线工具JSON转C#类',
             'description' => '在线json转C#类可以帮助您将JSON数据转换为对应的C#语言类。无论您是C#开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的C#类代码。它可以将JSON字符串的键名和类型信息自动解析为C#类的字段名称和类型，省去了手动编写类的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '6143',
         ],
         'json-to-kotlin' => [
             'name' => 'JSON转Kotlin类',
@@ -103,12 +125,16 @@ class ToolController extends Controller
             'title' => '在线工具JSON转Kotlin类',
             'description' => '在线json转Kotlin类可以帮助您将JSON数据转换为对应的Kotlin语言类。无论您是Kotlin开发人员还是JSON数据清洗者，只需粘贴您的JSON数据即可快速生成对应的Kotlin类代码。它可以将JSON字符串的键名和类型信息自动解析为Kotlin类的字段名称和类型，省去了手动编写类的繁琐步骤。',
             'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2123',
         ],
         'sql-table-data-generator' => [
             'name' => 'SQL表数据生成',
             'href' => '/tool/sql-table-data-generator',
             'title' => '在线工具SQL表数据生成',
             'description' => '在线工具SQL表数据生成是一个方便的工具，用于生成SQL表数据。无论是在开发环境中模拟数据，还是在测试中生成测试数据，这个工具都能帮助用户快速创建数据库表格所需的数据内容。支持MySQL、Oracle、MariaDB和PostgreSQL等多种数据库源',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2140',
         ],
         'url-encode-decode' => [
             'name' => 'URL编码解码',
@@ -116,6 +142,8 @@ class ToolController extends Controller
             'title' => '在线工具URL编码_URL解码_URI编码_URI解码_URL编码解码',
             'description' => '在线URL编码解码可以帮助您将数据转换为对应的URL编码解码数据。只需粘贴您的数据即可快速转换成对应的数据。',
             'group' => 'codec',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2111',
         ],
         'base64-encode-decode' => [
             'name' => 'Base64编码解码',
@@ -123,6 +151,8 @@ class ToolController extends Controller
             'title' => '在线工具base64编码_Base64解码_base64编码解码',
             'description' => '在线base64编码解码可以帮助您将base64数据转换为对应的base64编码解码数据。只需粘贴您的数据即可快速转换成对应的数据。',
             'group' => 'codec',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2144',
         ],
         'to-md5' => [
             'name' => 'MD5',
@@ -130,6 +160,8 @@ class ToolController extends Controller
             'title' => '在线工具计算MD5、MD2、MD4值',
             'description' => '在线计算字符MD5、MD2、MD4工具可帮助您快速计算从字符串或二进制计算MD5哈希值。MD5消息摘要算法是一种广泛使用的哈希函数，可生成128位哈希值。MD5可用作校验和来验证数据完整性，防止意外损坏。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2133',
         ],
         'to-sha1' => [
             'name' => 'SHA1',
@@ -137,6 +169,8 @@ class ToolController extends Controller
             'title' => '在线工具计算sha1、sha225、sha256、sha512值',
             'description' => '在线计算字符sha1、sha225、sha256、sha512工具可帮助您快速计算从字符串或二进制计算sha1哈希值。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '563',
         ],
         'to-crc32' => [
             'name' => 'CRC32',
@@ -144,6 +178,8 @@ class ToolController extends Controller
             'title' => '在线工具计算crc32、crc32b、crc32c值',
             'description' => '在线计算字符crc32、crc32b、crc32c工具可帮助您快速计算从字符串或二进制计算crc32哈希值。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '352',
         ],
         'to-hash' => [
             'name' => 'HASH',
@@ -151,6 +187,8 @@ class ToolController extends Controller
             'title' => '在线工具计算hash值',
             'description' => '在线计算字符Hash工具可帮助您快速计算从字符串或二进制计算哈希值。它支持md5、sha1、sha256、crc32、sha3、ripemd、tiger、haval、xxh等多种hash算法，同时也支持hmac形式计算。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2543',
         ],
         'aes-encryption-and-decryption' => [
             'name' => 'AES加密与解密',
@@ -158,6 +196,8 @@ class ToolController extends Controller
             'title' => '在线工具AES加密与解密',
             'description' => '在线AES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持AES-128-CBC、AES-192-CBC、AES-256-CBC、AES-128-ECB、AES-192-ECB、AES-256-ECB等多种加密解密算法。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2908',
         ],
         'des-encryption-and-decryption' => [
             'name' => 'DES、3DES加密与解密',
@@ -165,6 +205,8 @@ class ToolController extends Controller
             'title' => '在线工具DES加密与解密',
             'description' => '在线DES加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持DES-EDE-CBC、DES-EDE-CFB、DES-EDE-ECB、DES-EDE-OFB、DES-EDE3-CBC、DES-EDE3-CFB、DES-EDE3-ECB、DES-EDE3-OFB等多种加密解密算法。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '799',
         ],
         'sm4-encryption-and-decryption' => [
             'name' => 'SM4加密与解密',
@@ -172,6 +214,8 @@ class ToolController extends Controller
             'title' => '在线工具sm4加密与解密',
             'description' => '在线sm4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持SM4-CBC、SM4-CCM、SM4-CFB、SM4-CTR、SM4-ECB、SM4-GCM、SM4-OFB等多种加密解密算法。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '479',
         ],
         'rc24-encryption-and-decryption' => [
             'name' => 'RC2、RC4加密与解密',
@@ -179,6 +223,8 @@ class ToolController extends Controller
             'title' => '在线工具RC2、RC4加密与解密',
             'description' => '在线RC2、RC4加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持RC2-40-CBC、RC4-64-CBC、RC2-CFB、RC2-ECB、RC2-CBC、RC2-OFB、RC4、RC4-40等多种加密解密算法。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '872',
         ],
         'rsa-encryption-and-decryption' => [
             'name' => 'RSA加密与解密',
@@ -186,6 +232,8 @@ class ToolController extends Controller
             'title' => '在线工具RSA加密与解密',
             'description' => '在线RSA加密与解密工具可帮助您快速加密字符文本和解密加密文本，它支持私钥加密、公钥加密、公钥解密、公钥解密。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '258',
         ],
         'rsa-sign-and-verify' => [
             'name' => 'RSA签名与校验',
@@ -193,6 +241,8 @@ class ToolController extends Controller
             'title' => '在线工具RSA签名与校验',
             'description' => '在线RSA签名与校验工具可帮助您快速创建签名和校验签名，它支持sha1、sha224、md5等多种签名算法。',
             'group' => 'cipher',
+            'ratingValue' => '4.8',
+            'ratingCount' => '359',
         ],
         'hex-to-rgb' => [
             'name' => 'Hex转RGB',
@@ -200,6 +250,8 @@ class ToolController extends Controller
             'title' => '在线工具Hex转RGB',
             'description' => '在线Hex转RGB工具可帮助您快速转换十六进制颜色值到RGB颜色值。',
             'group' => 'color',
+            'ratingValue' => '4.8',
+            'ratingCount' => '689',
         ],
         'rgb-to-hex' => [
             'name' => 'RGB转Hex',
@@ -207,12 +259,16 @@ class ToolController extends Controller
             'title' => '在线工具RGB转Hex',
             'description' => '在RGB转Hex工具可帮助您快速转换RGB颜色值到十六进制颜色值。',
             'group' => 'color',
+            'ratingValue' => '4.8',
+            'ratingCount' => '168',
         ],
         'crontab' => [
             'name' => 'Crontab规则校验',
             'href' => '/tool/crontab',
             'title' => '在线工具crontab规则校验，时间计划',
             'description' => '在RGB转Hex工具可帮助您快速转换RGB颜色值到十六进制颜色值。',
+            'ratingValue' => '4.8',
+            'ratingCount' => '892',
         ],
         'image-to-base64' => [
             'name' => '图片转Base64',
@@ -220,12 +276,16 @@ class ToolController extends Controller
             'title' => '在线工具图片转Base64_图片Base64解码_图片Base64编码',
             'description' => '在线图片转Base64编码可以帮助您将图片转换为对应的Base64数据。只需选择您的图片文件即可快速转换成对应的Base64数据。',
             'group' => 'codec',
+            'ratingValue' => '4.8',
+            'ratingCount' => '560',
         ],
         'image-compression' => [
             'name' => 'PNG|WEBP|JPEG|JPG图片压缩',
             'href' => '/tool/image-compression',
             'title' => '在线工具压缩WebP、PNG、JPEG、JPG、GIF图像',
             'description' => '图片压缩将您的WebP、PNG 和 JPEG图片优化50-80%，同时保持完全透明！节省您的存储空间，节省您的带宽，更快加载时间，更快的访问速度！',
+            'ratingValue' => '4.8',
+            'ratingCount' => '214',
         ],
         'png-to-webp' => [
             'name' => 'PNG转WEBP',
@@ -233,6 +293,8 @@ class ToolController extends Controller
             'title' => 'PNG转WEBP - 免费在线工具PNG图像转换webp图像',
             'description' => '在线图像转换工具将您的png图像转换成webp格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '413',
         ],
         'png-to-jpeg' => [
             'name' => 'PNG转JPEG',
@@ -240,6 +302,8 @@ class ToolController extends Controller
             'title' => 'PNG转JPEG - 免费在线工具PNG图像转换JPEG图像',
             'description' => '在线图像转换工具将您的png图像转换成jpeg格式文件，同时支持png,webp,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '3478',
         ],
         'png-to-jpg'  => [
             'name' => 'PNG转JPG',
@@ -247,6 +311,8 @@ class ToolController extends Controller
             'title' => 'PNG转JPG - 免费在线工具PNG图像转换jpg图像',
             'description' => '在线图像转换工具将您的png图像转换成jpg格式文件，同时支持jpeg,webp,png,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '298',
         ],
         'webp-to-png' => [
             'name' => 'WEBP转PNG',
@@ -254,6 +320,8 @@ class ToolController extends Controller
             'title' => 'WEBP转PNG - 免费在线工具WEBP图像转换PNG图像',
             'description' => '在线图像转换工具将您的webp图像转换成png格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '246',
         ],
         'webp-to-jpeg' => [
             'name' => 'WEBP转JPEG',
@@ -261,6 +329,8 @@ class ToolController extends Controller
             'title' => 'WEBP转JPEG - 免费在线工具WEBP图像转换JPEG图像',
             'description' => '在线图像转换工具将您的webp图像转换成jpeg格式文件，同时支持png,webp,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '468',
         ],
         'jpeg-to-png' => [
             'name' => 'JPEG转PNG',
@@ -268,6 +338,8 @@ class ToolController extends Controller
             'title' => 'JPEG转PNG - 免费在线工具jpeg图像转换png图像',
             'description' => '在线图像转换工具将您的jpeg图像转换成png格式文件，同时支持jpeg,webp,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '682',
         ],
         'jpeg-to-webp' => [
             'name' => 'JPEG转WEBP',
@@ -275,6 +347,8 @@ class ToolController extends Controller
             'title' => 'JPEG转WEBP - 免费在线工具jpeg图像转换webp图像',
             'description' => '在线图像转换工具将您的jpeg图像转换成webp格式文件，同时支持jpeg,png,jpg,heic,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '864',
         ],
         'heic-to-webp' => [
             'name' => 'HEIC转WEBP',
@@ -282,6 +356,8 @@ class ToolController extends Controller
             'title' => 'HEIC转WEBP - 免费在线工具heic图像转换WEBP图像',
             'description' => '在线图像转换工具将您的heic图像转换成webp格式文件，同时支持jpeg,png,jpg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '221',
         ],
         'heic-to-png' => [
             'name' => 'HEIC转PNG',
@@ -289,6 +365,8 @@ class ToolController extends Controller
             'title' => 'HEIC转PNG - 免费在线工具heic图像转换png图像',
             'description' => '在线图像转换工具将您的heic图像转换成png格式文件，同时支持jpeg,heic,jpg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '518',
         ],
         'heic-to-jpeg' => [
             'name' => 'HEIC转JPEG',
@@ -296,6 +374,8 @@ class ToolController extends Controller
             'title' => 'HEIC转JPEG - 免费在线工具heic图像转换jpeg图像',
             'description' => '在线图像转换工具将您的heic图像转换成jpeg格式文件，同时支持png,heic,jpg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '521',
         ],
         'heic-to-jpg' => [
             'name' => 'HEIC转JPG',
@@ -303,6 +383,8 @@ class ToolController extends Controller
             'title' => 'HEIC转JPG - 免费在线工具heic图像转换jpg图像',
             'description' => '在线图像转换工具将您的heic图像转换成jpeg格式文件，同时支持png,heic,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '1314',
         ],
         'heic-to-avif' => [
             'name' => 'HEIC转AVIF',
@@ -310,6 +392,8 @@ class ToolController extends Controller
             'title' => 'HEIC转AVIF - 免费在线工具heic图像转换avif图像',
             'description' => '在线图像转换工具将您的heic图像转换成avif格式文件，同时支持png,heic,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '820',
         ],
         'avif-to-heic' => [
             'name' => 'AVIF转HEIC',
@@ -317,6 +401,8 @@ class ToolController extends Controller
             'title' => 'AVIF转HEIC - 免费在线工具avif图像转换heic图像',
             'description' => '在线图像转换工具将您的avif图像转换成heic格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '357',
         ],
 
         'avif-to-jpeg' => [
@@ -325,6 +411,8 @@ class ToolController extends Controller
             'title' => 'AVIF转JPEG - 免费在线工具avif图像转换jpeg图像',
             'description' => '在线图像转换工具将您的avif图像转换成jpeg格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '999',
         ],
         'avif-to-png' => [
             'name' => 'AVIF转PNG',
@@ -332,6 +420,8 @@ class ToolController extends Controller
             'title' => 'AVIF转PNG - 免费在线工具avif图像转换png图像',
             'description' => '在线图像转换工具将您的avif图像转换成png格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '998',
         ],
         'avif-to-webp' => [
             'name' => 'AVIF转WEBP',
@@ -339,6 +429,8 @@ class ToolController extends Controller
             'title' => 'AVIF转WEBP - 免费在线工具avif图像转换webp图像',
             'description' => '在线图像转换工具将您的avif图像转换成webp格式文件，同时支持png,heic,avif,jpeg,webp,gif等格式转换!',
             'group' => 'image-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '996',
         ],
 
     ];
@@ -362,11 +454,8 @@ class ToolController extends Controller
     public function __construct(Bridger $bridger)
     {
         parent::__construct($bridger);
-        $hook = $bridger->getHook();
-        $hook->add('_seo_tools_page', [$this, 'seo']);
-        $hook->add('_seo_tool_single_page', [$this, 'seo']);
-        $hook->add('breadcrumb', [$this, 'breadcrumb']);
-        $hook->add('compare_url', [$this, 'compareUrl']);
+        $bridger->getHook()->add('breadcrumb', [$this, 'breadcrumb'])
+            ->add('compare_url', [$this, 'compareUrl']);
     }
 
     /**
@@ -401,30 +490,6 @@ class ToolController extends Controller
             ];
         }
         return $crumbs;
-    }
-
-    /**
-     * @param array $optionVariables
-     * @return array
-     */
-    public function seo(array $optionVariables): array
-    {
-        $activatedRoute = $this->bridger->getActivatedRoute();
-        $optionVariables['options']['description'] = '%description%';
-        $optionVariables['options']['social_description'] = '%description%';
-        if ($activatedRoute->getRouteName() == 'tools_page') {
-            $optionVariables['variables'] = [
-                'title' => '常用在线工具_汉语转拼音_汉字转拼音_繁体转简体_中文智能分词_二维码生成_json转go结构体_PNG|WEBP|JPEG图片压缩 - 在线工具',
-                'description' => '常用在线工具包含了在线中文转拼音，繁体转中文简体，中文分词，二维码生成，图片识别，图片压缩等等在线工具',
-            ];
-        } else {
-            $name = $this->bridger->getRequest()->attributes->get('name');
-            $optionVariables['variables'] = [
-                'title' => static::$tools[$name]['title'],
-                'description' =>  static::$tools[$name]['description'],
-            ];
-        }
-        return $optionVariables;
     }
 
     /**
@@ -465,12 +530,26 @@ class ToolController extends Controller
         $description = function (string $description) use ($name) {
             return static::$tools[$name]['description'];
         };
-        $this->bridger->getHook()->add('_seo_title', $title);
-        $this->bridger->getHook()->add('_seo_graph_title', $title);
-        $this->bridger->getHook()->add('_seo_description', $description);
-        $this->bridger->getHook()->add('_seo_graph_description', $description);
-
-
+        $this->bridger->getHook()
+            ->add('_seo_title', $title)
+            ->add('_seo_graph_title', $title)
+            ->add('_seo_description', $description)
+            ->add('_seo_graph_description', $description)
+            ->add('_seo_schema_supports_software', function (bool $supports) {
+                return true;
+            })
+            ->add('_seo_schema_software', function (array $data) use ($name) {
+                $data['@type'] = 'WebApplication';
+                $data['url'] = $this->bridger->getRequest()->getUri();
+                $data['name'] = self::$tools[$name]['name'];
+                $data['browserRequirements'] = 'requires HTML5 support, requires javascript support';
+                $data['operatingSystem'] = 'Windows, OSX, Linux';
+                $data['applicationCategory'] = 'UtilitiesApplication';
+                $data['aggregateRating']['ratingValue'] = self::$tools[$name]['ratingValue'];
+                $data['aggregateRating']['ratingCount'] = self::$tools[$name]['ratingCount'];
+                return $data;
+            });
+        ;
         $tool = static::$tools[$name];
         $template = 'tools/' . $name . '.html.twig';
         $features = explode('-', $name);
