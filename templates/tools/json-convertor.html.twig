@@ -64,7 +64,9 @@
             }
             switch (theme) {
                 case 'Dark':
-                    document.head.removeChild(prismElement);
+                    if (document.getElementById('prismPrism')) {
+                        document.head.removeChild(prismElement);
+                    }
                     break;
                 case 'Light':
                     prismElement.id = "prismPrism";
@@ -85,5 +87,10 @@
             }
         };
     </script>
-    <script type="text/javascript" src="{{ asset('/assets/js/json-to-class.js') }}"></script>
+
+    {% if name == 'json-to-protobuf' %}
+        <script type="text/javascript" src="{{ asset('/assets/js/json-to-protobuf.js') }}"></script>
+    {% else %}
+        <script type="text/javascript" src="{{ asset('/assets/js/json-to-class.js') }}"></script>
+    {% endif %}
 {% endblock %}

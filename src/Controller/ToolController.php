@@ -128,6 +128,15 @@ class ToolController extends Controller
             'ratingValue' => '4.8',
             'ratingCount' => '2123',
         ],
+        'json-to-protobuf' => [
+            'name' => 'JSON转Protobuf',
+            'href' => '/tool/json-to-protobuf',
+            'title' => '在线工具JSON转Protobuf',
+            'description' => '这个工具可以立即将JSON数据转换成Protobuf。在左边输入框粘贴JSON数据内容，右边就会生成等价的Protobuf数据，你可以把它粘贴到你的程序中。',
+            'group' => 'json-convertor',
+            'ratingValue' => '4.8',
+            'ratingCount' => '2120',
+        ],
         'sql-table-data-generator' => [
             'name' => 'SQL表数据生成',
             'href' => '/tool/sql-table-data-generator',
