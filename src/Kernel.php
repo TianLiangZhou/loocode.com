@@ -22,10 +22,9 @@ class Kernel extends OctopusPressKernel implements PluginInterface
             'label' => '主标签',
             'options' => $devicons,
         ]);
-        $bridger->getHook()->add('_seo_sitemap_generator', function (string $domain) {
-            $urls = [];
+        $bridger->getHook()->add('_seo_sitemap_generator', function (array $urls, string $domain) {
             foreach (ToolController::$tools as $tool) {
-                $urls[] = $domain . $tool['href'];
+                $urls[] = $tool['href'];
             }
             return $urls;
         });
