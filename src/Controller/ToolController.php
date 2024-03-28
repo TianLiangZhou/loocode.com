@@ -13,6 +13,7 @@ use OctopusPress\Bundle\Bridge\Bridger;
 use OctopusPress\Bundle\Controller\Controller;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -550,15 +551,18 @@ class ToolController extends Controller
 
     static array $imagesSuffix = ['heic', 'avif', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
     static array $filesSuffix = ['md', 'pdf', 'html'];
+    private LoggerInterface $logger;
 
     /**
      * @param Bridger $bridger
+     * @param LoggerInterface $logger
      */
-    public function __construct(Bridger $bridger)
+    public function __construct(Bridger $bridger, LoggerInterface $logger)
     {
         parent::__construct($bridger);
         $bridger->getHook()->add('breadcrumb', [$this, 'breadcrumb'])
             ->add('compare_url', [$this, 'compareUrl']);
+        $this->logger = $logger;
     }
 
     /**
@@ -1081,7 +1085,7 @@ EOF;
             // pdf to doc, docx, ppt, pptx
             $commands[] = 'soffice';
             $commands[] = '--headless';
-            if (in_array($outputFormat, ['ppt', 'ppx'])) {
+            if (in_array($outputFormat, ['ppt', 'pptx'])) {
                 $commands[] = '--infilter=impress_pdf_import';
             } else {
                 $commands[] = '--infilter=writer_pdf_import';
@@ -1097,6 +1101,7 @@ EOF;
                 'message' => '参数错误',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        $this->logger->debug('commands: ' . implode(' ', $commands));
         $process = new Process($commands);
         if (0 !== $process->run()) {
             return $this->json([
