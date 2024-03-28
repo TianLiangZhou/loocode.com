@@ -971,14 +971,14 @@ EOF;
         $output = $rootPath . $filename;
         switch (strtolower($uploadedFile->getClientOriginalExtension())) {
             case 'webp':
-                $process = Process::fromShellCommandline('cwebp '. $file . ' -o ' . $output . ' -q 100 -m 6 -lossless');
+                $process = new Process(['cwebp', $file, '-o', $output, '-q', 100, '-m', 6, '-lossless']);
                 break;
             case 'png':
-                $process = Process::fromShellCommandline('oxipng '. $file . ' --out ' . $output . ' --opt max --strip safe');
+                $process = new Process(['oxipng', $file, '--out', $output, '--opt', 'max', '--strip', 'safe']);
                 break;
             case 'jpeg':
             case 'jpg':
-                $process = Process::fromShellCommandline('convert '. $file . ' -quality 70% ' . $output);
+                $process = new Process(['convert', $file, '-quality', '70%', $output,]);
                 break;
             default:
                 return $this->json([
@@ -1009,16 +1009,20 @@ EOF;
         }
         $file = $this->uploadFile($uploadedFile);
         [$rootPath, $filename] = $this->getConvertPathAndName($uploadedFile->getClientOriginalName(), $features[2]);
-        $output = $rootPath . $filename;
-        $process = Process::fromShellCommandline('convert '. $file . ' ' . $output);
+        $process = new Process([
+            'convert',
+            $file,
+            $rootPath . $filename,
+        ]);
         if (0 !== $process->run()) {
+            unlink($file);
             return $this->json([
                 'message' => $process->getErrorOutput(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         unlink($file);
         return $this->json([
-            'size'     => filesize($output),
+            'size'     => filesize($rootPath . $filename),
             'download' => $this->bridger->getPackages()->getUrl($filename),
         ]);
     }
