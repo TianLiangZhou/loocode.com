@@ -1364,7 +1364,7 @@ EOF;
      */
     private function uploadFile(UploadedFile $file): string
     {
-        $filename = $file->getClientOriginalName();
+        $filename = str_replace(' ', '-', $file->getClientOriginalName());
         $file->move($this->bridger->getTempDir(), $filename);
         return $this->bridger->getTempDir() . '/' . $filename;
     }
@@ -1384,7 +1384,7 @@ EOF;
         $outputFilename = sprintf(
             '%s/%s.%s',
             $outputPath,
-            pathinfo($originName, PATHINFO_FILENAME),
+            str_replace(' ', '-', pathinfo($originName, PATHINFO_FILENAME)),
             $outputFormat,
         );
         return [$outputRootPath, $outputFilename];
