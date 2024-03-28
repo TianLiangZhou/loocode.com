@@ -304,6 +304,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '413',
+            'template' => 'file-convertor',
         ],
         'png-to-jpeg' => [
             'name' => 'PNG转JPEG',
@@ -313,6 +314,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '3478',
+            'template' => 'file-convertor',
         ],
         'png-to-jpg'  => [
             'name' => 'PNG转JPG',
@@ -322,6 +324,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '298',
+            'template' => 'file-convertor',
         ],
         'webp-to-png' => [
             'name' => 'WEBP转PNG',
@@ -331,6 +334,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '246',
+            'template' => 'file-convertor',
         ],
         'webp-to-jpeg' => [
             'name' => 'WEBP转JPEG',
@@ -340,6 +344,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '468',
+            'template' => 'file-convertor',
         ],
         'jpeg-to-png' => [
             'name' => 'JPEG转PNG',
@@ -349,6 +354,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '682',
+            'template' => 'file-convertor',
         ],
         'jpeg-to-webp' => [
             'name' => 'JPEG转WEBP',
@@ -358,6 +364,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '864',
+            'template' => 'file-convertor',
         ],
         'heic-to-webp' => [
             'name' => 'HEIC转WEBP',
@@ -367,6 +374,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '221',
+            'template' => 'file-convertor',
         ],
         'heic-to-png' => [
             'name' => 'HEIC转PNG',
@@ -376,6 +384,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '518',
+            'template' => 'file-convertor',
         ],
         'heic-to-jpeg' => [
             'name' => 'HEIC转JPEG',
@@ -385,6 +394,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '521',
+            'template' => 'file-convertor',
         ],
         'heic-to-jpg' => [
             'name' => 'HEIC转JPG',
@@ -394,6 +404,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '1314',
+            'template' => 'file-convertor',
         ],
         'heic-to-avif' => [
             'name' => 'HEIC转AVIF',
@@ -403,6 +414,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '820',
+            'template' => 'file-convertor',
         ],
         'avif-to-heic' => [
             'name' => 'AVIF转HEIC',
@@ -412,6 +424,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '357',
+            'template' => 'file-convertor',
         ],
 
         'avif-to-jpeg' => [
@@ -422,6 +435,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '999',
+            'template' => 'file-convertor',
         ],
         'avif-to-png' => [
             'name' => 'AVIF转PNG',
@@ -431,6 +445,7 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '998',
+            'template' => 'file-convertor',
         ],
         'avif-to-webp' => [
             'name' => 'AVIF转WEBP',
@@ -440,6 +455,82 @@ class ToolController extends Controller
             'group' => 'image-convert',
             'ratingValue' => '4.8',
             'ratingCount' => '996',
+            'template' => 'file-convertor',
+        ],
+        'pdf-to-docx' => [
+            'name' => 'PDF转docx',
+            'href' => '/tool/pdf-to-docx',
+            'title' => 'PDF转DOCX - 免费在线将PDF转换为DOCX',
+            'description' => '这款免费在线的PDF到DOCX转换器可让你将PDF文档转换为Office Open XML文件，兼容所有主流办公软件，提供最佳转换质量。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '990',
+            'template' => 'file-convertor',
+        ],
+
+        'pdf-to-doc' => [
+            'name' => 'PDF转doc',
+            'href' => '/tool/pdf-to-doc',
+            'title' => 'PDF转DOC - 免费在线将PDF转换为DOC',
+            'description' =>'这款免费在线的PDF到DOC转换器可让你将PDF文档转换为Office Open XML文件，兼容所有主流办公软件，提供最佳转换质量。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '904',
+            'template' => 'file-convertor',
+        ],
+
+        'pdf-to-ppt' => [
+            'name' => 'PDF转ppt',
+            'href' => '/tool/pdf-to-ppt',
+            'title' => 'PDF转PPT - 免费在线将PDF转换为PPT',
+            'description' => '这款免费在线的PDF到PPT转换器可让你将PDF演示文稿转换为可编辑的Powerpoint PPT和PPTX幻灯片。使用最准确的PDF到Powerpoint转换器提供最佳转换质量。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '909',
+            'template' => 'file-convertor',
+        ],
+
+        'pdf-to-pptx' => [
+            'name' => 'PDF转pptx',
+            'href' => '/tool/pdf-to-pptx',
+            'title' => 'PDF转PPTX - 免费在线将PDF转换为PPTX',
+            'description' => '这款免费在线的PDF到PPT转换器可让你将PDF演示文稿转换为可编辑的Powerpoint PPT和PPTX幻灯片。使用最准确的PDF到Powerpoint转换器提供最佳转换质量。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '805',
+            'template' => 'file-convertor',
+        ],
+        'pdf-to-html' => [
+            'name' => 'PDF转html',
+            'href' => '/tool/pdf-to-html',
+            'title' => 'PDF转HTML - 免费在线将PDF转换为HTML',
+            'description' => '在线将PDF转换为HTML。 使用我们免费在线的 PDF 到 HTML 转换器，直接在浏览器中将 PDF 转换为 HTML 文件。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '808',
+            'template' => 'file-convertor',
+        ],
+
+        'html-to-pdf' => [
+            'name' => 'Html转PDF',
+            'href' => '/tool/html-to-pdf',
+            'title' => 'HTML转PDF - 免费在线将HTML转换为PDF',
+            'description' => '在线将HTML转换为PDF文档。使用我们免费在线的 HTML 到 PDF 转换器，直接在浏览器中将 HTML 转换为 PDF 文档。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '809',
+            'template' => 'file-convertor',
+        ],
+
+        'markdown-to-pdf' => [
+            'name' => 'Markdown转PDF',
+            'href' => '/tool/markdown-to-pdf',
+            'title' => 'Markdown转PDF - 免费在线将Markdown转换为PDF',
+            'description' => '在线将Markdown转换为PDF文档。使用我们免费在线的 Markdown 到 PDF 转换器，直接在浏览器中将 Markdown 转换为 PDF 文档。它免费、快速且易于使用。',
+            'group' => 'pdf-convert',
+            'ratingValue' => '4.8',
+            'ratingCount' => '880',
+            'template' => 'file-convertor',
         ],
 
     ];
@@ -456,6 +547,9 @@ class ToolController extends Controller
     static array $weight = [
         0 => '表述的冗余词', 1 => '限定较弱的词', 2 => '强限定的词', 3 => '核心词',
     ];
+
+    static array $imagesSuffix = ['heic', 'avif', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+    static array $filesSuffix = ['md', 'pdf', 'html'];
 
     /**
      * @param Bridger $bridger
@@ -595,6 +689,9 @@ class ToolController extends Controller
                 $data['hmac_algos'] = hash_hmac_algos();
             }
         }
+        if (isset($tool['template']) && $tool['template']) {
+            $template = 'tools/' . $tool['template'] .'.html.twig';
+        }
         return $this->render($template, $data);
     }
 
@@ -615,11 +712,13 @@ class ToolController extends Controller
         if (isset(static::$tools[$tool]['group'])) {
             switch (static::$tools[$tool]['group']) {
                 case 'image-convert':
-                    return $this->imageConvert(explode('-', $tool), $request->files->get('image'));
+                    return $this->imageConvert(explode('-', $tool), $request->files->get('file'));
                 case 'cipher':
                     return $this->toCipher($body);
                 case 'color':
                     return $this->toColor($body);
+                case 'pdf-convert':
+                    return $this->toPDF(explode('-', $tool), $request->files->get('file'));
             }
         }
         return match ($tool) {
@@ -633,7 +732,7 @@ class ToolController extends Controller
         };
     }
 
-    public function toColor(array $body)
+    public function toColor(array $body): JsonResponse
     {
         $text = $body['text'];
         $tool = $body['tool'];
@@ -860,7 +959,7 @@ EOF;
      */
     private function imageCompression(UploadedFile $uploadedFile): JsonResponse
     {
-        $file = $this->uploadLogo($uploadedFile, 5);
+        $file = $this->uploadFile($uploadedFile, self::$imagesSuffix,5);
         if ($file === 'error-type') {
             return $this->json([
                 'message' => '错误的图片类型',
@@ -874,7 +973,7 @@ EOF;
         $pathInfo = pathinfo($file);
         $name = $pathInfo['basename'];
         $path = ($this->bridger->getBuildAssetsDir() ? : $this->bridger->getPublicDir())
-        . '/upload/images/compression/' . date('Ymd');
+        . '/upload/converts/' . date('Ymd');
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -903,7 +1002,7 @@ EOF;
         unlink($file);
         return $this->json([
             'size'     => filesize($output),
-            'download' => $this->bridger->getPackages()->getUrl('/upload/images/compression/' .date('Ymd').'/'.$name),
+            'download' => $this->bridger->getPackages()->getUrl('/upload/converts/' .date('Ymd').'/'.$name),
         ]);
     }
 
@@ -914,7 +1013,7 @@ EOF;
      */
     private function imageConvert(array $features, UploadedFile $uploadedFile): JsonResponse
     {
-        $file = $this->uploadLogo($uploadedFile, 5);
+        $file = $this->uploadFile($uploadedFile, self::$imagesSuffix, 5);
         if ($file === 'error-type') {
             return $this->json([
                 'message' => '错误的图片类型',
@@ -928,7 +1027,7 @@ EOF;
         $pathInfo = pathinfo($file);
         $name = $pathInfo['filename'] . '.' . $features[2];
         $path = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir())
-            . '/upload/images/compression/' . date('Ymd');
+            . '/upload/converts/' . date('Ymd');
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -942,7 +1041,71 @@ EOF;
         unlink($file);
         return $this->json([
             'size'     => filesize($output),
-            'download' => $this->bridger->getPackages()->getUrl('/upload/images/compression/' .date('Ymd').'/'.$name),
+            'download' => $this->bridger->getPackages()->getUrl('/upload/converts/' .date('Ymd').'/'.$name),
+        ]);
+    }
+
+    /**
+     * @param array $features
+     * @param UploadedFile $file
+     * @return JsonResponse
+     */
+    private function toPDF(array $features, UploadedFile $file): JsonResponse
+    {
+        if (count($features) !== 3) {
+            return $this->json([
+                'message' => '参数错误',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $inputFormat  = $features[0];
+        $outputFormat = $features[2];
+        $inputFilepath = $this->uploadFile($file, self::$filesSuffix, 10);
+        $outputRootPath = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir());
+        $outputPath = '/upload/converts/' . date('Ymd');
+        if (!file_exists($outputRootPath . $outputPath)) {
+            mkdir($outputRootPath . $outputPath, 0755, true);
+        }
+        $outputFilename = sprintf(
+            '%s/%s.%s',
+            $outputPath,
+            $file->getClientOriginalName(),
+            $outputFormat,
+        );
+        $commands = [];
+        if (in_array($inputFormat, ['html', 'markdown'])) {
+            // html,md to pdf
+            $commands[] = 'weasyprint';
+            $commands[] = $inputFilepath;
+            $commands[] = $outputRootPath . $outputFilename;
+        } elseif (in_array($outputFormat, ['doc', 'docx', 'ppt', 'pptx', 'html'])) {
+            // pdf to doc, docx, ppt, pptx
+            $commands[] = 'soffice';
+            $commands[] = '--headless';
+            if (in_array($outputFormat, ['ppt', 'ppx'])) {
+                $commands[] = '--infilter=impress_pdf_import';
+            } else {
+                $commands[] = '--infilter=writer_pdf_import';
+            }
+            $commands[] = '--convert-to';
+            $commands[] = $outputFormat;
+            $commands[] = '--outdir';
+            $commands[] = dirname($outputRootPath . $outputFilename);
+            $commands[] = $inputFilepath;
+        } else {
+            unlink($inputFilepath);
+            return $this->json([
+                'message' => '参数错误',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $process = new Process($commands);
+        if (0 !== $process->run()) {
+            return $this->json([
+                'message' => $process->getErrorOutput(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->json([
+            'size'     => filesize($outputRootPath . $outputFilename),
+            'download' => $this->bridger->getPackages()->getUrl($outputFilename),
         ]);
     }
 
@@ -959,7 +1122,7 @@ EOF;
                 'message' => '请等待其它任务完成!',
             ], Response::HTTP_SERVICE_UNAVAILABLE);
         }
-        if ($uploadedFile && ($logo = $this->uploadLogo($uploadedFile))) {
+        if ($uploadedFile && ($logo = $this->uploadFile($uploadedFile, self::$imagesSuffix, 2))) {
             switch ($logo) {
                 case "error-max":
                     return $this->json([
@@ -1127,6 +1290,7 @@ EOF;
 
     /**
      * @param array $body
+     * @param UploadedFile|null $uploadedFile
      * @return Response
      */
     private function qrcode(array $body, UploadedFile $uploadedFile = null): Response
@@ -1160,7 +1324,7 @@ EOF;
                 if (!empty($body['fg_color']) && preg_match('/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $body['fg_color'], $fgColor) && $fgColor) {
                     $qrCode->withFgColor($body['fg_color']);
                 }
-                if ($uploadedFile && ($logo = $this->uploadLogo($uploadedFile))) {
+                if ($uploadedFile && ($logo = $this->uploadFile($uploadedFile, self::$imagesSuffix, 4))) {
                     switch ($logo) {
                         case "error-max":
                             return $this->json([
@@ -1219,13 +1383,13 @@ EOF;
         ]);
     }
 
-    private function uploadLogo(UploadedFile $logo, int $max = 2): string
+    private function uploadFile(UploadedFile $logo, array $suffixes, int $max): string
     {
         if ($logo->getSize() > $max * 1024 * 1024) {
             // 超出大小
             return "error-max";
         }
-        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), ['heic', 'avif', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])) {
+        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), $suffixes)) {
             // mime类型错误;
             return "error-type";
         }
@@ -1233,6 +1397,4 @@ EOF;
         $logo->move($this->bridger->getTempDir(), $filename);
         return $this->bridger->getTempDir() . '/' . $filename;
     }
-
-
 }
