@@ -550,7 +550,7 @@ class ToolController extends Controller
     ];
 
     static array $imagesSuffix = ['heic', 'avif', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
-    static array $filesSuffix = ['md', 'pdf', 'html'];
+    static array $filesSuffix = ['md', 'pdf', 'html', 'txt'];
     private LoggerInterface $logger;
 
     /**
@@ -963,26 +963,13 @@ EOF;
      */
     private function imageCompression(UploadedFile $uploadedFile): JsonResponse
     {
-        $file = $this->uploadFile($uploadedFile, self::$imagesSuffix,5);
-        if ($file === 'error-type') {
-            return $this->json([
-                'message' => '错误的图片类型',
-            ], Response::HTTP_NOT_ACCEPTABLE);
+        if (($response = $this->checkUploadFile($uploadedFile, self::$imagesSuffix,5))) {
+            return $response;
         }
-        if ($file === 'error-max') {
-            return $this->json([
-                'message' => '超出文件大小',
-            ], Response::HTTP_NOT_ACCEPTABLE);
-        }
-        $pathInfo = pathinfo($file);
-        $name = $pathInfo['basename'];
-        $path = ($this->bridger->getBuildAssetsDir() ? : $this->bridger->getPublicDir())
-        . '/upload/converts/' . date('Ymd');
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        }
-        $output = $path . '/' . $name;
-        switch (strtolower($pathInfo['extension'])) {
+        $file = $this->uploadFile($uploadedFile);
+        [$rootPath, $filename] = $this->getConvertPathAndName($uploadedFile->getClientOriginalName(), $uploadedFile->getClientOriginalExtension());
+        $output = $rootPath . $filename;
+        switch (strtolower($uploadedFile->getClientOriginalExtension())) {
             case 'webp':
                 $process = Process::fromShellCommandline('cwebp '. $file . ' -o ' . $output . ' -q 100 -m 6 -lossless');
                 break;
@@ -1006,7 +993,7 @@ EOF;
         unlink($file);
         return $this->json([
             'size'     => filesize($output),
-            'download' => $this->bridger->getPackages()->getUrl('/upload/converts/' .date('Ymd').'/'.$name),
+            'download' => $this->bridger->getPackages()->getUrl($filename),
         ]);
     }
 
@@ -1017,25 +1004,12 @@ EOF;
      */
     private function imageConvert(array $features, UploadedFile $uploadedFile): JsonResponse
     {
-        $file = $this->uploadFile($uploadedFile, self::$imagesSuffix, 5);
-        if ($file === 'error-type') {
-            return $this->json([
-                'message' => '错误的图片类型',
-            ], Response::HTTP_NOT_ACCEPTABLE);
+        if (($response = $this->checkUploadFile($uploadedFile, self::$imagesSuffix, 5))) {
+            return $response;
         }
-        if ($file === 'error-max') {
-            return $this->json([
-                'message' => '超出文件大小',
-            ], Response::HTTP_NOT_ACCEPTABLE);
-        }
-        $pathInfo = pathinfo($file);
-        $name = $pathInfo['filename'] . '.' . $features[2];
-        $path = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir())
-            . '/upload/converts/' . date('Ymd');
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        }
-        $output = $path . '/' . $name;
+        $file = $this->uploadFile($uploadedFile);
+        [$rootPath, $filename] = $this->getConvertPathAndName($uploadedFile->getClientOriginalName(), $features[2]);
+        $output = $rootPath . $filename;
         $process = Process::fromShellCommandline('convert '. $file . ' ' . $output);
         if (0 !== $process->run()) {
             return $this->json([
@@ -1045,7 +1019,7 @@ EOF;
         unlink($file);
         return $this->json([
             'size'     => filesize($output),
-            'download' => $this->bridger->getPackages()->getUrl('/upload/converts/' .date('Ymd').'/'.$name),
+            'download' => $this->bridger->getPackages()->getUrl($filename),
         ]);
     }
 
@@ -1063,28 +1037,11 @@ EOF;
         }
         $inputFormat  = $features[0];
         $outputFormat = $features[2];
-        $inputFilepath = $this->uploadFile($file, self::$filesSuffix, 10);
-        if ($inputFilepath === 'error-type') {
-            return $this->json([
-                'message' => '错误的文件类型:' . $file->guessExtension(),
-            ], Response::HTTP_NOT_ACCEPTABLE);
+        if (($response = $this->checkUploadFile($file, self::$filesSuffix, 10))) {
+            return $response;
         }
-        if ($inputFilepath === 'error-max') {
-            return $this->json([
-                'message' => '超出文件大小',
-            ], Response::HTTP_NOT_ACCEPTABLE);
-        }
-        $outputRootPath = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir());
-        $outputPath = '/upload/converts/' . date('Ymd');
-        if (!file_exists($outputRootPath . $outputPath)) {
-            mkdir($outputRootPath . $outputPath, 0755, true);
-        }
-        $outputFilename = sprintf(
-            '%s/%s.%s',
-            $outputPath,
-            $file->getClientOriginalName(),
-            $outputFormat,
-        );
+        $inputFilepath = $this->uploadFile($file);
+        [$outputRootPath, $outputFilename] = $this->getConvertPathAndName($file->getClientOriginalName(), $outputFormat);
         $commands = [];
         if (in_array($inputFormat, ['html', 'markdown'])) {
             // html,md to pdf
@@ -1113,15 +1070,9 @@ EOF;
         }
         $this->logger->error('commands: ' . implode(' ', $commands));
         $process = new Process($commands);
-        try {
-            if (0 !== $process->run()) {
-                return $this->json([
-                    'message' => $process->getErrorOutput(),
-                ], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-        } catch (\Throwable $exception) {
+        if (0 !== $process->run()) {
             return $this->json([
-                'message' => $exception->getMessage(),
+                'message' => $process->getErrorOutput(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         return $this->json([
@@ -1143,21 +1094,11 @@ EOF;
                 'message' => '请等待其它任务完成!',
             ], Response::HTTP_SERVICE_UNAVAILABLE);
         }
-        if ($uploadedFile && ($logo = $this->uploadFile($uploadedFile, self::$imagesSuffix, 2))) {
-            switch ($logo) {
-                case "error-max":
-                    return $this->json([
-                        'message' => '文件不能大于2M',
-                    ], Response::HTTP_NOT_ACCEPTABLE);
-                case "error-type":
-                    return $this->json([
-                        'message' => '必须是图片类型文件',
-                    ], Response::HTTP_NOT_ACCEPTABLE);
-                case "error":
-                    return $this->json([
-                        'message' => '上传失败',
-                    ], Response::HTTP_SERVICE_UNAVAILABLE);
+        if ($uploadedFile) {
+            if (($response = $this->checkUploadFile($uploadedFile, self::$imagesSuffix, 2))) {
+                return $response;
             }
+            $logo = $this->uploadFile($uploadedFile);
             $OCR = OCR::new(['use_mkldnn' => 0]);
             $cacheItem = $cache->getItem('ocr_threading');
             $cacheItem->expiresAfter(60);
@@ -1345,21 +1286,11 @@ EOF;
                 if (!empty($body['fg_color']) && preg_match('/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $body['fg_color'], $fgColor) && $fgColor) {
                     $qrCode->withFgColor($body['fg_color']);
                 }
-                if ($uploadedFile && ($logo = $this->uploadFile($uploadedFile, self::$imagesSuffix, 4))) {
-                    switch ($logo) {
-                        case "error-max":
-                            return $this->json([
-                                'message' => '文件不能大于2M',
-                            ], Response::HTTP_NOT_ACCEPTABLE);
-                        case "error-type":
-                            return $this->json([
-                                'message' => '必须是图片类型文件',
-                            ], Response::HTTP_NOT_ACCEPTABLE);
-                        case "error":
-                            return $this->json([
-                                'message' => '上传失败',
-                            ], Response::HTTP_SERVICE_UNAVAILABLE);
+                if ($uploadedFile) {
+                    if (($response = $this->checkUploadFile($uploadedFile, self::$imagesSuffix, 4))) {
+                        return $response;
                     }
+                    $logo = $this->uploadFile($uploadedFile);
                     $qrCode->withLogo($logo, true, false);
                 }
                 $name = $qrCode->image();
@@ -1404,18 +1335,58 @@ EOF;
         ]);
     }
 
-    private function uploadFile(UploadedFile $logo, array $suffixes, int $max): string
+    /**
+     * @param UploadedFile $file
+     * @param array $suffixes
+     * @param int $max
+     * @return JsonResponse|null
+     */
+    private function checkUploadFile(UploadedFile $file, array $suffixes, int $max): ?JsonResponse
     {
-        if ($logo->getSize() > $max * 1024 * 1024) {
+        if ($file->getSize() > $max * 1024 * 1024) {
             // 超出大小
-            return "error-max";
+            return $this->json([
+                'message' => '超出文件大小',
+            ], Response::HTTP_NOT_ACCEPTABLE);
         }
-        if (empty($logo->getPath()) || !in_array($logo->guessExtension(), $suffixes)) {
+        if (empty($file->getPath()) || !in_array($file->guessExtension(), $suffixes)) {
             // mime类型错误;
-            return "error-type";
+            return $this->json([
+                'message' => '错误的文件类型:' . $file->guessExtension(),
+            ], Response::HTTP_NOT_ACCEPTABLE);
         }
-        $filename = $logo->getClientOriginalName();
-        $logo->move($this->bridger->getTempDir(), $filename);
+        return null;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
+    private function uploadFile(UploadedFile $file): string
+    {
+        $filename = $file->getClientOriginalName();
+        $file->move($this->bridger->getTempDir(), $filename);
         return $this->bridger->getTempDir() . '/' . $filename;
+    }
+
+    /**
+     * @param string $originName
+     * @param string $outputFormat
+     * @return array
+     */
+    private function getConvertPathAndName(string $originName, string $outputFormat): array
+    {
+        $outputRootPath = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir());
+        $outputPath = '/upload/converts/' . date('Ymd');
+        if (!file_exists($outputRootPath . $outputPath)) {
+            mkdir($outputRootPath . $outputPath, 0755, true);
+        }
+        $outputFilename = sprintf(
+            '%s/%s.%s',
+            $outputPath,
+            pathinfo($originName, PATHINFO_FILENAME),
+            $outputFormat,
+        );
+        return [$outputRootPath, $outputFilename];
     }
 }
