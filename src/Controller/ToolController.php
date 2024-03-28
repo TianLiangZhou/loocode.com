@@ -1064,6 +1064,16 @@ EOF;
         $inputFormat  = $features[0];
         $outputFormat = $features[2];
         $inputFilepath = $this->uploadFile($file, self::$filesSuffix, 10);
+        if ($inputFilepath === 'error-type') {
+            return $this->json([
+                'message' => '错误的文件类型:' . $file->guessExtension(),
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        if ($inputFilepath === 'error-max') {
+            return $this->json([
+                'message' => '超出文件大小',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
         $outputRootPath = ($this->bridger->getBuildAssetsDir() ?: $this->bridger->getPublicDir());
         $outputPath = '/upload/converts/' . date('Ymd');
         if (!file_exists($outputRootPath . $outputPath)) {
@@ -1101,11 +1111,17 @@ EOF;
                 'message' => '参数错误',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        $this->logger->debug('commands: ' . implode(' ', $commands));
+        $this->logger->error('commands: ' . implode(' ', $commands));
         $process = new Process($commands);
-        if (0 !== $process->run()) {
+        try {
+            if (0 !== $process->run()) {
+                return $this->json([
+                    'message' => $process->getErrorOutput(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch (\Throwable $exception) {
             return $this->json([
-                'message' => $process->getErrorOutput(),
+                'message' => $exception->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         return $this->json([
