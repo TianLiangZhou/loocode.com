@@ -16,7 +16,7 @@
 
 - 应用程序属性文件激活
 
-```
+```ini
 #application.properties
 
 spring.profiles.active=dev
