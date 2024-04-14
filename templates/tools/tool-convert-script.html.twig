@@ -9,7 +9,7 @@
             algo: '',
             loading: false,
             message: '',
-            extra: e || {},
+            extra: typeof e === 'string'  ? JSON.parse(e) : e,
             /**
              *
              * @param {string} proxyCallback

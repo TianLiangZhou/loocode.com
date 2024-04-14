@@ -141,10 +141,18 @@ class ToolController extends Controller
         'sql-table-data-generator' => [
             'name' => 'SQL表数据生成',
             'href' => '/tool/sql-table-data-generator',
-            'title' => '在线工具SQL表数据生成',
+            'title' => '在线工具SQL表数据生成_表测试数据生成_表DEMO数据生成',
             'description' => '在线工具SQL表数据生成是一个方便的工具，用于生成SQL表数据。无论是在开发环境中模拟数据，还是在测试中生成测试数据，这个工具都能帮助用户快速创建数据库表格所需的数据内容。支持MySQL、Oracle、MariaDB和PostgreSQL等多种数据库源',
             'ratingValue' => '4.8',
             'ratingCount' => '2140',
+        ],
+        'markdown-table-generator' => [
+            'name' => 'Markdown表格生成器',
+            'href' => '/tool/markdown-table-generator',
+            'title' => '在线Markdown表格生成器_GFM表格生成器',
+            'description' => '在线Markdown表格生成器轻松创建 Markdown Here 和 GFM 支持的扩展 Markdown 格式的表格。',
+            'ratingValue' => '4.9',
+            'ratingCount' => '2133',
         ],
         'url-encode-decode' => [
             'name' => 'URL编码解码',

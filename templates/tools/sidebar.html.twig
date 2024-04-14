@@ -26,17 +26,19 @@
                 </div>
             </div>
             <div class="grow lg:ml-2">
-                <h2 class="sr-only">{{ tool.name }}</h2>
-                <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert">
-                    <div class="p-6 relative dark:border-slate-700">
-                        <form name="body" x-ref="form">
-                            <input type="hidden" name="tool" value="{{name}}">
-                            {% block child %}{% endblock %}
-                        </form>
+                <div>
+                    <h2 class="sr-only">{{ tool.name }}</h2>
+                    <div class="bg-white dark:bg-slate-800 rounded-lg" x-data="toolConvert({{ convert_extra|default("'{}'") }})">
+                        <div class="p-6 relative dark:border-slate-700">
+                            <form name="body" x-ref="form">
+                                <input type="hidden" name="tool" value="{{name}}">
+                                {% block child %}{% endblock %}
+                            </form>
+                        </div>
                     </div>
                 </div>
+                {% block append %}{% endblock %}
             </div>
-            {% block append %}{% endblock %}
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'tools/sidebar.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% set convert_extra = "'{\"row\":3, \"column\": 3}'" %}
+{% block child %}
+    <div class="flex justify-center items-center">
+        <label class="text-slate-700 dark:text-slate-400">行</label>
+        <div class="ml-4">
+            <div class="dark:text-slate-300">
+                <label><input
+                            class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                            value="3" type="number" min="2" max="500" x-model="extra.row" placeholder="行"/></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-center my-5 items-center">
+        <label class="text-slate-700 dark:text-slate-400">列</label>
+        <div class="ml-4">
+            <div class="dark:text-slate-300">
+                <label><input class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                            value="3" type="number" min="2" max="20" x-model="extra.column" placeholder="行"/>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="flex my-5 justify-center">
+        {{ forms.button('生成', 'markdownTableGenerator') }}
+    </div>
+{% endblock %}
+{% block append %}
+    <div class="mt-6 bg-white dark:bg-slate-800 rounded-lg">
+        <div class="relative dark:border-slate-700">
+            <pre class="w-3/5 language-markdown dark:bg-slate-900 !mx-auto">
+                <code class="language-markdown" id="result-markdown">
+|   |   |   |
+|---|---|---|
+|   |   |   |
+|   |   |   |
+|   |   |   |
+                </code>
+            </pre>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        (function (root) {
+            root.markdownTableGenerator = function () {
+                if (this.extra.column < 2 || this.extra.row < 2) {
+                    return ;
+                }
+                let columns = [],
+                    row = parseInt(this.extra.row) + 2,
+                    column = parseInt(this.extra.column) + 1;
+                for (let i = 0; i < row; i++) {
+                    columns[i] = [];
+                    for (let j = 0; j < column; j++) {
+                        if (i === 1) {
+                            columns[i][j] = j === (column - 1) ? '|' : "|---";
+                        } else {
+                            columns[i][j] = "|";
+                        }
+                    }
+                }
+                let markdown = "\n";
+                for (let i = 0; i < columns.length; i++) {
+                    markdown = markdown.concat(columns[i].join(i !== 1 ? "\t" : '') + "&#10;&#13;");
+                }
+                root.document.getElementById('result-markdown').innerHTML = markdown;
+            };
+        })(window);
+    </script>
+{% endblock %}
