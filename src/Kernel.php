@@ -15,6 +15,8 @@ class Kernel extends OctopusPressKernel implements PluginInterface
 
     public function launcher(Bridger $bridger): void
     {
+        $page = $bridger->getPost()->getType(Post::TYPE_PAGE);
+        $page->addSupport('name')->addSupports();
 
         $devicons = json_decode(file_get_contents($this->getProjectDir() . '/devicons.json'), true);
         $bridger->getMeta()->registerPost(Post::TYPE_POST, 'devicon', [], [
