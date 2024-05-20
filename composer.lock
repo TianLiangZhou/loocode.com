@@ -2667,12 +2667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TianLiangZhou/octopuspress-bundle.git",
-                "reference": "8a23c824c6acb7a7809fb140801980b75967d068"
+                "reference": "dfb7f49ce26b18ceb498b62c4e818bf0f02b8d80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TianLiangZhou/octopuspress-bundle/zipball/8a23c824c6acb7a7809fb140801980b75967d068",
-                "reference": "8a23c824c6acb7a7809fb140801980b75967d068",
+                "url": "https://api.github.com/repos/TianLiangZhou/octopuspress-bundle/zipball/dfb7f49ce26b18ceb498b62c4e818bf0f02b8d80",
+                "reference": "dfb7f49ce26b18ceb498b62c4e818bf0f02b8d80",
                 "shasum": ""
             },
             "require": {
@@ -2747,7 +2747,7 @@
                 "source": "https://github.com/TianLiangZhou/octopuspress-bundle/tree/main",
                 "issues": "https://github.com/TianLiangZhou/octopuspress-bundle/issues"
             },
-            "time": "2024-05-19T13:11:24+00:00"
+            "time": "2024-05-20T05:26:57+00:00"
         },
         {
             "name": "meshell/php-ffi-packages",
