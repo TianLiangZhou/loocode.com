@@ -59,9 +59,9 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300">
-                    <label><input class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" checked="" type="radio" /> 解密</label>
-                    <label class="mx-2"><input name="mode" value="2" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> 加密</label>
+                <div class="dark:text-slate-300" x-init="mode = 2;$watch('mode', value => {if(value==1&&$data.data){text=$data.data;data='';}})">
+                    <label><input name="mode" x-model="mode" value="2" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" checked="" /> 加密</label>
+                    <label class="mx-2"><input x-model="mode" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" type="radio" /> 解密</label>
                 </div>
             </div>
         </div>
@@ -161,7 +161,7 @@
     <div class="flex my-5">
         <label for="summary" class="text-slate-700 dark:text-slate-400">文本</label>
         <div class="flex-1 ml-4">
-            <textarea required id="summary" aria-required="true" name="text" rows="10" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你要计算的内容"></textarea>
+            <textarea required id="summary" aria-required="true" x-model="text" name="text" rows="10" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你要计算的内容"></textarea>
         </div>
     </div>
     <div class="flex my-5 justify-center">
