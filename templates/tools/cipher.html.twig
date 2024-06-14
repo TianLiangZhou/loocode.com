@@ -90,7 +90,7 @@
                 <div class="dark:text-slate-300 flex">
                     <input id="IV" :required="algo != 'rc4' && algo != 'rc4-40' && algo != 'rc4-hmac-md5'" aria-required="true" placeholder="IV" type="text" class="flex-1 w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="iv" value="" maxlength="512" minlength="1" />
                     <label for="iv_base64"><input id="iv_base64" name="iv_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
-                    <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary ml-3" @click.prevent="randomIV()">随机</button>
+                    <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary text-white ml-3" @click.prevent="randomIV()">随机</button>
                 </div>
             </div>
         </div>

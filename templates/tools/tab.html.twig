@@ -13,12 +13,12 @@
                 <div class="bg-white py-4 dark:bg-slate-800 rounded-t-lg">
                     <div class="">
                         <ul class="flex flex-wrap font-semibold text-slate-900 text-left dark:text-slate-500">
-                            {% for item in tools|filter(v => v.group is defined and v.group == group) %}
+                            {% for key,item in tools|filter(v => v.group is defined and v.group == group) %}
                                 <li class="flex py-3 ml-6 {% if tool.name == item.name %} border-b-4 border-primary {% endif %}">
                                     {% if tool.name == item.name %}
-                                        <h2 class="!text-primary">{{ item.name }}</h2>
+                                        <h2 id="{{ key }}" class="!text-primary">{{ item.name }}</h2>
                                     {% else %}
-                                        <a href="{{ item.href }}" class="relative w-full hover:underline hover:text-primary">{{item.name}}</a>
+                                        <a href="{{ item.href }}#{{ key }}" class="relative w-full hover:underline hover:text-primary">{{item.name}}</a>
                                     {% endif %}
                                 </li>
                             {% endfor %}
