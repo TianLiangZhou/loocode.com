@@ -10,24 +10,24 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^10.4.14",
-    "croner": "^8.0.0",
-    "date-fns": "^2.30.0",
+    "autoprefixer": "^10.4.19",
+    "croner": "^8.0.2",
+    "date-fns": "^3.6.0",
     "esbuild-plugin-prismjs": "^1.0.8",
     "js-base64": "^3.7.5",
-    "json-formatter-js": "^2.3.4",
-    "postcss": "^8.4.23",
+    "json-formatter-js": "^2.5.12",
+    "postcss": "^8.4.38",
     "postcss-cli": "^10.1.0",
-    "postcss-nesting": "^11.2.2",
+    "postcss-nesting": "^12.1.5",
     "prismjs": "^1.29.0",
-    "quicktype-core": "^23.0.80",
+    "quicktype-core": "23.0.146",
     "toastify-js": "^1.12.0",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
-    "esbuild": "^0.19.9",
-    "node-sql-parser": "^4.17.0",
-    "tailwindcss": "^3.3.2"
+    "esbuild": "^0.21.5",
+    "node-sql-parser": "^4.18.0",
+    "tailwindcss": "^3.4.4"
   },
   "packageManager": "yarn@4.0.2"
 }

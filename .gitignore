@@ -8,6 +8,8 @@
 /public/themes/
 /public/upload/
 /public/plugins/
+/public/assets/js/*.map
+/public/assets/css/*.map
 /var/
 /vendor/
 /templates

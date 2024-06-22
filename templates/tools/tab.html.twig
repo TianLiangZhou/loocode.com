@@ -30,7 +30,7 @@
                 <h2 class="sr-only">{{ tool.name }}</h2>
                 <div class="bg-white dark:bg-slate-800 rounded-b-lg">
                     <div class="p-6 relative dark:border-slate-700">
-                        <form name="body" x-ref="form" x-data="toolConvert">
+                        <form name="body" x-ref="form" x-data="toolConvert({{ convert_extra|default("'{}'") }})">
                             <input type="hidden" name="tool" value="{{name}}">
                             {% block child %}{% endblock %}
                         </form>
