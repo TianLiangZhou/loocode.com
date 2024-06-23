@@ -34,6 +34,7 @@ class ToolController extends Controller
             'description' => '在线汉字转拼音是通过将中文汉字转换成汉字拼音形式，它支持多种模式无音标、首字母、多音字等等',
             'ratingValue' => '4.8',
             'ratingCount' => '2143',
+            'group' => 'chinese',
         ],
         'simplified-chinese-to-traditional-chinese' => [
             'name' => '简体转繁体',
@@ -42,6 +43,7 @@ class ToolController extends Controller
             'description' => '中文简体转繁体是通过OpenCC库快速将简体转成繁体、繁体转简体、简体转台湾繁体、简体转香港繁体的在线工具',
             'ratingValue' => '4.8',
             'ratingCount' => '3143',
+            'group' => 'chinese',
         ],
         'chinese-word-segmentation' => [
             'name' => '中文分词',
@@ -50,6 +52,7 @@ class ToolController extends Controller
             'description' => '中文分词可以帮助您对中文文本进行精确且快速的分词。无论您是从事中文自然语言处理的研究者，还是需要对中文文本进行分析的业务用户，都可以使用我的工具轻松地进行中文分词。它使用了最新的中文分词算法，能够识别中文词汇的各种不同形式和用法，并生成与之相应的分词结果。',
             'ratingValue' => '4.8',
             'ratingCount' => '4143',
+            'group' => 'chinese',
         ],
         'qr-code-generator' => [
             'name' => '二维码生成器',
