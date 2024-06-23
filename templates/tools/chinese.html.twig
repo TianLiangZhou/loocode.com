@@ -1,0 +1,94 @@
+{% extends 'tools/tab.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+{% block child %}
+    {% if name == 'chinese-to-pinyin' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input
+                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                name="mode" value="1" checked="" type="radio"/> 音标</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        无音标</label>
+                    <label><input name="mode" value="3" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        首字母</label>
+                    <label class="mx-2"><input name="mode" value="4" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        多音</label>
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'simplified-chinese-to-traditional-chinese' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="flex items-center dark:text-slate-300">
+                    <label><input name="mode" value="1" checked="" type="radio"
+                                  class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        简转繁</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        繁转简</label>
+                    <label><input name="mode" value="3" type="radio"
+                                  class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        简转正</label>
+                    <label class="mx-2"><input name="mode" value="4" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        正转简</label>
+                    <label><input name="mode" value="5" type="radio"
+                                  class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        简转港</label>
+                    <label class="mx-2"><input name="mode" value="6" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        港转简</label>
+                </div>
+            </div>
+        </div>
+    {% elseif name == 'chinese-word-segmentation' %}
+        <div class="flex">
+            <label class="text-slate-700 dark:text-slate-400">模式</label>
+            <div class="flex-1 ml-4">
+                <div class="flex items-center dark:text-slate-300">
+                    <label><input name="mode" value="1" checked="" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        分词</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio"
+                                               class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        分词标注</label>
+                    <label><input name="mode" value="3" type="radio"
+                                  class="!text-primary border-transparent  bg-slate-100 dark:bg-slate-900 focus:border-transparent focus:bg-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        词语权重</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="flex flex-col lg:flex-row">
+        <div class="flex-1 flex my-5">
+            <label for="summary" class="invisible text-slate-700 dark:text-slate-400">文本</label>
+            <div class="flex-1 ml-4">
+                <textarea required aria-required="true" id="summary" name="text" rows="10"
+                          class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                          placeholder="输入你要转换的内容"></textarea>
+            </div>
+        </div>
+        <div class="flex-1 flex my-5" x-show="data">
+            <label for="result" class="invisible text-slate-700 dark:text-slate-400">结果</label>
+            {% if name == 'chinese-word-segmentation' %}
+                <div class="flex-1 ml-4" x-html="data">
+                </div>
+            {% else %}
+                <div class="flex-1 ml-4">
+                    <textarea id="result" rows="10" x-model="data"
+                              class="block w-full  rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                              placeholder="这里是转换之后结果"></textarea>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="flex my-5 justify-center">
+        {{ forms.button(name == 'chinese-word-segmentation' ? '分词' : '转换') }}
+    </div>
+{% endblock %}
