@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use FastFFI\LAC\LAC;
+use FastFFI\LAC\ThuLAC;
 use FastFFI\OCR\OCR;
 use FastFFI\Opencc\OpenCC;
 use FastFFI\Pinyin\Pinyin;
@@ -1199,8 +1200,17 @@ EOF;
                 $model = "rank_model";
                 break;
         }
-        $path = dirname($this->getParameter('kernel.cache_dir')) . '/model/' . $model;
-        $obj = LAC::new($path);
+        $obj = null;
+        if (($body['build'] ?? 1) == 1) {
+            $path = dirname($this->getParameter('kernel.cache_dir')) . '/model/' . $model;
+            $obj = LAC::new($path);
+        } else if (($body['build'] ?? 1) == 2) {
+            $path = dirname($this->getParameter('kernel.cache_dir')) . '/models';
+            $obj = ThuLAC::new($path);
+        }
+        if ($obj == null) {
+            return $this->json(['data' => '']);
+        }
         $result = $obj->parse($text);
         $table = $thead = "";
         if (!empty($result['words'])) {
@@ -1227,7 +1237,7 @@ EOF;
                     if ($mode == 3) {
                         $tr .= sprintf(
                             '<td class="text-center border dark:border-slate-900 px-4 py-2 dark:text-slate-300 font-medium">%s</td>',
-                            self::$weight[$weight[$key]] ?? "无",
+                            self::$weight[$weight[$key] ?? -1] ?? "无",
                         );
                     }
                 }
