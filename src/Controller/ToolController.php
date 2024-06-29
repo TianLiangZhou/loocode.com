@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -624,6 +625,7 @@ class ToolController extends Controller
      * @return Response
      */
     #[Route('/tools', name: 'tools_page')]
+    #[Cache(maxage: 3600, public: true, mustRevalidate: true)]
     public function index(): Response
     {
         $title = function (string $title) {
@@ -647,6 +649,7 @@ class ToolController extends Controller
      * @return Response
      */
     #[Route('/tool/{name}', name: 'tool_single_page', requirements: ['name' => '[a-z0-9\-_]{2,}',], methods: 'GET')]
+    #[Cache(maxage: 3600, public: true, mustRevalidate: true)]
     public function tool(string $name): Response
     {
         if (!isset(static::$tools[$name])) {
