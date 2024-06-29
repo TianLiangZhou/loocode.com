@@ -10,6 +10,15 @@ use FastFFI\OCR\OCR;
 use FastFFI\Opencc\OpenCC;
 use FastFFI\Pinyin\Pinyin;
 use FastFFI\QrCode\QrCode;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use League\CommonMark\MarkdownConverter;
 use OctopusPress\Bundle\Bridge\Bridger;
 use OctopusPress\Bundle\Controller\Controller;
 use Psr\Cache\CacheItemPoolInterface;
@@ -672,6 +681,9 @@ class ToolController extends Controller
         $tool = static::$tools[$name];
         $template = 'tools/' . $name . '.html.twig';
         $features = explode('-', $name);
+        if ($features[0] === 'markdown') {
+            $features[0] = 'md';
+        }
         $data = [
             'tools' => static::$tools,
             'tool' => $tool,
@@ -1060,6 +1072,11 @@ EOF;
         [$outputRootPath, $outputFilename] = $this->getConvertPathAndName($file->getClientOriginalName(), $outputFormat);
         $commands = [];
         if (in_array($inputFormat, ['html', 'markdown'])) {
+            if ($inputFormat === 'markdown') {
+                $originFilename = $inputFilepath;
+                $inputFilepath = $this->markdownToHtml($inputFilepath);
+                unlink($originFilename);
+            }
             // html,md to pdf
             $commands[] = 'weasyprint';
             $commands[] = $inputFilepath;
@@ -1087,6 +1104,7 @@ EOF;
         $this->logger->error('commands: ' . implode(' ', $commands));
         $process = new Process($commands);
         if (0 !== $process->run()) {
+            unlink($inputFilepath);
             return $this->json([
                 'message' => $process->getErrorOutput(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -1095,6 +1113,42 @@ EOF;
             'size'     => filesize($outputRootPath . $outputFilename),
             'download' => $this->bridger->getPackages()->getUrl($outputFilename),
         ]);
+    }
+
+    /**
+     * @param string $file
+     * @return string
+     * @throws CommonMarkException
+     */
+    private function markdownToHtml(string $file): string
+    {
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new DefaultAttributesExtension());
+        $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+        $environment->addExtension(new TableOfContentsExtension());
+
+        $converter = new MarkdownConverter($environment);
+        $content = $converter->convert(file_get_contents($file))->getContent();
+        $fileinfo = pathinfo($file);
+        $html = <<<EOF
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$fileinfo['filename']}</title>
+</head>
+<body>
+$content
+</body>
+</html>
+EOF;
+        $file = $fileinfo['dirname'] . '/' . $fileinfo['filename'] . '.html';
+        file_put_contents($file, $html);
+        return $file;
     }
 
     /**
