@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
 
 return function (ContainerConfigurator $configurator, ContainerBuilder $container) {
     if ($configurator->env() === 'prod') {
-        $configurator->parameters()->set('container.dumper.inline_factories', true);
+        $configurator->parameters()->set('.container.dumper.inline_factories', true);
+        $configurator->parameters()->set('debug.container.dump', false);
     }
     $container->register('Redis', \Redis::class)
         ->addMethodCall('connect', ['%env(REDIS_HOST)%', '%env(int:REDIS_PORT)%']);
