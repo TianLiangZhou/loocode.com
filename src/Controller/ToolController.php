@@ -1353,7 +1353,7 @@ EOF;
         }
         $qrCode->withZone(true);
         $image = "";
-        switch ($body['mode']) {
+        switch ($body['mode'] ?? 1) {
             case 1:
                 $uploadPath = $this->getParameter('public_dir');
                 $path = $uploadPath . '/upload/images/qrcode/' . date('Ymd');

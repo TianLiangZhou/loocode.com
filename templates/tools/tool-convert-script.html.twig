@@ -38,6 +38,9 @@
                     this.loading = false;
                     response.json().then((body) => {
                         this.data = body.data || body.message;
+                        if (window['successCallback'] && typeof window['successCallback'] === 'function') {
+                            window['successCallback'].apply(this, [body])
+                        }
                     }).catch((err) => {
                         console.log(err);
                     });

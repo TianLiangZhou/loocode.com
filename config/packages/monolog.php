@@ -11,11 +11,12 @@ return static function(MonologConfig $monologConfig, ContainerConfigurator $conf
     switch ($configurator->env()) {
         case 'prod':
             $monologConfig->handler('main')
-                ->type('fingers_crossed')
+                ->type('rotating_file')
                 ->actionLevel('error')
                 ->handler('nested')
-                ->excludedHttpCode(new ExcludedHttpCodeConfig(['code' => 404]))
-                ->excludedHttpCode(new ExcludedHttpCodeConfig(['code' => 405]))
+//                ->excludedHttpCode(new ExcludedHttpCodeConfig(['code' => 404]))
+//                ->excludedHttpCode(new ExcludedHttpCodeConfig(['code' => 405]))
+                ->maxFiles(0)
                 ->bufferSize(50);
             $monologConfig->handler('nested')
                 ->type('stream')
