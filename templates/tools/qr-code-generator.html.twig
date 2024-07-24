@@ -1,7 +1,7 @@
 {% extends 'tools/tab.html.twig' %}
 {% import "tools/forms.html.twig" as forms %}
 {% block child %}
-    <div class="flex">
+    <div class="flex" id="qrcodeContainer">
         <div class="flex flex-col flex-1">
             <div class="flex my-5 h-80">
                 <label for="slogan" class="sr-only text-slate-700 dark:text-slate-400">文本</label>
@@ -49,19 +49,20 @@
                 dialog.close()
             }
         });
+        var lgShow = false;
         window['successCallback'] = function (body) {
             if (!qrcodeArea.checkVisibility({checkVisibilityCSS:  true, checkOpacity: true})) {
                 /**
                  *
                  * @type {HTMLDivElement}
                  */
-                var qrcode = qrcodeArea.cloneNode(true);
-                qrcode.classList.remove('hidden');
-                if (dialog.firstChild) {
-                    dialog.removeChild(dialog.firstChild);
+                qrcodeArea.classList.remove('hidden');
+                if (dialog.firstChild == null) {
+                    dialog.appendChild(qrcodeArea);
                 }
-                dialog.appendChild(qrcode);
                 dialog.showModal();
+            } else {
+                lgShow = true;
             }
         };
         document.getElementById('download').addEventListener('click', function (evt) {
@@ -86,7 +87,25 @@
             document.body.removeChild(link);
         });
         document.getElementById('beautify').addEventListener('click', function (evt) {
-
+        });
+        window.addEventListener('resize', function (evt) {
+            if (evt.target.innerWidth >= 1024) {
+                if (dialog.firstChild !== null) {
+                    dialog.removeChild(dialog.firstChild);
+                    document.getElementById('qrcodeContainer').appendChild(qrcodeArea);
+                }
+                if (dialog.open) {
+                    dialog.close()
+                }
+            } else {
+                if (!qrcodeArea.classList.contains('hidden') || lgShow) {
+                    qrcodeArea.classList.remove('hidden');
+                    if (dialog.firstChild == null) {
+                        dialog.appendChild(qrcodeArea);
+                    }
+                    dialog.showModal();
+                }
+            }
         });
     </script>
 {% endblock %}
