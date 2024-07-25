@@ -33,7 +33,11 @@
 {% endblock %}
 {% block script %}
     <script type="text/javascript">
-        var qrcodeArea = document.getElementById('qrcodeArea');
+        /**
+         *
+         * @type {HTMLDivElement}
+         */
+        const qrcodeArea = document.getElementById('qrcodeArea');
         /**
          * @type {HTMLDialogElement}
          */
@@ -47,11 +51,14 @@
         document.body.addEventListener('click', function (evt) {
             if (evt.target.id === 'qrcodeDialog' && dialog.open) {
                 dialog.close()
+                qrcodeArea.classList.add('hidden');
             }
         });
         var lgShow = false;
         window['successCallback'] = function (body) {
-            if (!qrcodeArea.checkVisibility({checkVisibilityCSS:  true, checkOpacity: true})) {
+            const qrcodeAreaDisplay = getComputedStyle(qrcodeArea).display;
+            if ((typeof qrcodeArea.checkVisibility === 'function' && !qrcodeArea.checkVisibility({checkVisibilityCSS:  true, checkOpacity: true}))
+                    || qrcodeAreaDisplay === 'none') {
                 /**
                  *
                  * @type {HTMLDivElement}
