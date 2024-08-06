@@ -104,3 +104,11 @@ spring.application.name=MyApp
 spring.application.name=MyCloudApp
 spring.config.activate.on-cloud-platform=kubernetes
 ```
+
+配置以下参数`Spring Boot`将打印出加载的配置文件记录:
+
+```yaml
+logging:
+  level:
+    org.springframework.boot.context.config: trace
+```
