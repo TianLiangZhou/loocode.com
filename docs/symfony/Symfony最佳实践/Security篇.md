@@ -761,5 +761,5 @@ return static function (SecurityConfig $security): void {
 ## 实践
 
 1. [微信小程序验证器](https://loocode.com/post/symfony-security-xiao-cheng-xu-deng-lu-shou-quan-shi-jian)
-2. GitHub验证器
+2. [GitHub验证器](https://loocode.com/post/symfony-security-github-deng-lu-shou-quan-shi-jian)
 3. 动态授权访问验证
