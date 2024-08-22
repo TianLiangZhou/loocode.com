@@ -5,9 +5,10 @@
         <div class="flex">
             <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
             <div class="flex-1 ml-4">
-                <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                        id="algo" name="algo">
                     {% for algo in algos %}
-                    <option value="{{ algo }}">{{ algo }}</option>
+                        <option value="{{ algo }}">{{ algo }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -17,7 +18,9 @@
             <label for="key" class="text-slate-700 dark:text-slate-400">密钥</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300">
-                    <input id="key" placeholder="密钥" type="text" class="w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="key" value="" maxlength="128" minlength="1" />
+                    <input id="key" placeholder="密钥" type="text"
+                           class="w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                           name="key" value="" maxlength="128" minlength="1"/>
                 </div>
             </div>
         </div>
@@ -26,9 +29,15 @@
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300">
-                    <label><input class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" checked="" type="radio" /> MD5</label>
-                    <label class="mx-2"><input name="mode" value="2" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> MD4</label>
-                    <label><input name="mode" value="3" type="radio" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> MD2</label>
+                    <label><input
+                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                name="mode" value="1" checked="" type="radio"/> MD5</label>
+                    <label class="mx-2"><input name="mode" value="2" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        MD4</label>
+                    <label><input name="mode" value="3" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        MD2</label>
                 </div>
             </div>
         </div>
@@ -37,10 +46,18 @@
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300">
-                    <label><input class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="4" checked="" type="radio" /> sha1</label>
-                    <label class="mx-2"><input name="mode" value="5" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> sha224</label>
-                    <label><input name="mode" value="6" type="radio" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> sha256</label>
-                    <label><input name="mode" value="7" type="radio" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> sha512</label>
+                    <label><input
+                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                name="mode" value="4" checked="" type="radio"/> sha1</label>
+                    <label class="mx-2"><input name="mode" value="5" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        sha224</label>
+                    <label><input name="mode" value="6" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        sha256</label>
+                    <label><input name="mode" value="7" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        sha512</label>
                 </div>
             </div>
         </div>
@@ -49,26 +66,39 @@
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300">
-                    <label><input class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="8" checked="" type="radio" /> CRC32</label>
-                    <label class="mx-2"><input name="mode" value="9" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> CRC32b</label>
-                    <label><input name="mode" value="10" type="radio" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> CRC32c</label>
+                    <label><input
+                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                name="mode" value="8" checked="" type="radio"/> CRC32</label>
+                    <label class="mx-2"><input name="mode" value="9" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        CRC32b</label>
+                    <label><input name="mode" value="10" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        CRC32c</label>
                 </div>
             </div>
         </div>
-    {% elseif name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption'  %}
+    {% elseif name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption' %}
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300" x-init="mode = 2;$watch('mode', value => {if(value==1&&$data.data){text=$data.data;data='';}})">
-                    <label><input name="mode" x-model="mode" value="2" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" checked="" /> 加密</label>
-                    <label class="mx-2"><input x-model="mode" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="mode" value="1" type="radio" /> 解密</label>
+                <div class="dark:text-slate-300"
+                     x-init="mode = 2;$watch('mode', value => {if(value==1&&$data.data){text=$data.data;data='';}})">
+                    <label><input name="mode" x-model="mode" value="2" type="radio"
+                                  class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                  checked=""/> 加密</label>
+                    <label class="mx-2"><input x-model="mode"
+                                               class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                               name="mode" value="1" type="radio"/> 解密</label>
                 </div>
             </div>
         </div>
         <div class="flex my-5">
             <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
             <div class="flex-1 ml-4">
-                <select x-model="algo" class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
+                <select x-model="algo"
+                        class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                        id="algo" name="algo">
                     {% for algo in algos %}
                         <option value="{{ algo }}">{{ algo }}</option>
                     {% endfor %}
@@ -79,8 +109,12 @@
             <label for="key" class="text-slate-700 dark:text-slate-400">密钥</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300 flex">
-                    <input id="key" required aria-required="true" placeholder="密钥" type="text" class="flex-1 w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="key" value="" />
-                    <label for="key_base64"><input id="key_base64" name="key_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
+                    <input id="key" required aria-required="true" placeholder="密钥" type="text"
+                           class="flex-1 w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                           name="key" value=""/>
+                    <label for="key_base64"><input id="key_base64" name="key_base64" type="checkbox"
+                                                   class="ml-3 !text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                                   value="1"/> Base64</label>
                 </div>
             </div>
         </div>
@@ -88,9 +122,16 @@
             <label for="IV" class="text-slate-700 dark:text-slate-400">&nbsp;&nbsp;&nbsp;&nbsp;IV</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300 flex">
-                    <input id="IV" :required="algo != 'rc4' && algo != 'rc4-40' && algo != 'rc4-hmac-md5'" aria-required="true" placeholder="IV" type="text" class="flex-1 w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" name="iv" value="" maxlength="512" minlength="1" />
-                    <label for="iv_base64"><input id="iv_base64" name="iv_base64" type="checkbox" class="ml-3 !text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" value="1" /> Base64</label>
-                    <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary text-white ml-3" @click.prevent="randomIV()">随机</button>
+                    <input id="IV" :required="algo != 'rc4' && algo != 'rc4-40' && algo != 'rc4-hmac-md5'" aria-required="true"
+                           placeholder="IV" type="text"
+                           class="flex-1 w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                           name="iv" value="" maxlength="512" minlength="1"/>
+                    <label for="iv_base64"><input id="iv_base64" name="iv_base64" type="checkbox"
+                                                  class="ml-3 !text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                                  value="1"/> Base64</label>
+                    <button type="button" class="rounded-md px-3 py-0 text-xl !bg-primary text-white ml-3" @click.prevent="randomIV()">
+                        随机
+                    </button>
                 </div>
             </div>
         </div>
@@ -98,7 +139,8 @@
         <div class="flex my-5">
             <label for="option" class="text-slate-700 dark:text-slate-400">补齐</label>
             <div class="flex-1 ml-4">
-                <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="option" name="option">
+                <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                        id="option" name="option">
                     <option selected value="0">无</option>
                     <option value="1">原码</option>
                     <option value="2">零补齐</option>
@@ -111,28 +153,36 @@
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300" x-init="mode = 1">
-                    <label><input x-model="mode" name="mode" value="1" checked="" type="radio" class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" /> {% if name == 'rsa-encryption-and-decryption' %}解密{% else %}签名{% endif %}</label>
-                    <label class="mx-2"><input  x-model="mode" name="mode" value="2" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}加密{% else %}校验{% endif %}</label>
+                    <label><input x-model="mode" name="mode" value="1" checked="" type="radio"
+                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}解密{% else %}签名{% endif %}
+                    </label>
+                    <label class="mx-2"><input x-model="mode" name="mode" value="2" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}加密{% else %}校验{% endif %}
+                    </label>
                 </div>
             </div>
         </div>
         {% if name == 'rsa-sign-and-verify' %}
-        <div class="flex my-5">
-            <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
-            <div class="flex-1 ml-4">
-                <select x-model="algo" class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="algo" name="algo">
-                    {% for algo in algos %}
-                        <option value="{{ algo }}">{{ algo }}</option>
-                    {% endfor %}
-                </select>
+            <div class="flex my-5">
+                <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
+                <div class="flex-1 ml-4">
+                    <select x-model="algo"
+                            class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                            id="algo" name="algo">
+                        {% for algo in algos %}
+                            <option value="{{ algo }}">{{ algo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="flex my-5" x-show="mode == 2">
-            <label for="sign" class="text-slate-700 dark:text-slate-400">签名</label>
-            <div class="flex-1 ml-4">
-                <textarea :required="mode==2" id="sign" aria-required="true" name="sign" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="填写签名内容"></textarea>
+            <div class="flex my-5" x-show="mode == 2">
+                <label for="sign" class="text-slate-700 dark:text-slate-400">签名</label>
+                <div class="flex-1 ml-4">
+                    <textarea :required="mode==2" id="sign" aria-required="true" name="sign"
+                              class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                              placeholder="填写签名内容"></textarea>
+                </div>
             </div>
-        </div>
 
         {% endif %}
 
@@ -140,12 +190,20 @@
             <label class="text-slate-700 dark:text-slate-400" for="cert">证书</label>
             <div class="flex-1 ml-4">
                 <div class="dark:text-slate-300">
-                    <textarea required id="cert" aria-required="true" name="cert" rows="10" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="填写证书内容"></textarea>
+                    <textarea required id="cert" aria-required="true" name="cert" rows="10"
+                              class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                              placeholder="填写证书内容"></textarea>
                 </div>
                 <div class="dark:text-slate-300 my-5">
-                    <label><input class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary" name="cert_mode" value="4" checked="" type="radio" /> 私钥</label>
-                    <label class="mx-2"><input name="cert_mode" value="8" type="radio" class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> 公钥</label>
-                    <label><input class="rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="私钥密码" name="cert_pass" type="text" /></label>
+                    <label><input
+                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                name="cert_mode" value="4" checked="" type="radio"/> 私钥</label>
+                    <label class="mx-2"><input name="cert_mode" value="8" type="radio"
+                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
+                        公钥</label>
+                    <label><input
+                                class="rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                                placeholder="私钥密码" name="cert_pass" type="text"/></label>
                 </div>
                 <div class="dark:text-slate-300 my-5">
                 </div>
@@ -162,19 +220,53 @@
         <div class="flex flex-1 my-5">
             <label for="summary" class="invisible text-slate-700 dark:text-slate-400">文本</label>
             <div class="flex-1 ml-4">
-                <textarea required id="summary" aria-required="true" x-model="text" name="text" rows="10" class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="输入你要计算的内容"></textarea>
+                <textarea required id="summary" aria-required="true" x-model="text" name="text" rows="10"
+                          class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                          placeholder="输入你要计算的内容"></textarea>
             </div>
         </div>
         <div class="flex flex-1 my-5" x-show="data">
             <label for="result" class="invisible text-slate-700 dark:text-slate-400">结果</label>
             <div class="flex-1 ml-4">
-                <textarea id="result" rows="10" x-model="data" class="block w-full  rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80" placeholder="这里是计算之后结果"></textarea>
+                <textarea id="result" rows="10" x-model="data"
+                          class="block w-full  rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                          placeholder="这里是计算之后结果"></textarea>
             </div>
         </div>
     </div>
 
-
     <div class="flex my-5 justify-center">
         {{ forms.button('计算') }}
     </div>
+{% endblock %}
+{% block append %}
+    {% if name == 'aes-encryption-and-decryption' %}
+        <div class="w-full mt-4">
+            <div class="bg-white dark:bg-slate-800 rounded-lg">
+                <div class="">
+                    <h3 class="text-xl p-4 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-900">
+                        如何使用编程语实现AES加密解密?</h3>
+                    <div class="pt-4">
+                        <ul>
+                            <li class="truncate px-4 py-2 border-b border-slate-200 dark:border-slate-900 last:border-0 flex items-center">
+                                <div class="truncate text-base leading-8 text-slate-900 dark:text-slate-400">
+                                    <a class="hover:text-primary" href="/docs/example/php/aes-jia-mi-jie-mi">PHP 实现AES加密解密</a>
+                                </div>
+                            </li>
+                            <li class="truncate px-4 py-2 border-b border-slate-200 dark:border-slate-900 last:border-0 flex items-center">
+                                <div class="truncate text-base leading-8 text-slate-900 dark:text-slate-400">
+                                    <a class="hover:text-primary" href="/docs/example/golang/aes-jia-mi-jie-mi">Golang 实现AES加密解密</a>
+                                </div>
+                            </li>
+                            <li class="truncate px-4 py-2 border-b border-slate-200 dark:border-slate-900 last:border-0 flex items-center">
+                                <div class="truncate text-base leading-8 text-slate-900 dark:text-slate-400">
+                                    <a class="hover:text-primary" href="/docs/example/java/aes-jia-mi-jie-mi">Java 实现AES加密解密</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
