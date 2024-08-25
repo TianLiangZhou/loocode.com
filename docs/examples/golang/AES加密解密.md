@@ -2,7 +2,7 @@
 
 ## 加密
 
-```golang
+```go
 // 加密
 func Encrypter(cipherText, key, iv []byte) (string, error) {
 	// 补齐内容
@@ -28,7 +28,7 @@ func PKCS5Padding(cipherText []byte, blockSize int) []byte {
 
 ## 解密
 
-```golang
+```go
 func Decrypter(encryptedText string, key, iv []byte) (string, error) {
 	cipherText, err := base64.StdEncoding.DecodeString(encryptedText)
 	if err != nil {
@@ -72,7 +72,7 @@ func PKCS5Unpadding(data []byte, blockSize int) ([]byte, error) {
 
 ## 主程序
 
-```golang
+```go
 package main
 
 import (
