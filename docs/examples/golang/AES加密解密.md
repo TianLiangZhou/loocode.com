@@ -101,3 +101,5 @@ func main() {
 	}
 }
 ```
+
+> [在线AES加密解密工具](/tool/aes-encryption-and-decryption)

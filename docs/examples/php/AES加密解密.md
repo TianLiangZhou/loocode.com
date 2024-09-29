@@ -204,3 +204,5 @@ echo $original_plaintext, "\n";
 | 162 | sm4-xts                  |
 
 > 加密算法依赖[openssl](https://www.php.net/manual/en/book.openssl.php)库.
+
+> [在线AES加密解密工具](/tool/aes-encryption-and-decryption)
