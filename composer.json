@@ -112,10 +112,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/TianLiangZhou/octopuspress-bundle"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/TianLiangZhou/ckfinder-symfony-bundle"
     }
   ]
 }
