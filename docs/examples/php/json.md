@@ -1,4 +1,4 @@
-#### json_encode
+## json_encode
 
 
 ```php
@@ -47,7 +47,7 @@ echo json_encode($array, JSON_PRETTY_PRINT);
 > }
 
 
-#### json_decode
+## json_decode
 
 对`JSON`格式的字符串进行解码.
 
@@ -62,7 +62,8 @@ var_dump(json_decode($json, true)); // 以数组形式返回
 
 以上示例会输出：
 
-```
+```plain
+
 object(stdClass)#1 (1) {
   ["a"]=>
   string(3) "dog"
@@ -89,7 +90,8 @@ var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
 
 以上示例会输出：
 
-```
+```plain
+
 object(stdClass)#1 (1) {
   ["number"]=>
   float(1.2345678901235E+19)
@@ -102,7 +104,7 @@ object(stdClass)#1 (1) {
 ```
 
 
-#### json_validate
+## json_validate
 
 `PHP >= 8.3`
 
@@ -119,7 +121,7 @@ var_dump(json_validate('{ "": "": "" } }'));
 
 以上示例会输出：
 
-```
+```plain
 
 bool(true)
 bool(false)
