@@ -22,8 +22,14 @@ echo json_encode($array), "\n", json_encode($array, JSON_UNESCAPED_UNICODE);
 
 ```
 
-> 这将输出: {"a":"\u6d4b\u8bd5\u4e0d\u7f16\u7801\u8f93\u51fa"}
-> {"a":"测试不编码输出"}
+这将输出:
+
+```plain
+
+{"a":"\u6d4b\u8bd5\u4e0d\u7f16\u7801\u8f93\u51fa"}
+{"a":"测试不编码输出"}
+
+```
 
 
 美化输出.
@@ -36,15 +42,18 @@ echo json_encode($array, JSON_PRETTY_PRINT);
 
 ```
 
-> 这将输出:
-> {
->    "a": "dog",
->    "b": "cat",
->    "c": "cow",
->    "d": "duck",
->    "e": "goose",
->    "f": "elephant"
-> }
+这将输出:
+
+```json
+{
+    "a": "dog",
+    "b": "cat",
+    "c": "cow",
+    "d": "duck",
+    "e": "goose",
+    "f": "elephant"
+}
+```
 
 
 ## json_decode
@@ -146,7 +155,7 @@ var_dump($json, $error === JSON_ERROR_UTF8);
 
 示例将输出：
 
-```php
+```plain
 string(4) "null"
 bool(true)
 ```
