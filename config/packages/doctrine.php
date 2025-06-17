@@ -7,7 +7,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 return static function (DoctrineConfig $doctrine, ContainerConfigurator $configurator) {
     $doctrine->dbal()
         ->connection('default')
-        ->option(\PDO::ATTR_TIMEOUT, 1.3)
+        ->option(\PDO::ATTR_TIMEOUT, 2)
         ->driver('pdo_mysql')
         ->url(env('DATABASE_URL')->resolve())
         ->logging('%kernel.debug%');
