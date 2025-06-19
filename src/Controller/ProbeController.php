@@ -34,44 +34,59 @@ class ProbeController extends Controller
         return $this->render('probe/index.html.twig', [
             'probes' => [
                 [
-                    "name" => 'PHP Version',
+                    "name" => 'PHP 版本',
                     "description" => PHP_VERSION,
-                    "status" => 'active',
-                    "created_at" => new \DateTime(),
-                    "updated_at" => new \DateTime(),
+                    "status" => null,
                 ],
                 [
-                    "name" => 'Database Source',
+                    "name" => '存储驱动',
                     "description" => substr(array_reverse(explode("\\", get_class($this->em->getConnection()->getDatabasePlatform())))[0], 0, -8),
-                    "status" => 'active',
-                    "created_at" => new \DateTime(),
-                    "updated_at" => new \DateTime(),
+                    "status" => null,
                 ],
                 [
-                    "name" => 'Database Source Version',
+                    "name" => '存储版本',
                     "description" => $this->em->getConnection()->getServerVersion(),
-                    "status" => 'active',
-                    "created_at" => new \DateTime(),
-                    "updated_at" => new \DateTime(),
+                    "status" => null,
                 ],
                 [
-                    "name" => 'Symfony Version',
+                    "name" => 'Symfony 版本',
                     "description" => \Symfony\Component\HttpKernel\Kernel::VERSION,
-                    "status" => 'active',
-                    "created_at" => new \DateTime(),
-                    "updated_at" => new \DateTime(),
+                    "status" => null,
                 ],
                 [
-                    "name" => 'Redis Version',
-                    "description" =>  phpversion('redis'),
-                    "status" => 'active',
-                    "created_at" => new \DateTime(),
-                    "updated_at" => new \DateTime(),
+                    "name" => 'Redis 版本',
+                    "description" =>  extension_loaded("redis") ? phpversion('redis'): '',
+                    "status" => extension_loaded("redis"),
+                ],
+                [
+                    "name" => 'cURL',
+                    "description" =>  extension_loaded("curl") ? curl_version()["version"] : '',
+                    "status" => extension_loaded("curl"),
+                ],
+                [
+                    "name" => 'gd',
+                    "description" =>  '',
+                    "status" => extension_loaded("gd"),
+                ],
+                [
+                    "name" => 'imagick',
+                    "description" =>  extension_loaded("imgick") ? phpversion('imgick'): '',
+                    "status" => extension_loaded("imagick"),
+                ],
+                [
+                    "name" => 'FFI',
+                    "description" =>  '',
+                    "status" => extension_loaded("FFI"),
                 ],
 
+                [
+                    "name" => 'SAPI',
+                    "description" =>  PHP_SAPI,
+                    "status" => null,
+                ],
+                
             ],
-            'title' => 'Probe Page',
-            'message' => 'This is a probe page.'
+            'title' => '探针信息',
         ]);
     }
 }
