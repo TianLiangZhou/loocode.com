@@ -1,0 +1,54 @@
+{% extends '@OctopusPress/base.html.twig' %}
+{% block style %}
+<style>
+    .text-green-700 {
+        color: #16a34a; /* Tailwind's green-700 */
+    }
+    .bg-green-50 {
+        background-color: #f0fdf4; /* Tailwind's green-50 */
+    }
+    .ring-green-600\/20 {
+        box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.2); /* Tailwind's green-600 with opacity */
+    }
+    .bg-gray-50 {
+        background-color: #f9fafb; /* Tailwind's gray-50 */
+    }
+    .text-gray-600 {
+        color: #4b5563; /* Tailwind's gray-600 */
+    }
+    .ring-gray-500\/10 {
+        box-shadow: 0 0 0 1px rgba(107, 114, 128, 0.1); /* Tailwind's gray-500 with opacity */
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container mx-auto my-5 px-4">
+    <div class="bg-white p-4 dark:bg-slate-800 rounded-t-lg">
+        <table class="table-auto w-full dark:text-white">
+            <caption class="text-lg font-semibold mb-4">探针信息</caption>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">名称</th>
+                    <th class="px-4 py-2">值</th>
+                    <th class="px-4 py-2">状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for probe in probes %}
+                <tr>
+                    <td class="border px-4 py-2">{{ probe.name }}</td>
+                    <td class="border px-4 py-2">{{ probe.description }}</td>
+                    <td class="border px-4 py-2">
+                        {% if probe.status %}
+                            <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">支持</span>
+                        {% elseif probe.status is same as(false) %}
+                            <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">不支持</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
