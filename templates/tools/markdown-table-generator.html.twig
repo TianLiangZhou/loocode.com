@@ -1,72 +1,146 @@
 {% extends 'tools/sidebar.html.twig' %}
 {% import "tools/forms.html.twig" as forms %}
-{% set convert_extra = "'{\"row\":3, \"column\": 3}'" %}
+{% set convert_extra = "'{\"row\":3, \"column\": 3, \"headers\":[\"\"]}'" %}
 {% block child %}
-    <div class="flex justify-center items-center">
-        <label class="text-slate-700 dark:text-slate-400">行</label>
-        <div class="ml-4">
-            <div class="dark:text-slate-300">
-                <label><input
-                            class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                            value="3" type="number" min="2" max="500" x-model="extra.row" placeholder="行"/></label>
+<div class="mx-auto max-w-sm">
+    <div class="flex">
+        <div class="flex justify-center items-center">
+            <label class="text-slate-700 dark:text-slate-400">行&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <div class="ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input
+                                class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                                value="3" type="number" min="2" max="500" x-model="extra.row" placeholder="行"/></label>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center my-5 items-center">
+            <label class="text-slate-700 dark:text-slate-400">&nbsp;&nbsp;列&nbsp;&nbsp;</label>
+            <div class="ml-4">
+                <div class="dark:text-slate-300">
+                    <label><input class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                                value="3" type="number" min="2" max="20" x-model="extra.column" placeholder="行"/>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
+    <div class="flex flex-col">
+         <template x-for="(c, i) in extra.headers">
+            <div class="flex justify-start my-5 items-center">
+                <label class="text-slate-700 dark:text-slate-400" :class="i != 0 ? 'invisible':''">表头</label>
+                <div class="ml-4">
+                    <div class="dark:text-slate-300">
+                        <label>
+                            <input class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                                    type="text" x-model="extra.headers[i]" :placeholder="'表头' + (i+1)"/>
+                        </label>
 
-    <div class="flex justify-center my-5 items-center">
-        <label class="text-slate-700 dark:text-slate-400">列</label>
-        <div class="ml-4">
-            <div class="dark:text-slate-300">
-                <label><input class="!text-primary w-40 bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                            value="3" type="number" min="2" max="20" x-model="extra.column" placeholder="行"/>
-                </label>
+                    </div>
+                </div>
+                <button x-show="i==0" type="button" class="w-5 mx-2" aria-label="新增" @click="extra.column > extra.headers.length && extra.headers.push('')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-slate-700 dark:fill-slate-200">
+                        <g data-name="Layer 2">
+                            <g data-name="plus">
+                                <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/>
+                                <path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
             </div>
-        </div>
+        </template>
     </div>
-    <div class="flex my-5 justify-center">
+    <div class="flex my-5">
         {{ forms.button('生成', 'markdownTableGenerator') }}
     </div>
+</div>
 {% endblock %}
 {% block append %}
-    <div class="mt-6 bg-white dark:bg-slate-800 rounded-lg">
-        <div class="relative dark:border-slate-700">
-            <pre class="w-3/5 language-markdown dark:bg-slate-900 !mx-auto">
-                <code class="language-markdown" id="result-markdown">
-|   |   |   |
-|---|---|---|
-|   |   |   |
-|   |   |   |
-|   |   |   |
-                </code>
-            </pre>
+    <div class="mt-6 bg-white dark:bg-slate-800 rounded-lg" x-data="markdownGenerator()" @generator.window="generator($event.detail)">
+        <div class="relative dark:border-slate-700 p-4" x-show="row > 0 && column > 0">
+            <div class="flex justify-between items-center mb-4">
+                <span></span>
+                <h2 class="text-lg font-semibold mb-4">Markdown表格</h2>
+                <button type="button" x-show="column > 0 && row > 0" class="my-2 rounded-md px-3 py-1 text-xl font-bold !bg-primary text-white" @click="copy()" aria-label="复制到剪切板" x-text="copyed?'已复制':'复制'"></button>
+            </div>
+            <table class="table-auto w-full dark:text-white">
+                <thead>
+                    <tr>
+                        <template x-for="(c, i) in column">
+                            <th class="px-4 py-2" x-text="headers[i]||''"></th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+               <template x-for="(c, i) in row"> 
+                    <tr>
+                        <template x-for="(c, i) in column">
+                        <td class="border px-4 py-2">
+                            &nbsp;
+                        </td>
+                        </template>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
         </div>
     </div>
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data("markdownGenerator", (e) => ({
+                row: 0,
+                column: 0,
+                headers: [],
+                copyed: false,
+                init() {
+                    
+                },
+                generator(data) {
+                    this.row = parseInt(data.row);
+                    this.column = parseInt(data.column);
+                    this.headers = data.headers || [];
+                    this.copyed = false;
+                },
+                copy() {
+                    let columns = [],
+                    row = parseInt(this.row) + 2,
+                    column = parseInt(this.column) + 1;
+                    for (let i = 0; i < row; i++) {
+                        columns[i] = [];
+                        for (let j = 0; j < column; j++) {
+                            if (i === 1) {
+                                columns[i][j] = j === (column - 1) ? '|' : "|---";
+                            } else {
+                                columns[i][j] =  "|" + (i == 0 && this.headers[j] ? this.headers[j] : '');
+                            }
+                        }
+                    }
+                    let markdown = [];
+                    for (let i = 0; i < columns.length; i++) {
+                        markdown.push(columns[i].join(i !== 1 ? "\t" : ''));
+                    }
+                    navigator.clipboard.writeText(markdown.join("\n")).then(() => {
+                        this.copyed = true;
+                    });
+                }
+            }));
+
+        });
+    </script>
 {% endblock %}
 {% block script %}
     <script>
         (function (root) {
             root.markdownTableGenerator = function () {
-                if (this.extra.column < 2 || this.extra.row < 2) {
-                    return ;
-                }
-                let columns = [],
-                    row = parseInt(this.extra.row) + 2,
-                    column = parseInt(this.extra.column) + 1;
-                for (let i = 0; i < row; i++) {
-                    columns[i] = [];
-                    for (let j = 0; j < column; j++) {
-                        if (i === 1) {
-                            columns[i][j] = j === (column - 1) ? '|' : "|---";
-                        } else {
-                            columns[i][j] = "|";
-                        }
-                    }
-                }
-                let markdown = "\n";
-                for (let i = 0; i < columns.length; i++) {
-                    markdown = markdown.concat(columns[i].join(i !== 1 ? "\t" : '') + "&#10;&#13;");
-                }
-                root.document.getElementById('result-markdown').innerHTML = markdown;
+                var event = new CustomEvent('generator', {
+                    detail: this.extra
+                });
+                dispatchEvent(event);
+                return ;
             };
         })(window);
     </script>
