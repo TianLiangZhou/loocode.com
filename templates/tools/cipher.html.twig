@@ -28,14 +28,14 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300">
+                <div class="dark:text-slate-300" x-init="mode=1">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                name="mode" value="1" checked="" type="radio"/> MD5</label>
-                    <label class="mx-2"><input name="mode" value="2" type="radio"
+                                name="mode" value="1" checked="" type="radio" x-model="mode" /> MD5</label>
+                    <label class="mx-2"><input name="mode" value="2" x-model="mode" type="radio"
                                                class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         MD4</label>
-                    <label><input name="mode" value="3" type="radio"
+                    <label><input x-model="mode" name="mode" value="3" type="radio"
                                   class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         MD2</label>
                 </div>
@@ -45,17 +45,17 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300">
+                <div class="dark:text-slate-300" x-init="mode=4">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                name="mode" value="4" checked="" type="radio"/> sha1</label>
-                    <label class="mx-2"><input name="mode" value="5" type="radio"
+                                name="mode" value="4" checked="" type="radio" x-model="mode" /> sha1</label>
+                    <label class="mx-2"><input name="mode" value="5" type="radio" x-model="mode"
                                                class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         sha224</label>
-                    <label><input name="mode" value="6" type="radio"
+                    <label><input name="mode" value="6" type="radio" x-model="mode"
                                   class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         sha256</label>
-                    <label><input name="mode" value="7" type="radio"
+                    <label><input name="mode" value="7" type="radio" x-model="mode"
                                   class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         sha512</label>
                 </div>
@@ -65,14 +65,14 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300">
+                <div class="dark:text-slate-300"  x-init="mode=8">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                name="mode" value="8" checked="" type="radio"/> CRC32</label>
-                    <label class="mx-2"><input name="mode" value="9" type="radio"
+                                name="mode" value="8" checked="" type="radio" x-model="mode"/> CRC32</label>
+                    <label class="mx-2"><input name="mode" value="9" type="radio" x-model="mode"
                                                class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         CRC32b</label>
-                    <label><input name="mode" value="10" type="radio"
+                    <label><input name="mode" value="10" type="radio" x-model="mode"
                                   class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
                         CRC32c</label>
                 </div>
@@ -222,7 +222,7 @@
             <div class="flex-1 ml-4">
                 <textarea required id="summary" aria-required="true" x-model="text" name="text" rows="10"
                           class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                          placeholder="输入你要计算的内容"></textarea>
+                          placeholder="输入你要计算的内容" @keyup="inputEventSubmit($data)" @blur="inputEventSubmit($data)"></textarea>
             </div>
         </div>
         <div class="flex flex-1 my-5" x-show="data">
@@ -269,4 +269,13 @@
             </div>
         </div>
     {% endif %}
+{% endblock %}
+{% block script %}
+    <script>
+        function inputEventSubmit($form) {
+            console.log($form);
+            $form.convert();
+            // $form.submit();
+        }
+    </script>
 {% endblock %}
