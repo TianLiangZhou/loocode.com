@@ -927,7 +927,7 @@ class ToolController extends Controller
                 }
                 break;
             case 'rsa-sign-and-verify':
-                if ((int) $body['mode'] == 1) {
+                if ((int) $body['mode'] == 2) {
                     if (openssl_sign($text, $signature, $this->getPrivateKey($body['cert'], $body['cert_pass'] ?? ''), $body['algo']) === false) {
                         return $this->json([
                             'data' => openssl_error_string(),

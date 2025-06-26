@@ -1,12 +1,13 @@
 {% extends 'tools/tab.html.twig' %}
 {% import "tools/forms.html.twig" as forms %}
+{% set names = {'rsa-sign-and-verify': '签名', 'rsa-sign-and-verify-mode': '校验'} %}
 {% block child %}
     {% if name == 'to-hash' %}
         <div class="flex">
             <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
-            <div class="flex-1 ml-4">
+            <div class="flex-1 ml-4" x-init="algo='{{algos[0]}}';$watch('algo', value => text && inputEventSubmit($data))">
                 <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                        id="algo" name="algo">
+                        id="algo" name="algo" x-model="algo">
                     {% for algo in algos %}
                         <option value="{{ algo }}">{{ algo }}</option>
                     {% endfor %}
@@ -20,7 +21,7 @@
                 <div class="dark:text-slate-300">
                     <input id="key" placeholder="密钥" type="text"
                            class="w-full rounded-md bg-slate-100 dark:text-slate-300 dark:bg-slate-900 border-transparent  focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                           name="key" value="" maxlength="128" minlength="1"/>
+                           name="key" value="" maxlength="128" minlength="1" x-model="key" @keyup="text && inputEventSubmit($data)" />
                 </div>
             </div>
         </div>
@@ -28,7 +29,7 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300" x-init="mode=1">
+                <div class="dark:text-slate-300" x-init="mode=1;$watch('mode', value => text && inputEventSubmit($data))">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 name="mode" value="1" checked="" type="radio" x-model="mode" /> MD5</label>
@@ -45,7 +46,7 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300" x-init="mode=4">
+                <div class="dark:text-slate-300" x-init="mode=4;$watch('mode', value => text && $data.convert())">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 name="mode" value="4" checked="" type="radio" x-model="mode" /> sha1</label>
@@ -65,7 +66,7 @@
         <div class="flex">
             <label class="text-slate-700 dark:text-slate-400">模式</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300"  x-init="mode=8">
+                <div class="dark:text-slate-300" x-init="mode=8;$watch('mode', value => text && inputEventSubmit($data))">
                     <label><input
                                 class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 name="mode" value="8" checked="" type="radio" x-model="mode"/> CRC32</label>
@@ -79,19 +80,8 @@
             </div>
         </div>
     {% elseif name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption' %}
-        <div class="flex">
-            <label class="text-slate-700 dark:text-slate-400">模式</label>
-            <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300"
-                     x-init="mode = 2;$watch('mode', value => {if(value==1&&$data.data){text=$data.data;data='';}})">
-                    <label><input name="mode" x-model="mode" value="2" type="radio"
-                                  class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                  checked=""/> 加密</label>
-                    <label class="mx-2"><input x-model="mode"
-                                               class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                               name="mode" value="1" type="radio"/> 解密</label>
-                </div>
-            </div>
+        <div class="flex" x-init="mode = 2">
+             <input name="mode" x-model="mode" value="2" type="hidden"/> 
         </div>
         <div class="flex my-5">
             <label for="algo" class="text-slate-700 dark:text-slate-400">算法</label>
@@ -149,18 +139,8 @@
             </div>
         </div>
     {% elseif name == 'rsa-encryption-and-decryption' or name == 'rsa-sign-and-verify' %}
-        <div class="flex  my-5">
-            <label class="text-slate-700 dark:text-slate-400">模式</label>
-            <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300" x-init="mode = 1">
-                    <label><input x-model="mode" name="mode" value="1" checked="" type="radio"
-                                  class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}解密{% else %}签名{% endif %}
-                    </label>
-                    <label class="mx-2"><input x-model="mode" name="mode" value="2" type="radio"
-                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/> {% if name == 'rsa-encryption-and-decryption' %}加密{% else %}校验{% endif %}
-                    </label>
-                </div>
-            </div>
+        <div class="flex" x-init="mode = 1">
+             <input name="mode" x-model="mode" value="1" type="hidden"/> 
         </div>
         {% if name == 'rsa-sign-and-verify' %}
             <div class="flex my-5">
@@ -175,15 +155,14 @@
                     </select>
                 </div>
             </div>
-            <div class="flex my-5" x-show="mode == 2">
+            <div class="flex my-5">
                 <label for="sign" class="text-slate-700 dark:text-slate-400">签名</label>
                 <div class="flex-1 ml-4">
-                    <textarea :required="mode==2" id="sign" aria-required="true" name="sign"
+                    <textarea id="sign" aria-required="true" name="sign"
                               class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                              placeholder="填写签名内容"></textarea>
+                              placeholder="签名内容校验时填写..."></textarea>
                 </div>
             </div>
-
         {% endif %}
 
         <div class="flex  my-5">
@@ -236,7 +215,13 @@
     </div>
 
     <div class="flex my-5 justify-center">
-        {{ forms.button('计算') }}
+        {% if name != 'to-md5' and name != 'to-sha1' and name != 'to-crc32' and name != 'to-hash' %}
+            {{ forms.button(names[name]|default('加密'), '', 'encryption($data)') }}
+        {% endif %}
+        {% if name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption' or name == 'rsa-encryption-and-decryption' or name == 'rsa-sign-and-verify' %}
+            <div class="w-2"></div>
+            {{ forms.button(names[name ~ '-mode']|default('解密'), '', 'decryption($data)') }} 
+        {% endif %}
     </div>
 {% endblock %}
 {% block append %}
@@ -271,11 +256,28 @@
     {% endif %}
 {% endblock %}
 {% block script %}
-    <script>
+    <script type="text/javascript">
+        let name = '{{ name }}';
         function inputEventSubmit($form) {
-            console.log($form);
-            $form.convert();
-            // $form.submit();
+            if (name == 'to-md5' || name == 'to-sha1' || name == 'to-crc32' || name == 'to-hash') {
+                $form.convert();
+            }
+        }
+        function encryption($proxy) {
+            $proxy.mode = 2; // 设置为加密模式
+            setTimeout(() => {
+                $proxy.convert();
+            });
+        }
+        function decryption($proxy) {
+            $proxy.mode = 1; // 设置为解密模式
+            if ($proxy.data) {
+                $proxy.text = $proxy.data; // 将data赋值给text
+                $proxy.data = ''; // 清空data
+            }
+            setTimeout(() => {
+                $proxy.convert();
+            });
         }
     </script>
 {% endblock %}
