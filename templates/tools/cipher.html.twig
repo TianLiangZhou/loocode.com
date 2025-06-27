@@ -267,17 +267,17 @@
             $proxy.mode = 2; // 设置为加密模式
             setTimeout(() => {
                 $proxy.convert();
-            });
+            }, 100);
         }
         function decryption($proxy) {
-            $proxy.mode = 1; // 设置为解密模式
-            if ($proxy.data) {
+            if ($proxy.mode == 2 && $proxy.data) {
                 $proxy.text = $proxy.data; // 将data赋值给text
                 $proxy.data = ''; // 清空data
             }
+            $proxy.mode = 1; // 设置为解密模式
             setTimeout(() => {
                 $proxy.convert();
-            });
+            }, 100);
         }
     </script>
 {% endblock %}

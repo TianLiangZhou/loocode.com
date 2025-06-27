@@ -805,7 +805,7 @@ class ToolController extends Controller
     public function randomIv(Request $request): JsonResponse
     {
         $algo = $request->get('algo', '');
-        if (in_array(!$algo, openssl_get_cipher_methods())) {
+        if (!in_array($algo, openssl_get_cipher_methods())) {
             return $this->json([
                 'message' => '不支持的算法',
             ], Response::HTTP_NOT_ACCEPTABLE);
