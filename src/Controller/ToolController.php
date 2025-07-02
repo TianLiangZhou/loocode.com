@@ -276,6 +276,14 @@ class ToolController extends Controller
             'ratingValue' => '4.8',
             'ratingCount' => '359',
         ],
+        'rsa-key-generator' => [
+            'name' => 'RSA Key 生成器',
+            'href' => '/tool/rsa-key-generator',
+            'title' => '在线工具RSA key生成器',
+            'description' => '在线工具RSA key生成器工具可帮助您快速创建rsa key，它支持1024、 2048、4096等多种长度。',
+            'ratingValue' => '4.8',
+            'ratingCount' => '359',
+        ],
         'hex-to-rgb' => [
             'name' => 'Hex转RGB',
             'href' => '/tool/hex-to-rgb',
@@ -759,8 +767,36 @@ class ToolController extends Controller
             'qr-code-generator' => $this->qrcode($body, $request->files->get('logo')),
             'ocr-recognition' => $this->ocr($cache, $request->files->get('logo')),
             'image-compression' => $this->imageCompression($request->files->get('image')),
+            'rsa-key-generator' => $this->rsaKeyGenerator($request->request->getInt('mode', 2048)),
             default => $this->json(null),
         };
+    }
+
+    public function rsaKeyGenerator(int $mode): JsonResponse {
+        if (!in_array($mode, [1024, 2048, 4096])) {
+            return $this->json([
+                'message' => '不支持的密钥长度',
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $key = openssl_pkey_new([
+            "digest_alg" => "sha512",
+            'private_key_bits' => $mode,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+        ]);
+        if (!$key) {
+            return $this->json([
+                'message' => '生成密钥失败',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        openssl_pkey_export($key, $privateKey);
+        $publicKey = openssl_pkey_get_details($key)['key'];
+        return $this->json([
+            'data' => [
+                'private' => $privateKey,
+                'public' => $publicKey,
+            ]
+        ]);
+        
     }
 
     public function toColor(array $body): JsonResponse

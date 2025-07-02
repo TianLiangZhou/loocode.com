@@ -1,0 +1,82 @@
+{% extends 'tools/tab.html.twig' %}
+{% import "tools/forms.html.twig" as forms %}
+
+{% block child %}
+    <div>
+        <p class="text-slate-700 dark:text-slate-400 mb-4">
+            你可以借助该工具生成 RSA 私钥。此外，它还会显示生成或粘贴的私钥的公钥。
+        </p>
+        <p class="text-slate-700 dark:text-slate-400 mb-2">
+            <label for="mode">密钥长度</label>
+        </p>
+    </div>
+    <div class="flex items-center mb-4">
+        <div x-init="mode='1024'">
+            <select class="!text-primary rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                    id="mode" name="mode" x-model="mode">
+                    <option value="1024">1024</option>
+                    <option value="2048">2048</option>
+                    <option value="4096">4096</option>
+            </select>
+        </div>
+        <div class="ml-4">
+            {{ forms.button('生成') }}
+        </div>
+    </div>
+    <div class="flex flex-col md:flex-row">
+        <div class="flex flex-1 flex-col border border-slate-200 dark:border-slate-700 rounded-md" style="border-top-right-radius: 0rem; border-bottom-right-radius: 0rem;">
+            <label for="privateKey" class="text-slate-700 dark:text-slate-400 p-3 border-b border-slate-200 dark:border-slate-700">私钥</label>
+            <div class="p-3">
+                <textarea id="privateKey" name="privateKey" x-model="data.private" rows="20"
+                      class="w-full dark:text-white rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"></textarea>
+            </div>
+        </div>
+        <div class="flex flex-1 flex-col border border-slate-200 dark:border-slate-700 rounded-md" style="border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
+            <label for="publicKey" class="text-slate-700 dark:text-slate-400 p-3 p-3 border-b border-slate-200 dark:border-slate-700">公钥</label>
+            <div class="p-3">
+                <textarea id="publicKey" name="publicKey" x-model="data.public" rows="20"
+                      class="w-full dark:text-white rounded-md bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"></textarea>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block append %}
+
+<div class="w-full mt-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg">
+    <h3 class="text-xl p-4 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-900">RSA 说明</h3>
+    <p class="px-4 py-2">RSA 是一种非对称加密算法。对于给定的密钥对，用一个密钥加密的数据只能由另一个密钥解密。这对于加密多方之间的数据非常有用；每个人只需要一个密钥对。RSA 被广泛应用于整个互联网的 HTTPS。</p>
+    <p class="px-4 py-2">要生成密钥对，请选择密钥对的比特长度，然后单击 "生成"。根据长度，浏览器可能需要很长时间才能生成密钥对。1024 位密钥通常可以立即生成，而 4096 位密钥可能需要几分钟。如需更快、更安全的方法，请参阅下面的 "命令行手动"。</p>
+    <p class="px-4 py-2">本站还支持<a href="/tool/rsa-encryption-and-decryption" class="!text-primary">RSA加密解密</a>, <a class="!text-primary" href="/tool/rsa-sign-and-verify">RSA签名校验</a>。</p>
+    </div>
+</div>
+
+<div class="w-full mt-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg">
+        <h3 class="text-xl p-4 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-900">命令行手动</h3>
+        <p class="px-4 py-2">执行这些步骤需要使用 OpenSSL 命令行工具。理想情况下，您应该拥有自己的私钥和他人的公钥。为了演示，我们将仅使用一对密钥。</p>
+
+        <h4 class="p-4 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-900">生成私钥</h4>
+        <p class="px-4 py-2">运行此命令可生成 4096 位私人密钥，并将其输出到 private.pem 文件。如果你愿意，可以更改密钥长度和/或输出文件。</p>
+        <div class="px-4 py-2 code-toolbar">
+            <pre class="language-shell">
+                <code class="language-shell">
+$ openssl genrsa -out private.pem 4096
+                </code>
+            </pre>
+        </div>
+        <h4 class="p-4 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-900">导出公钥</h4>
+        <p class="px-4 py-2">在给定私钥的情况下，可以使用此命令导出公钥并将其输出到 public.pem 中。(你也可以将 OpenSSL 生成的私钥粘贴到上面的表格中，以获取其公钥）。</p>
+        <div class="px-4 py-2 code-toolbar">
+            <pre class="language-shell">
+                <code class="language-shell">
+$ openssl rsa -in private.pem -pubout -out public.pem
+                </code>
+            </pre>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
