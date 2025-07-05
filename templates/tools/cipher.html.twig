@@ -1,6 +1,6 @@
 {% extends 'tools/tab.html.twig' %}
 {% import "tools/forms.html.twig" as forms %}
-{% set names = {'rsa-sign-and-verify': '签名', 'rsa-sign-and-verify-mode': '校验'} %}
+{% set names = {'rsa-encryption-and-decryption': '私钥加密','rsa-encryption-and-decryption-mode': '私钥解密','rsa-sign-and-verify': '签名', 'rsa-sign-and-verify-mode': '校验'} %}
 {% block child %}
     {% if name == 'to-hash' %}
         <div class="flex">
@@ -158,7 +158,7 @@
             <div class="flex my-5">
                 <label for="sign" class="text-slate-700 dark:text-slate-400">签名</label>
                 <div class="flex-1 ml-4">
-                    <textarea id="sign" aria-required="true" name="sign"
+                    <textarea id="sign" aria-required="true" x-model="sign" name="sign"
                               class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
                               placeholder="签名内容校验时填写..."></textarea>
                 </div>
@@ -168,21 +168,19 @@
         <div class="flex  my-5">
             <label class="text-slate-700 dark:text-slate-400" for="cert">证书</label>
             <div class="flex-1 ml-4">
-                <div class="dark:text-slate-300">
+                <div class="dark:text-slate-300 flex flex-col md:flex-row">
                     <textarea required id="cert" aria-required="true" name="cert" rows="10"
                               class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                              placeholder="填写证书内容"></textarea>
+                              placeholder="私钥"></textarea>
+                    <textarea required id="cert" aria-required="true" name="public_cert" rows="10"
+                              class="block w-full rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
+                              placeholder="公钥"></textarea>
                 </div>
-                <div class="dark:text-slate-300 my-5">
-                    <label><input
-                                class="!text-primary bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                                name="cert_mode" value="4" checked="" type="radio"/> 私钥</label>
-                    <label class="mx-2"><input name="cert_mode" value="8" type="radio"
-                                               class="!text-primary  bg-slate-100 dark:bg-slate-900 border-transparent focus:border-transparent focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary"/>
-                        公钥</label>
+                <div class="dark:text-slate-300 my-5" x-init="cert_mode=4">
+                    <input type="hidden" name="cert_mode" x-model="cert_mode" value="4" />
                     <label><input
                                 class="rounded-md bg-slate-100 dark:bg-slate-900 dark:text-slate-300 border-transparent focus:bg-white focus:ring-0 focus:border-primary focus:dark:bg-slate-900/80"
-                                placeholder="私钥密码" name="cert_pass" type="text"/></label>
+                                placeholder="证书密码" name="cert_pass" type="text"/></label>
                 </div>
                 <div class="dark:text-slate-300 my-5">
                 </div>
@@ -216,11 +214,19 @@
 
     <div class="flex my-5 justify-center">
         {% if name != 'to-md5' and name != 'to-sha1' and name != 'to-crc32' and name != 'to-hash' %}
-            {{ forms.button(names[name]|default('加密'), '', 'encryption($data)') }}
+            {{ forms.button(names[name]|default('加密'), '', 'encryption($data, 4)') }}
+            {% if  name == 'rsa-encryption-and-decryption'  %}
+                <div class="w-2"></div>
+                {{ forms.button('公钥加密', '', 'encryption($data, 8)') }}
+            {% endif %}
         {% endif %}
         {% if name == 'aes-encryption-and-decryption' or name == 'des-encryption-and-decryption' or name == 'sm4-encryption-and-decryption' or name == 'rc24-encryption-and-decryption' or name == 'rsa-encryption-and-decryption' or name == 'rsa-sign-and-verify' %}
             <div class="w-2"></div>
-            {{ forms.button(names[name ~ '-mode']|default('解密'), '', 'decryption($data)') }} 
+            {{ forms.button(names[name ~ '-mode']|default('解密'), '', 'decryption($data, 4)') }}
+            {% if  name == 'rsa-encryption-and-decryption' %}
+                <div class="w-2"></div>
+                {{ forms.button('公钥解密', '', 'decryption($data, 8)') }}
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
@@ -259,22 +265,28 @@
     <script type="text/javascript">
         let name = '{{ name }}';
         function inputEventSubmit($form) {
-            if (name == 'to-md5' || name == 'to-sha1' || name == 'to-crc32' || name == 'to-hash') {
+            if (name === 'to-md5' || name === 'to-sha1' || name === 'to-crc32' || name === 'to-hash') {
                 $form.convert();
             }
         }
-        function encryption($proxy) {
+        function encryption($proxy, $certMode) {
             $proxy.mode = 2; // 设置为加密模式
+            $proxy.cert_mode = $certMode; // 设置使用证书
             setTimeout(() => {
                 $proxy.convert();
             }, 100);
         }
-        function decryption($proxy) {
-            if ($proxy.mode == 2 && $proxy.data) {
-                $proxy.text = $proxy.data; // 将data赋值给text
+        function decryption($proxy, $certMode) {
+            if ($proxy.mode === 2 && $proxy.data) {
+                if (name === "rsa-sign-and-verify") {
+                    $proxy.sign = $proxy.data; // 将data赋值给text
+                } else {
+                    $proxy.text = $proxy.data; // 将data赋值给text
+                }
                 $proxy.data = ''; // 清空data
             }
             $proxy.mode = 1; // 设置为解密模式
+            $proxy.cert_mode = $certMode; // 设置使用证书
             setTimeout(() => {
                 $proxy.convert();
             }, 100);

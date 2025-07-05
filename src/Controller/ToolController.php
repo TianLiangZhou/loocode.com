@@ -931,10 +931,11 @@ class ToolController extends Controller
             case 'rsa-encryption-and-decryption':
                 $certMode = (int) ($body['cert_mode'] ?? 4);
                 $mode = ((int) ($body['mode'] ?? 1)) + $certMode;
-                $certContent = $body['cert'] ?? '';
+                $privateCert = $body['cert'] ?? '';
+                $publicCert  = $body['public_cert'] ?? '';
                 $cert = $certMode === 4
-                        ? $this->getPrivateKey($certContent, $body['cert_pass'] ?? '')
-                        : $this->getPublicKey($certContent);
+                        ? $this->getPrivateKey($privateCert, $body['cert_pass'] ?? '')
+                        : $this->getPublicKey($publicCert);
                 if ($cert === false) {
                     return $this->json([
                         'data' => openssl_error_string(),
@@ -973,7 +974,7 @@ class ToolController extends Controller
                         'data' => base64_encode($signature),
                     ]);
                 }
-                if (openssl_verify($text, base64_decode($body['sign']), $this->getPublicKey($body['cert']), $body['algo']) === 1) {
+                if (openssl_verify($text, base64_decode($body['sign']), $this->getPublicKey($body['public_cert']), $body['algo']) === 1) {
                     return $this->json([
                         'data' => '校验成功',
                     ]);
