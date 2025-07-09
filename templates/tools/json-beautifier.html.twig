@@ -51,6 +51,9 @@
                                 <button title="复制" class="w-5 mx-2" aria-label="复制" id="copy">
                                     <svg  class="fill-slate-700 dark:fill-slate-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="copy"><rect width="24" height="24" opacity="0"/><path d="M18 21h-6a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3zm-6-10a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1z"/><path d="M9.73 15H5.67A2.68 2.68 0 0 1 3 12.33V5.67A2.68 2.68 0 0 1 5.67 3h6.66A2.68 2.68 0 0 1 15 5.67V9.4h-2V5.67a.67.67 0 0 0-.67-.67H5.67a.67.67 0 0 0-.67.67v6.66a.67.67 0 0 0 .67.67h4.06z"/></g></g></svg>
                                 </button>
+                                <button title="示例" class="w-5 mx-2" aria-label="示例" id="exampleJson">
+                                    <svg class="fill-slate-700 dark:fill-slate-200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" class="eva eva-bulb-outline eva-animation eva-icon-hover-zoom" fill="inherit"><g data-name="Layer 2"><g data-name="bulb"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"></rect><path d="M12 7a5 5 0 0 0-3 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a5 5 0 0 0-3-9zm1.5 7.59a1 1 0 0 0-.5.87V20h-2v-4.54a1 1 0 0 0-.5-.87A3 3 0 0 1 9 12a3 3 0 0 1 6 0 3 3 0 0 1-1.5 2.59z"></path><path d="M12 6a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1z"></path><path d="M21 11h-2a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2z"></path><path d="M5 11H3a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2z"></path><path d="M7.66 6.42L6.22 5a1 1 0 0 0-1.39 1.47l1.44 1.39a1 1 0 0 0 .73.28 1 1 0 0 0 .72-.31 1 1 0 0 0-.06-1.41z"></path><path d="M19.19 5.05a1 1 0 0 0-1.41 0l-1.44 1.37a1 1 0 0 0 0 1.41 1 1 0 0 0 .72.31 1 1 0 0 0 .69-.28l1.44-1.39a1 1 0 0 0 0-1.42z"></path></g></g></svg>
+                                </button>
                                 <button title="清空" class="w-5 mx-2" aria-label="清空" id="clearInput">
                                     <svg class="fill-slate-700 dark:fill-slate-200" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="trash-2"><rect width="24" height="24" opacity="0"/><path d="M21 6h-5V4.33A2.42 2.42 0 0 0 13.5 2h-3A2.42 2.42 0 0 0 8 4.33V6H3a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2zM10 4.33c0-.16.21-.33.5-.33h3c.29 0 .5.17.5.33V6h-4zM18 19a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8h12z"/><path d="M9 17a1 1 0 0 0 1-1v-4a1 1 0 0 0-2 0v4a1 1 0 0 0 1 1z"/><path d="M15 17a1 1 0 0 0 1-1v-4a1 1 0 0 0-2 0v4a1 1 0 0 0 1 1z"/></g></g></svg>
                                 </button>
@@ -80,10 +83,161 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-6 px-4 w-full">
+            <div class="bg-white rounded-md dark:bg-slate-800">
+                <h2 class="text-xl font-medium text-slate-700 dark:text-white p-3 border-b border-slate-200 dark:border-slate-700">{{ tool['name'] }}</h2>
+                <div class="p-3 text-slate-700 dark:text-slate-400" id="mainContent">
+                    <p><code>JSON</code> 美化工具它能够自动格式化 <code>JSON</code> 数据，使其更加易于阅读和理解。通常，JSON 数据可能会很复杂，尤其是在嵌套较深的情况下，手动解析和检查变得非常困难。</p>
+                    <h4 class="text-xl">工具特性</h4>
+                    <ul>
+                        <li>自动缩进和格式化</li>
+                        <li>错误检查和高亮</li>
+                        <li>压缩/优化功能</li>
+                        <li>一键复制</li>
+                        <li>生成代码实体</li>
+                    </ul>
+                    <h4 class="text-xl">什么是JSON？</h4>
+                    <p><code>JSON</code>（JavaScript Object Notation，JavaScript 对象表示法）是一种轻量级的数据交换格式，它采用了与 <code>JavaScript</code> 对象相似的文本格式，易于人阅读和编写，同时也便于机器解析和生成。JSON 主要用于数据的传输和存储，广泛应用于 Web 开发中，尤其是在前后端之间传递数据时。
+                    <h4 class="text-xl">JSON 的基本格式语法：</h4>
+                    <p>1. 对象（Object）：</p>
+                    <ul class="ml-4">
+                        <li>由一对花括号<code>{}</code>包围。</li>
+                        <li>包含一个或多个键值对，键和值之间用冒号分隔。</li>
+                        <li>键必须是字符串，值可以是字符串、数字、布尔值、null、对象或数组。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"name": "John",
+"age": 30,
+"city": "New York"
+}
+                            </code>
+                        </pre>
+                    </div>
+
+                    <p>2. 数组（Array）：</p>
+                    <ul class="ml-4">
+                        <li>JSON 数组是一个有序的值的集合，值可以是字符串、数字、布尔值、对象、数组等。</li>
+                        <li>数组由方括号 <code>[]</code> 包裹，数组的值之间用逗号分隔。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+[
+"apple",
+"banana",
+"cherry"
+]
+                            </code>
+                        </pre>
+                    </div> 
+                    <p>3. 值（Value）：</p>
+                    <ul class="ml-4">
+                        <li>JSON 的值可以是：字符串、数字、布尔值（true 或 false）、null、对象或数组。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"isActive": true,
+"score": 98.5,
+"address": null
+}
+                            </code>
+                        </pre>
+                    </div>
+                    <p>4. 字符串（String）：</p>
+                    <ul class="ml-4">
+                        <li>字符串必须用双引号 <code>"</code> 括起来，可以包含转义字符（例如 \"、\\ 等）。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"message": "Hello, \"world\"!"
+}
+                            </code>
+                        </pre>
+                    </div> 
+
+                    <p>5. 数字（Number）：</p>
+                    <ul class="ml-4">
+                        <li>数字可以是整数或浮点数字。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"price": 19.99,
+"quantity": 100
+}
+                            </code>
+                        </pre>
+                    </div>
+
+                    <p>6. 布尔值（Boolean）：</p>
+                    <ul class="ml-4">
+                        <li>布尔值可以是 <code>true</code> 或 <code>false</code>。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"isEnabled": true
+}
+                            </code>
+                        </pre>
+                    </div>
+
+                    <p>7. 空值（null）：</p>
+                    <ul class="ml-4">
+                        <li><code>null</code> 表示无值或空值。</li>
+                    </ul>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+"middleName": null
+}
+                            </code>
+                        </pre>
+                    </div>
+
+
+                    <h4 class="text-xl">示例</h4>
+                    <div class="px-4 py-2 code-toolbar">
+                        <pre class="language-json">
+                            <code class="language-json">
+{
+  "url": "https://loocode.com/tools/json-beautifier",  
+  "name": "JSON美化工具",
+  "description": "一个在线的JSON美化工具，支持格式化、压缩、转换等功能。",
+  "age": 18,
+  "isStudent": false,
+  "courses": [
+    { "courseName": "数学", "score": 1 },
+    { "courseName": "英语", "score": -1 }
+  ],
+  "address": {
+    "street": "拱墅区",
+    "city": "杭州市",
+    "zip": "33000中"
+  }
+}
+                            </code>
+                        </pre>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
 {% block footer %}
-    <footer class="p-6 bg-white dark:bg-slate-800 fixed bottom-0 w-full">
+    <footer class="p-6 bg-white dark:bg-slate-800 bottom-0 w-full">
         <div class="mx-auto max-w-screen-xl text-center">
             <div class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                 {% set beian = theme_mod('beian') %}
@@ -93,6 +247,5 @@
     </footer>
 {% endblock %}
 {% block script %}
-    <script type="text/javascript" src="{{ asset('/assets/js/prismjs.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/js/json-beautiful.js') }}"></script>
 {% endblock %}

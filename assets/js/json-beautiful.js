@@ -62,6 +62,7 @@ import Toastify from "toastify-js";
       output.classList.remove('!text-red-500');
       output.classList.add('overflow-y-scroll');
       inputJson.classList.remove('!border-red-500');
+      inputJson.value = JSON.stringify(obj, null, 4);
     } catch (e) {
       outputElement = document.createElement('div');
       outputElement.classList.add('p-3');
@@ -107,6 +108,25 @@ import Toastify from "toastify-js";
     navigator.clipboard.writeText(JSON.stringify(JSON.parse(inputJson.value), null, 4)).then(() => {
       root.defaultToast('已复制');
     });
+  });
+  document.getElementById('exampleJson').addEventListener('click', function () {
+    inputJson.value = `{
+  "url": "https://loocode.com/tools/json-beautifier",  
+  "name": "JSON美化工具",
+  "description": "一个在线的JSON美化工具，支持格式化、压缩、转换等功能。",
+  "age": 18,
+  "isStudent": false,
+  "courses": [
+    { "courseName": "数学", "score": 1 },
+    { "courseName": "英语", "score": -1 }
+  ],
+  "address": {
+    "street": "拱墅区",
+    "city": "杭州市",
+    "zip": "33000中"
+  }
+}`;
+    toConvert(inputJson.value);
   });
   var langLinkMap = {
     "ts":     "/tool/json-to-typescript",
