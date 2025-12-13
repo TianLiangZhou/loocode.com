@@ -13,7 +13,6 @@ return static function (DoctrineConfig $doctrine, ContainerConfigurator $configu
         ->logging('%kernel.debug%');
 
     $doctrine->orm()
-        ->autoGenerateProxyClasses(true)
         ->defaultEntityManager('default');
 
     $doctrine->orm()->entityManager('default')
