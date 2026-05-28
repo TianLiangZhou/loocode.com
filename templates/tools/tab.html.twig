@@ -30,7 +30,7 @@
             </div>
             {% endif %}
             <div class="">
-                <h2 class="sr-only">{{ tool.name }}</h2>
+                <h1 class="sr-only">{{ tool.name }}</h1>
                 <div class="bg-white dark:bg-slate-800 rounded-b-lg">
                     <div class="p-6 relative dark:border-slate-700">
                         <form name="body" x-ref="form" x-data="toolConvert({{ convert_extra|default("'{}'") }})" x-init="mode={{ mode|default(0)}},data='{{ data|default(null) }}',algo='{{ algo|default('') }}',text='{{ text|default('') }}'">
